@@ -8,11 +8,15 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Georgia,serif;background:#0a0a1a;color:#fff;min-height:100vh}
-.lang-toggle{display:flex;justify-content:center;margin-bottom:15px;gap:5px;background:rgba(0,0,0,0.3);border-radius:25px;padding:5px;width:fit-content;margin-left:auto;margin-right:auto;border:2px solid rgba(255,215,0,0.4)}
-.lang-btn{padding:10px 18px;border:none;border-radius:20px;cursor:pointer;font-weight:bold;font-size:0.9em;transition:all 0.2s;background:transparent;color:#fff}
+body{font-family:Georgia,serif;background:#0a0a1a;color:#fff;min-height:100vh;padding-top:60px}
+
+/* Sticky Language Toggle Bar */
+.lang-bar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,10,26,0.95);backdrop-filter:blur(10px);padding:10px 20px;display:flex;justify-content:center;align-items:center;border-bottom:2px solid rgba(255,215,0,0.3)}
+.lang-toggle{display:flex;gap:5px;background:rgba(0,0,0,0.4);border-radius:25px;padding:4px;border:2px solid rgba(255,215,0,0.4)}
+.lang-btn{padding:8px 16px;border:none;border-radius:20px;cursor:pointer;font-weight:bold;font-size:0.85em;transition:all 0.2s;background:transparent;color:#fff}
 .lang-btn.active{background:#ffd700;color:#1a1a2e}
 .lang-btn:hover:not(.active){background:rgba(255,255,255,0.1)}
+
 .header{background:linear-gradient(135deg,#1a1a2e,#16213e);padding:20px;text-align:center;border-bottom:3px solid #ffd700}
 .logo-row{display:flex;align-items:center;justify-content:center;gap:15px}
 .logo{font-size:2.5em}
@@ -70,201 +74,241 @@ body{font-family:Georgia,serif;background:#0a0a1a;color:#fff;min-height:100vh}
 .footer{text-align:center;padding:40px 20px;border-top:1px solid rgba(255,255,255,0.1);margin-top:50px}
 .footer p{opacity:0.6;font-size:0.9em}
 .footer a{color:#ffd700}
-[data-lang="es"]{display:none}
-body.es [data-lang="en"]{display:none}
-body.es [data-lang="es"]{display:inline}
-@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr);margin-top:-20px}.hero h1{font-size:1.8em}.stat-value{font-size:1.8em}.price-card .price{font-size:2em}}
+
+/* Language Switching - Hide/Show */
+.en .lang-es{display:none!important}
+.es .lang-en{display:none!important}
+
+@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr);margin-top:-20px}.hero h1{font-size:1.8em}.stat-value{font-size:1.8em}.price-card .price{font-size:2em}body{padding-top:55px}}
 @media(max-width:500px){.stats{grid-template-columns:1fr}.brand{font-size:1.4em}}
 </style>
 </head>
 <body class="en">
 
-<header class="header">
+<!-- Sticky Language Bar -->
+<div class="lang-bar">
 <div class="lang-toggle">
-<button class="lang-btn active" id="btnEn" onclick="setLang('en')">🇺🇸 EN</button>
-<button class="lang-btn" id="btnEs" onclick="setLang('es')">🇵🇷 ES</button>
+<button class="lang-btn active" id="btnEn" onclick="setLang('en')">🇺🇸 English</button>
+<button class="lang-btn" id="btnEs" onclick="setLang('es')">🇵🇷 Español</button>
 </div>
+</div>
+
+<header class="header">
 <div class="logo-row">
 <span class="logo">🎓</span>
 <span class="brand">Akashic Academy</span>
 </div>
 <p class="tagline">
-<span data-lang="en">Digital Literacy for Schools</span>
-<span data-lang="es">Alfabetización Digital para Escuelas</span>
+<span class="lang-en">Digital Literacy for Schools</span>
+<span class="lang-es">Alfabetización Digital para Escuelas</span>
 </p>
 </header>
 
 <nav class="nav">
-<a href="#features"><span data-lang="en">Features</span><span data-lang="es">Características</span></a>
-<a href="#pricing"><span data-lang="en">Pricing</span><span data-lang="es">Precios</span></a>
-<a href="#games"><span data-lang="en">Games</span><span data-lang="es">Juegos</span></a>
-<a href="teacher-dashboard.html"><span data-lang="en">Teachers</span><span data-lang="es">Maestros</span></a>
-<a href="student-setup.html" class="active"><span data-lang="en">Students</span><span data-lang="es">Estudiantes</span></a>
+<a href="#features"><span class="lang-en">Features</span><span class="lang-es">Características</span></a>
+<a href="#pricing"><span class="lang-en">Pricing</span><span class="lang-es">Precios</span></a>
+<a href="#games"><span class="lang-en">Games</span><span class="lang-es">Juegos</span></a>
+<a href="teacher-dashboard.html"><span class="lang-en">Teachers</span><span class="lang-es">Maestros</span></a>
+<a href="student-setup.html" class="active"><span class="lang-en">Students</span><span class="lang-es">Estudiantes</span></a>
 </nav>
 
 <section class="hero">
 <h1>
-<span data-lang="en">Build <span>Digital Skills</span> for the Future</span>
-<span data-lang="es">Desarrolla <span>Habilidades Digitales</span> para el Futuro</span>
+<span class="lang-en">Build <span>Digital Skills</span> for the Future</span>
+<span class="lang-es">Desarrolla <span>Habilidades Digitales</span> para el Futuro</span>
 </h1>
 <p>
-<span data-lang="en">Comprehensive K-12 digital literacy program with games, assessments, and real-time progress tracking. Fully bilingual English/Spanish.</span>
-<span data-lang="es">Programa completo de alfabetización digital K-12 con juegos, evaluaciones y seguimiento en tiempo real. Totalmente bilingüe inglés/español.</span>
+<span class="lang-en">Comprehensive K-12 digital literacy program with games, assessments, and real-time progress tracking. Fully bilingual English/Spanish.</span>
+<span class="lang-es">Programa completo de alfabetización digital K-12 con juegos, evaluaciones y seguimiento en tiempo real. Totalmente bilingüe inglés/español.</span>
 </p>
 <div class="hero-buttons">
-<a href="/cdn-cgi/l/email-protection#573e39313817363c36243f3e342038253c247934383a682422353d3234236a1125323272656703253e363b726567053226223224237265677a726567163c36243f3e3472656716343633323a2e713538332e6a1f323b3b387b7267167267161e703a7265673e3923322532242332337265673e39726567367265673125323272656723253e363b7265673831726567163c36243f3e3472656716343633323a2e7972671672671604343f38383b7818253036393e2d36233e38396d72656772671619223a353225726567383172656704232233323923246d72656772671610253633327265671b3221323b246d726567726716726716033f36393c7265672e382276" class="btn btn-gold">
-<span data-lang="en">🎁 Request Free Trial</span>
-<span data-lang="es">🎁 Solicitar Prueba Gratis</span>
+<a href="mailto:info@akashicworks.com?subject=Free%20Trial%20Request%20-%20Akashic%20Academy&body=Hello,%0A%0AI'm%20interested%20in%20a%20free%20trial%20of%20Akashic%20Academy.%0A%0ASchool/Organization:%20%0ANumber%20of%20Students:%20%0AGrade%20Levels:%20%0A%0AThank%20you!" class="btn btn-gold">
+<span class="lang-en">🎁 Request Free Trial</span>
+<span class="lang-es">🎁 Solicitar Prueba Gratis</span>
 </a>
 <a href="#pricing" class="btn btn-outline">
-<span data-lang="en">💰 View Pricing</span>
-<span data-lang="es">💰 Ver Precios</span>
+<span class="lang-en">💰 View Pricing</span>
+<span class="lang-es">💰 Ver Precios</span>
 </a>
 </div>
 </section>
 
 <div class="stats">
-<div class="stat"><div class="stat-value">24</div><div class="stat-label"><span data-lang="en">Learning Games</span><span data-lang="es">Juegos Educativos</span></div></div>
-<div class="stat"><div class="stat-value">K-12</div><div class="stat-label"><span data-lang="en">All Grade Levels</span><span data-lang="es">Todos los Grados</span></div></div>
-<div class="stat"><div class="stat-value">2</div><div class="stat-label"><span data-lang="en">Languages</span><span data-lang="es">Idiomas</span></div></div>
-<div class="stat"><div class="stat-value">100%</div><div class="stat-label"><span data-lang="en">Progress Tracking</span><span data-lang="es">Seguimiento</span></div></div>
+<div class="stat"><div class="stat-value">24</div><div class="stat-label"><span class="lang-en">Learning Games</span><span class="lang-es">Juegos Educativos</span></div></div>
+<div class="stat"><div class="stat-value">K-12</div><div class="stat-label"><span class="lang-en">All Grade Levels</span><span class="lang-es">Todos los Grados</span></div></div>
+<div class="stat"><div class="stat-value">2</div><div class="stat-label"><span class="lang-en">Languages</span><span class="lang-es">Idiomas</span></div></div>
+<div class="stat"><div class="stat-value">100%</div><div class="stat-label"><span class="lang-en">Progress Tracking</span><span class="lang-es">Seguimiento</span></div></div>
 </div>
 
 <main class="main">
 
 <section class="section" id="features">
-<h2 class="section-title"><span data-lang="en">✨ Why Akashic Academy?</span><span data-lang="es">✨ ¿Por qué Akashic Academy?</span></h2>
+<h2 class="section-title"><span class="lang-en">✨ Why Akashic Academy?</span><span class="lang-es">✨ ¿Por qué Akashic Academy?</span></h2>
 <div class="features-grid">
 <div class="feature">
 <span class="feature-icon">🎮</span>
-<div><h3><span data-lang="en">Game-Based Learning</span><span data-lang="es">Aprendizaje con Juegos</span></h3>
-<p><span data-lang="en">24 engaging games covering memory, typing, problem-solving, and digital skills. Students learn while having fun.</span><span data-lang="es">24 juegos atractivos que cubren memoria, mecanografía, resolución de problemas y habilidades digitales. Los estudiantes aprenden mientras se divierten.</span></p></div>
+<div><h3><span class="lang-en">Game-Based Learning</span><span class="lang-es">Aprendizaje con Juegos</span></h3>
+<p><span class="lang-en">24 engaging games covering memory, typing, problem-solving, and digital skills. Students learn while having fun.</span><span class="lang-es">24 juegos atractivos que cubren memoria, mecanografía, resolución de problemas y habilidades digitales. Los estudiantes aprenden mientras se divierten.</span></p></div>
 </div>
 <div class="feature">
 <span class="feature-icon">🌎</span>
-<div><h3><span data-lang="en">Fully Bilingual</span><span data-lang="es">Totalmente Bilingüe</span></h3>
-<p><span data-lang="en">Every game available in English and Spanish. Perfect for Puerto Rico schools and bilingual programs.</span><span data-lang="es">Cada juego disponible en inglés y español. Perfecto para escuelas de Puerto Rico y programas bilingües.</span></p></div>
+<div><h3><span class="lang-en">Fully Bilingual</span><span class="lang-es">Totalmente Bilingüe</span></h3>
+<p><span class="lang-en">Every game available in English and Spanish. Perfect for Puerto Rico schools and bilingual programs.</span><span class="lang-es">Cada juego disponible en inglés y español. Perfecto para escuelas de Puerto Rico y programas bilingües.</span></p></div>
 </div>
 <div class="feature">
 <span class="feature-icon">📊</span>
-<div><h3><span data-lang="en">Real-Time Dashboard</span><span data-lang="es">Panel en Tiempo Real</span></h3>
-<p><span data-lang="en">Teachers see student progress instantly. Track scores, identify struggles, and celebrate successes.</span><span data-lang="es">Los maestros ven el progreso al instante. Rastrea puntuaciones, identifica dificultades y celebra éxitos.</span></p></div>
+<div><h3><span class="lang-en">Real-Time Dashboard</span><span class="lang-es">Panel en Tiempo Real</span></h3>
+<p><span class="lang-en">Teachers see student progress instantly. Track scores, identify struggles, and celebrate successes.</span><span class="lang-es">Los maestros ven el progreso al instante. Rastrea puntuaciones, identifica dificultades y celebra éxitos.</span></p></div>
 </div>
 <div class="feature">
 <span class="feature-icon">🔒</span>
-<div><h3><span data-lang="en">Secure & Private</span><span data-lang="es">Seguro y Privado</span></h3>
-<p><span data-lang="en">Student data stays private. No ads, no tracking, no selling data. COPPA compliant.</span><span data-lang="es">Los datos de estudiantes permanecen privados. Sin anuncios, sin rastreo, sin vender datos.</span></p></div>
+<div><h3><span class="lang-en">Secure & Private</span><span class="lang-es">Seguro y Privado</span></h3>
+<p><span class="lang-en">Student data stays private. No ads, no tracking, no selling data. COPPA compliant.</span><span class="lang-es">Los datos de estudiantes permanecen privados. Sin anuncios, sin rastreo, sin vender datos.</span></p></div>
 </div>
 <div class="feature">
 <span class="feature-icon">📱</span>
-<div><h3><span data-lang="en">Works Everywhere</span><span data-lang="es">Funciona en Todas Partes</span></h3>
-<p><span data-lang="en">Chromebooks, tablets, phones, computers. No downloads or installations required.</span><span data-lang="es">Chromebooks, tabletas, teléfonos, computadoras. No se requieren descargas ni instalaciones.</span></p></div>
+<div><h3><span class="lang-en">Works Everywhere</span><span class="lang-es">Funciona en Todas Partes</span></h3>
+<p><span class="lang-en">Chromebooks, tablets, phones, computers. No downloads or installations required.</span><span class="lang-es">Chromebooks, tabletas, teléfonos, computadoras. No se requieren descargas ni instalaciones.</span></p></div>
 </div>
 <div class="feature">
 <span class="feature-icon">🎯</span>
-<div><h3><span data-lang="en">Age-Appropriate</span><span data-lang="es">Apropiado para Cada Edad</span></h3>
-<p><span data-lang="en">Four grade bands (K-2, 3-5, 6-8, 9-12) with content matched to developmental levels.</span><span data-lang="es">Cuatro niveles (K-2, 3-5, 6-8, 9-12) con contenido adaptado a cada nivel de desarrollo.</span></p></div>
+<div><h3><span class="lang-en">Age-Appropriate</span><span class="lang-es">Apropiado para Cada Edad</span></h3>
+<p><span class="lang-en">Four grade bands (K-2, 3-5, 6-8, 9-12) with content matched to developmental levels.</span><span class="lang-es">Cuatro niveles (K-2, 3-5, 6-8, 9-12) con contenido adaptado a cada nivel de desarrollo.</span></p></div>
 </div>
 </div>
 </section>
 
 <section class="section" id="pricing">
-<h2 class="section-title"><span data-lang="en">💰 Simple, Affordable Pricing</span><span data-lang="es">💰 Precios Simples y Accesibles</span></h2>
+<h2 class="section-title"><span class="lang-en">💰 Simple, Affordable Pricing</span><span class="lang-es">💰 Precios Simples y Accesibles</span></h2>
 <p style="text-align:center;opacity:0.8;margin-bottom:30px">
-<span data-lang="en">Per student, per year. Volume discounts available. Minimum 25 students.</span>
-<span data-lang="es">Por estudiante, por año. Descuentos por volumen. Mínimo 25 estudiantes.</span>
+<span class="lang-en">Per student, per year. Volume discounts available. Minimum 25 students.</span>
+<span class="lang-es">Por estudiante, por año. Descuentos por volumen. Mínimo 25 estudiantes.</span>
 </p>
 <div class="pricing-grid">
 <div class="price-card">
-<div class="tier"><span data-lang="en">Starter</span><span data-lang="es">Inicial</span></div>
-<div class="students">25-99 <span data-lang="en">Students</span><span data-lang="es">Estudiantes</span></div>
-<div class="price">$4<span>/<span data-lang="en">student/yr</span><span data-lang="es">est./año</span></span></div>
-<div class="per"><span data-lang="en">Full access to all 24 games</span><span data-lang="es">Acceso completo a 24 juegos</span></div>
-<div class="example">25 est. = <b>$100/<span data-lang="en">year</span><span data-lang="es">año</span></b></div>
+<div class="tier"><span class="lang-en">Starter</span><span class="lang-es">Inicial</span></div>
+<div class="students">25-99 <span class="lang-en">Students</span><span class="lang-es">Estudiantes</span></div>
+<div class="price">$4<span>/<span class="lang-en">student/yr</span><span class="lang-es">est./año</span></span></div>
+<div class="per"><span class="lang-en">Full access to all 24 games</span><span class="lang-es">Acceso completo a 24 juegos</span></div>
+<div class="example">25 est. = <b>$100/<span class="lang-en">year</span><span class="lang-es">año</span></b></div>
 </div>
 <div class="price-card featured">
-<div class="tier">⭐ <span data-lang="en">Most Popular</span><span data-lang="es">Más Popular</span></div>
-<div class="students">100-249 <span data-lang="en">Students</span><span data-lang="es">Estudiantes</span></div>
-<div class="price">$3.50<span>/<span data-lang="en">student/yr</span><span data-lang="es">est./año</span></span></div>
-<div class="per"><span data-lang="en">Save 12.5%</span><span data-lang="es">Ahorra 12.5%</span></div>
-<div class="example">150 est. = <b>$525/<span data-lang="en">year</span><span data-lang="es">año</span></b></div>
+<div class="tier">⭐ <span class="lang-en">Most Popular</span><span class="lang-es">Más Popular</span></div>
+<div class="students">100-249 <span class="lang-en">Students</span><span class="lang-es">Estudiantes</span></div>
+<div class="price">$3.50<span>/<span class="lang-en">student/yr</span><span class="lang-es">est./año</span></span></div>
+<div class="per"><span class="lang-en">Save 12.5%</span><span class="lang-es">Ahorra 12.5%</span></div>
+<div class="example">150 est. = <b>$525/<span class="lang-en">year</span><span class="lang-es">año</span></b></div>
 </div>
 <div class="price-card">
-<div class="tier"><span data-lang="en">School</span><span data-lang="es">Escuela</span></div>
-<div class="students">250-499 <span data-lang="en">Students</span><span data-lang="es">Estudiantes</span></div>
-<div class="price">$3<span>/<span data-lang="en">student/yr</span><span data-lang="es">est./año</span></span></div>
-<div class="per"><span data-lang="en">Save 25%</span><span data-lang="es">Ahorra 25%</span></div>
-<div class="example">300 est. = <b>$900/<span data-lang="en">year</span><span data-lang="es">año</span></b></div>
+<div class="tier"><span class="lang-en">School</span><span class="lang-es">Escuela</span></div>
+<div class="students">250-499 <span class="lang-en">Students</span><span class="lang-es">Estudiantes</span></div>
+<div class="price">$3<span>/<span class="lang-en">student/yr</span><span class="lang-es">est./año</span></span></div>
+<div class="per"><span class="lang-en">Save 25%</span><span class="lang-es">Ahorra 25%</span></div>
+<div class="example">300 est. = <b>$900/<span class="lang-en">year</span><span class="lang-es">año</span></b></div>
 </div>
 <div class="price-card">
-<div class="tier"><span data-lang="en">District</span><span data-lang="es">Distrito</span></div>
-<div class="students">500+ <span data-lang="en">Students</span><span data-lang="es">Estudiantes</span></div>
-<div class="price">$2.50<span>/<span data-lang="en">student/yr</span><span data-lang="es">est./año</span></span></div>
-<div class="per"><span data-lang="en">Save 37.5%</span><span data-lang="es">Ahorra 37.5%</span></div>
-<div class="example">500 est. = <b>$1,250/<span data-lang="en">year</span><span data-lang="es">año</span></b></div>
+<div class="tier"><span class="lang-en">District</span><span class="lang-es">Distrito</span></div>
+<div class="students">500+ <span class="lang-en">Students</span><span class="lang-es">Estudiantes</span></div>
+<div class="price">$2.50<span>/<span class="lang-en">student/yr</span><span class="lang-es">est./año</span></span></div>
+<div class="per"><span class="lang-en">Save 37.5%</span><span class="lang-es">Ahorra 37.5%</span></div>
+<div class="example">500 est. = <b>$1,250/<span class="lang-en">year</span><span class="lang-es">año</span></b></div>
 </div>
 </div>
 <div style="text-align:center;margin-top:30px">
-<a href="/cdn-cgi/l/email-protection#345d5a525b74555f55475c5d57435b465f471a575b590b4741565e5157400964465d575d5a531106047d5a45415d464d11060419110604755f55475c5d571106047557555051594d" class="btn btn-gold">
-<span data-lang="en">📧 Contact for Quote</span><span data-lang="es">📧 Contactar para Cotización</span>
+<a href="mailto:info@akashicworks.com?subject=Pricing%20Inquiry%20-%20Akashic%20Academy" class="btn btn-gold">
+<span class="lang-en">📧 Contact for Quote</span><span class="lang-es">📧 Contactar para Cotización</span>
 </a>
 </div>
 </section>
 
 <section class="section" id="games">
-<h2 class="section-title"><span data-lang="en">🎮 24 Learning Games</span><span data-lang="es">🎮 24 Juegos Educativos</span></h2>
+<h2 class="section-title"><span class="lang-en">🎮 24 Learning Games</span><span class="lang-es">🎮 24 Juegos Educativos</span></h2>
 <p style="text-align:center;opacity:0.8;margin-bottom:30px">
-<span data-lang="en">Cognitive training and digital literacy across all grade levels</span>
-<span data-lang="es">Entrenamiento cognitivo y alfabetización digital en todos los niveles</span>
+<span class="lang-en">Cognitive training and digital literacy across all grade levels</span>
+<span class="lang-es">Entrenamiento cognitivo y alfabetización digital en todos los niveles</span>
 </p>
 
-<h3 style="color:#ffd700;margin:25px 0 15px">👶 <span data-lang="en">Grades K-2 (Ages 5-8)</span><span data-lang="es">Grados K-2 (Edades 5-8)</span></h3>
+<h3 style="color:#ffd700;margin:25px 0 15px">👶 <span class="lang-en">Grades K-2 (Ages 5-8)</span><span class="lang-es">Grados K-2 (Edades 5-8)</span></h3>
 <div class="games-preview">
-<div class="game-preview"><div class="icon">👁️</div><div class="name"><span data-lang="en">Visual Memory</span><span data-lang="es">Memoria Visual</span></div></div>
-<div class="game-preview"><div class="icon">🎨</div><div class="name"><span data-lang="en">Color Match</span><span data-lang="es">Combinar Colores</span></div></div>
-<div class="game-preview"><div class="icon">🔲</div><div class="name"><span data-lang="en">Sequence Memory</span><span data-lang="es">Memoria de Secuencia</span></div></div>
+<div class="game-preview"><div class="icon">👁️</div><div class="name"><span class="lang-en">Visual Memory</span><span class="lang-es">Memoria Visual</span></div></div>
+<div class="game-preview"><div class="icon">🎨</div><div class="name"><span class="lang-en">Color Match</span><span class="lang-es">Combinar Colores</span></div></div>
+<div class="game-preview"><div class="icon">🔲</div><div class="name"><span class="lang-en">Sequence Memory</span><span class="lang-es">Memoria de Secuencia</span></div></div>
 </div>
 
-<h3 style="color:#ffd700;margin:25px 0 15px">📚 <span data-lang="en">Grades 3-5 (Ages 8-11)</span><span data-lang="es">Grados 3-5 (Edades 8-11)</span></h3>
+<h3 style="color:#ffd700;margin:25px 0 15px">📚 <span class="lang-en">Grades 3-5 (Ages 8-11)</span><span class="lang-es">Grados 3-5 (Edades 8-11)</span></h3>
 <div class="games-preview">
-<div class="game-preview"><div class="icon">🔢</div><div class="name"><span data-lang="en">Number Memory</span><span data-lang="es">Memoria de Números</span></div></div>
-<div class="game-preview"><div class="icon">🔍</div><div class="name"><span data-lang="en">Word Search</span><span data-lang="es">Sopa de Letras</span></div></div>
-<div class="game-preview"><div class="icon">👁️</div><div class="name"><span data-lang="en">Visual Memory+</span><span data-lang="es">Memoria Visual+</span></div></div>
+<div class="game-preview"><div class="icon">🔢</div><div class="name"><span class="lang-en">Number Memory</span><span class="lang-es">Memoria de Números</span></div></div>
+<div class="game-preview"><div class="icon">🔍</div><div class="name"><span class="lang-en">Word Search</span><span class="lang-es">Sopa de Letras</span></div></div>
+<div class="game-preview"><div class="icon">👁️</div><div class="name"><span class="lang-en">Visual Memory+</span><span class="lang-es">Memoria Visual+</span></div></div>
 </div>
 
-<h3 style="color:#ffd700;margin:25px 0 15px">🎒 <span data-lang="en">Grades 6-8 (Ages 11-14)</span><span data-lang="es">Grados 6-8 (Edades 11-14)</span></h3>
+<h3 style="color:#ffd700;margin:25px 0 15px">🎒 <span class="lang-en">Grades 6-8 (Ages 11-14)</span><span class="lang-es">Grados 6-8 (Edades 11-14)</span></h3>
 <div class="games-preview">
-<div class="game-preview"><div class="icon">⌨️</div><div class="name"><span data-lang="en">Typing Quiz</span><span data-lang="es">Prueba de Tecleo</span></div></div>
-<div class="game-preview"><div class="icon">🔍</div><div class="name"><span data-lang="en">Word Search Pro</span><span data-lang="es">Sopa de Letras Pro</span></div></div>
-<div class="game-preview"><div class="icon">🔢</div><div class="name"><span data-lang="en">Number Memory Pro</span><span data-lang="es">Memoria Números Pro</span></div></div>
+<div class="game-preview"><div class="icon">⌨️</div><div class="name"><span class="lang-en">Typing Quiz</span><span class="lang-es">Prueba de Tecleo</span></div></div>
+<div class="game-preview"><div class="icon">🔍</div><div class="name"><span class="lang-en">Word Search Pro</span><span class="lang-es">Sopa de Letras Pro</span></div></div>
+<div class="game-preview"><div class="icon">🔢</div><div class="name"><span class="lang-en">Number Memory Pro</span><span class="lang-es">Memoria Números Pro</span></div></div>
 </div>
 
-<h3 style="color:#ffd700;margin:25px 0 15px">🎓 <span data-lang="en">Grades 9-12 (Ages 14-18)</span><span data-lang="es">Grados 9-12 (Edades 14-18)</span></h3>
+<h3 style="color:#ffd700;margin:25px 0 15px">🎓 <span class="lang-en">Grades 9-12 (Ages 14-18)</span><span class="lang-es">Grados 9-12 (Edades 14-18)</span></h3>
 <div class="games-preview">
-<div class="game-preview"><div class="icon">📝</div><div class="name"><span data-lang="en">Digital Assessment</span><span data-lang="es">Evaluación Digital</span></div></div>
-<div class="game-preview"><div class="icon">⌨️</div><div class="name"><span data-lang="en">Speed Typing</span><span data-lang="es">Tecleo Rápido</span></div></div>
-<div class="game-preview"><div class="icon">🧠</div><div class="name"><span data-lang="en">Stroop Challenge</span><span data-lang="es">Desafío Stroop</span></div></div>
+<div class="game-preview"><div class="icon">📝</div><div class="name"><span class="lang-en">Digital Assessment</span><span class="lang-es">Evaluación Digital</span></div></div>
+<div class="game-preview"><div class="icon">⌨️</div><div class="name"><span class="lang-en">Speed Typing</span><span class="lang-es">Tecleo Rápido</span></div></div>
+<div class="game-preview"><div class="icon">🧠</div><div class="name"><span class="lang-en">Stroop Challenge</span><span class="lang-es">Desafío Stroop</span></div></div>
 </div>
 </section>
 
 <section class="access-gate">
-<h2><span data-lang="en">🔑 Student Access</span><span data-lang="es">🔑 Acceso de Estudiantes</span></h2>
-<p><span data-lang="en">Already have a class code from your teacher? Join your class to start playing!</span><span data-lang="es">¿Ya tienes un código de clase de tu maestro? ¡Únete a tu clase para comenzar!</span></p>
+<h2><span class="lang-en">🔑 Student Access</span><span class="lang-es">🔑 Acceso de Estudiantes</span></h2>
+<p><span class="lang-en">Already have a class code from your teacher? Join your class to start playing!</span><span class="lang-es">¿Ya tienes un código de clase de tu maestro? ¡Únete a tu clase para comenzar!</span></p>
 <div class="access-buttons">
-<a href="student-setup.html" class="btn btn-gold"><span data-lang="en">🎓 Join My Class</span><span data-lang="es">🎓 Unirme a Mi Clase</span></a>
-<a href="teacher-dashboard.html" class="btn btn-outline" style="border-color:#ffd700;color:#ffd700"><span data-lang="en">👩‍🏫 Teacher Login</span><span data-lang="es">👩‍🏫 Acceso Maestros</span></a>
+<a href="student-setup.html" class="btn btn-gold"><span class="lang-en">🎓 Join My Class</span><span class="lang-es">🎓 Unirme a Mi Clase</span></a>
+<a href="teacher-dashboard.html" class="btn btn-outline" style="border-color:#ffd700;color:#ffd700"><span class="lang-en">👩‍🏫 Teacher Login</span><span class="lang-es">👩‍🏫 Acceso Maestros</span></a>
 </div>
 </section>
 
 <section class="cta-box">
-<h2><span data-lang="en">🎁 Try It Free!</span><span data-lang="es">🎁 ¡Pruébalo Gratis!</span></h2>
-<p><span data-lang="en">Get a 14-day free trial for your classroom. No credit card required. See why teachers love Akashic Academy.</span><span data-lang="es">Obtén una prueba gratis de 14 días para tu salón. No se requiere tarjeta de crédito. Descubre por qué los maestros aman Akashic Academy.</span></p>
+<h2><span class="lang-en">🎁 Try It Free!</span><span class="lang-es">🎁 ¡Pruébalo Gratis!</span></h2>
+<p><span class="lang-en">Get a 14-day free trial for your classroom. No credit card required. See why teachers love Akashic Academy.</span><span class="lang-es">Obtén una prueba gratis de 14 días para tu salón. No se requiere tarjeta de crédito. Descubre por qué los maestros aman Akashic Academy.</span></p>
 <div class="cta-buttons">
-<a href="/cdn-cgi/l/email-protection#5c35323a331c3d373d2f34353f2b332e372f723f3331632f293e36393f28611a2e3939796e6c082e353d30796e6c0e392d29392f28796e6c71796e6c1d373d2f34353f796e6c1d3f3d383931257a3e33382561143930303370796c1d796c1d157b38796e6c30353739796e6c2833796e6c2e392d29392f28796e6c3d796e6c3a2e3939796e6c282e353d3072796c1d796c1d0f3f3433333066796e6c796c1d0f2829383932282f66796e6c796c1d1b2e3d38392f66796e6c796c1d796c1d08343d3237796e6c2533297d" class="btn btn-gold"><span data-lang="en">📧 Request Free Trial</span><span data-lang="es">📧 Solicitar Prueba Gratis</span></a>
-<a href="/cdn-cgi/l/email-protection#f1989f979eb1909a9082999892869e839a82df929e9cce8284939b949285cca084948285989e9fd4c3c190939e8485d4c3c1b09a9082999892d4c3c1b0929095949c88" class="btn btn-outline"><span data-lang="en">💬 Ask a Question</span><span data-lang="es">💬 Hacer una Pregunta</span></a>
+<a href="mailto:info@akashicworks.com?subject=Free%20Trial%20Request%20-%20Akashic%20Academy&body=Hello,%0A%0AI'd%20like%20to%20request%20a%20free%20trial.%0A%0ASchool:%20%0AStudents:%20%0AGrades:%20%0A%0AThank%20you!" class="btn btn-gold"><span class="lang-en">📧 Request Free Trial</span><span class="lang-es">📧 Solicitar Prueba Gratis</span></a>
+<a href="mailto:info@akashicworks.com?subject=Question%20about%20Akashic%20Academy" class="btn btn-outline"><span class="lang-en">💬 Ask a Question</span><span class="lang-es">💬 Hacer una Pregunta</span></a>
 </div>
 </section>
 
 </main>
 
-<footer class="footer"
+<footer class="footer">
+<p>© 2024 <a href="https://akashicworks.com">Akashic Works LLC</a> • San Juan, Puerto Rico 🇵🇷</p>
+<p style="margin-top:10px"><a href="mailto:info@akashicworks.com">info@akashicworks.com</a></p>
+</footer>
+
+<script>
+function setLang(lang) {
+    // Update body class
+    document.body.classList.remove('en', 'es');
+    document.body.classList.add(lang);
+    
+    // Update buttons
+    document.getElementById('btnEn').classList.toggle('active', lang === 'en');
+    document.getElementById('btnEs').classList.toggle('active', lang === 'es');
+    
+    // Update html lang attribute
+    document.documentElement.lang = lang;
+    
+    // Save preference
+    localStorage.setItem('akashic_lang', lang);
+}
+
+// Load saved language or detect from browser
+(function() {
+    var saved = localStorage.getItem('akashic_lang');
+    if (saved) {
+        setLang(saved);
+    } else if (navigator.language && navigator.language.startsWith('es')) {
+        setLang('es');
+    }
+})();
+</script>
+
+</body>
+</html>
