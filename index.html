@@ -9,7 +9,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Georgia,serif;background:#0a0a1a;color:#fff;min-height:100vh}
-.lang-toggle{position:fixed;top:20px;right:20px;z-index:1000;display:flex;background:rgba(0,0,0,0.6);border-radius:25px;padding:5px;backdrop-filter:blur(10px);border:2px solid rgba(255,215,0,0.4)}
+.lang-toggle{display:flex;justify-content:center;margin-bottom:15px;gap:5px;background:rgba(0,0,0,0.3);border-radius:25px;padding:5px;width:fit-content;margin-left:auto;margin-right:auto;border:2px solid rgba(255,215,0,0.4)}
 .lang-btn{padding:10px 18px;border:none;border-radius:20px;cursor:pointer;font-weight:bold;font-size:0.9em;transition:all 0.2s;background:transparent;color:#fff}
 .lang-btn.active{background:#ffd700;color:#1a1a2e}
 .lang-btn:hover:not(.active){background:rgba(255,255,255,0.1)}
@@ -73,18 +73,17 @@ body{font-family:Georgia,serif;background:#0a0a1a;color:#fff;min-height:100vh}
 [data-lang="es"]{display:none}
 body.es [data-lang="en"]{display:none}
 body.es [data-lang="es"]{display:inline}
-@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr);margin-top:-20px}.hero h1{font-size:1.8em}.stat-value{font-size:1.8em}.price-card .price{font-size:2em}.lang-toggle{top:10px;right:10px}}
+@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr);margin-top:-20px}.hero h1{font-size:1.8em}.stat-value{font-size:1.8em}.price-card .price{font-size:2em}}
 @media(max-width:500px){.stats{grid-template-columns:1fr}.brand{font-size:1.4em}}
 </style>
 </head>
 <body class="en">
 
+<header class="header">
 <div class="lang-toggle">
 <button class="lang-btn active" id="btnEn" onclick="setLang('en')">🇺🇸 EN</button>
 <button class="lang-btn" id="btnEs" onclick="setLang('es')">🇵🇷 ES</button>
 </div>
-
-<header class="header">
 <div class="logo-row">
 <span class="logo">🎓</span>
 <span class="brand">Akashic Academy</span>
@@ -113,7 +112,7 @@ body.es [data-lang="es"]{display:inline}
 <span data-lang="es">Programa completo de alfabetización digital K-12 con juegos, evaluaciones y seguimiento en tiempo real. Totalmente bilingüe inglés/español.</span>
 </p>
 <div class="hero-buttons">
-<a href="mailto:info@akashicworks.com?subject=Free%20Trial%20Request%20-%20Akashic%20Academy&body=Hello,%0A%0AI'm%20interested%20in%20a%20free%20trial%20of%20Akashic%20Academy.%0A%0ASchool/Organization:%20%0ANumber%20of%20Students:%20%0AGrade%20Levels:%20%0A%0AThank%20you!" class="btn btn-gold">
+<a href="/cdn-cgi/l/email-protection#573e39313817363c36243f3e342038253c247934383a682422353d3234236a1125323272656703253e363b726567053226223224237265677a726567163c36243f3e3472656716343633323a2e713538332e6a1f323b3b387b7267167267161e703a7265673e3923322532242332337265673e39726567367265673125323272656723253e363b7265673831726567163c36243f3e3472656716343633323a2e7972671672671604343f38383b7818253036393e2d36233e38396d72656772671619223a353225726567383172656704232233323923246d72656772671610253633327265671b3221323b246d726567726716726716033f36393c7265672e382276" class="btn btn-gold">
 <span data-lang="en">🎁 Request Free Trial</span>
 <span data-lang="es">🎁 Solicitar Prueba Gratis</span>
 </a>
@@ -206,7 +205,7 @@ body.es [data-lang="es"]{display:inline}
 </div>
 </div>
 <div style="text-align:center;margin-top:30px">
-<a href="mailto:info@akashicworks.com?subject=Pricing%20Inquiry%20-%20Akashic%20Academy" class="btn btn-gold">
+<a href="/cdn-cgi/l/email-protection#345d5a525b74555f55475c5d57435b465f471a575b590b4741565e5157400964465d575d5a531106047d5a45415d464d11060419110604755f55475c5d571106047557555051594d" class="btn btn-gold">
 <span data-lang="en">📧 Contact for Quote</span><span data-lang="es">📧 Contactar para Cotización</span>
 </a>
 </div>
@@ -261,30 +260,11 @@ body.es [data-lang="es"]{display:inline}
 <h2><span data-lang="en">🎁 Try It Free!</span><span data-lang="es">🎁 ¡Pruébalo Gratis!</span></h2>
 <p><span data-lang="en">Get a 14-day free trial for your classroom. No credit card required. See why teachers love Akashic Academy.</span><span data-lang="es">Obtén una prueba gratis de 14 días para tu salón. No se requiere tarjeta de crédito. Descubre por qué los maestros aman Akashic Academy.</span></p>
 <div class="cta-buttons">
-<a href="mailto:info@akashicworks.com?subject=Free%20Trial%20Request%20-%20Akashic%20Academy&body=Hello,%0A%0AI'd%20like%20to%20request%20a%20free%20trial.%0A%0ASchool:%20%0AStudents:%20%0AGrades:%20%0A%0AThank%20you!" class="btn btn-gold"><span data-lang="en">📧 Request Free Trial</span><span data-lang="es">📧 Solicitar Prueba Gratis</span></a>
-<a href="mailto:info@akashicworks.com?subject=Question%20about%20Akashic%20Academy" class="btn btn-outline"><span data-lang="en">💬 Ask a Question</span><span data-lang="es">💬 Hacer una Pregunta</span></a>
+<a href="/cdn-cgi/l/email-protection#5c35323a331c3d373d2f34353f2b332e372f723f3331632f293e36393f28611a2e3939796e6c082e353d30796e6c0e392d29392f28796e6c71796e6c1d373d2f34353f796e6c1d3f3d383931257a3e33382561143930303370796c1d796c1d157b38796e6c30353739796e6c2833796e6c2e392d29392f28796e6c3d796e6c3a2e3939796e6c282e353d3072796c1d796c1d0f3f3433333066796e6c796c1d0f2829383932282f66796e6c796c1d1b2e3d38392f66796e6c796c1d796c1d08343d3237796e6c2533297d" class="btn btn-gold"><span data-lang="en">📧 Request Free Trial</span><span data-lang="es">📧 Solicitar Prueba Gratis</span></a>
+<a href="/cdn-cgi/l/email-protection#f1989f979eb1909a9082999892869e839a82df929e9cce8284939b949285cca084948285989e9fd4c3c190939e8485d4c3c1b09a9082999892d4c3c1b0929095949c88" class="btn btn-outline"><span data-lang="en">💬 Ask a Question</span><span data-lang="es">💬 Hacer una Pregunta</span></a>
 </div>
 </section>
 
 </main>
 
-<footer class="footer">
-<p>© 2024 <a href="https://akashicworks.com">Akashic Works LLC</a> • San Juan, Puerto Rico 🇵🇷</p>
-<p style="margin-top:10px"><a href="mailto:info@akashicworks.com">info@akashicworks.com</a></p>
-</footer>
-
-<script>
-function setLang(lang) {
-    document.body.className = lang;
-    document.getElementById('btnEn').classList.toggle('active', lang === 'en');
-    document.getElementById('btnEs').classList.toggle('active', lang === 'es');
-    localStorage.setItem('akashic_lang', lang);
-}
-// Load saved or detect
-const saved = localStorage.getItem('akashic_lang');
-if (saved) setLang(saved);
-else if (navigator.language.startsWith('es')) setLang('es');
-</script>
-
-</body>
-</html>
+<footer class="footer"
