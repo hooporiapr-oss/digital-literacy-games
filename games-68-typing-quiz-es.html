@@ -1,1 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Escritura + Quiz - Grados 6-8 | Akashic</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Georgia,serif;background:linear-gradient(135deg,#1e3a5f,#2d5a87);min-height:100vh;color:#fff;display:flex;flex-direction:column;align-items:center;padding:15px}
+.header{text-align:center;margin-bottom:15px}
+.title{font-size:1.6em;margin-bottom:5px}
+.grade{background:rgba(255,255,255,0.2);padding:5px 15px;border-radius:20px;font-size:0.85em;display:inline-block}
+.box{background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.3);border-radius:16px;padding:20px;width:100%;max-width:500px}
+.info{display:flex;justify-content:space-around;margin-bottom:15px;text-align:center}
+.info-item b{display:block;font-size:1.3em;color:#ffd700}
+.info-item span{font-size:0.7em;opacity:0.8}
+.passage-box{background:rgba(0,0,0,0.3);border-radius:12px;padding:15px;margin-bottom:15px;line-height:1.8;font-size:1.05em}
+.passage-box .word{display:inline}
+.passage-box .word.current{background:#ffd700;color:#1e3a5f;padding:2px 4px;border-radius:4px}
+.passage-box .word.correct{color:#2ecc71}
+.passage-box .word.incorrect{color:#e74c3c;text-decoration:underline}
+.input-area{margin-bottom:15px}
+.type-input{width:100%;padding:15px;font-size:1.1em;border:3px solid rgba(255,255,255,0.3);border-radius:12px;background:rgba(255,255,255,0.1);color:#fff}
+.type-input:focus{outline:none;border-color:#ffd700}
+.type-input.correct{border-color:#2ecc71}
+.type-input.incorrect{border-color:#e74c3c}
+.progress-bar{width:100%;height:8px;background:rgba(255,255,255,0.2);border-radius:4px;margin-bottom:15px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#2ecc71,#27ae60);transition:width 0.3s}
+.btn{width:100%;padding:15px;font-size:1.1em;font-weight:bold;border:none;border-radius:25px;cursor:pointer;margin-top:10px}
+.btn-start{background:linear-gradient(135deg,#2ecc71,#27ae60);color:#fff}
+.btn-next{background:linear-gradient(135deg,#3498db,#2980b9);color:#fff}
+.btn-again{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1e3a5f}
+.btn:active{transform:scale(0.98)}
+.quiz-section{margin-top:20px}
+.quiz-question{background:rgba(0,0,0,0.3);border-radius:12px;padding:15px;margin-bottom:15px}
+.quiz-question h4{color:#ffd700;margin-bottom:10px}
+.quiz-option{display:block;width:100%;padding:12px 15px;margin:8px 0;background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.3);border-radius:10px;color:#fff;cursor:pointer;text-align:left;font-size:0.95em;transition:all 0.2s}
+.quiz-option:hover{border-color:#ffd700}
+.quiz-option.selected{border-color:#3498db;background:rgba(52,152,219,0.2)}
+.quiz-option.correct{border-color:#2ecc71;background:rgba(46,204,113,0.2)}
+.quiz-option.wrong{border-color:#e74c3c;background:rgba(231,76,60,0.2)}
+.result{text-align:center;padding:20px}
+.result h2{color:#ffd700;font-size:1.5em;margin-bottom:10px}
+.result .score{font-size:2.5em;color:#ffd700;font-weight:bold}
+.result .label{opacity:0.8;margin-bottom:10px}
+.result-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:15px 0}
+.result-stat{background:rgba(0,0,0,0.2);padding:10px;border-radius:8px;text-align:center}
+.result-stat b{display:block;color:#ffd700;font-size:1.2em}
+.result-stat span{font-size:0.8em;opacity:0.8}
+.hidden{display:none!important}
+.home-link{position:absolute;top:15px;left:15px;color:#fff;text-decoration:none;font-size:0.9em;opacity:0.8}
+.topic-badge{background:rgba(52,152,219,0.3);padding:5px 12px;border-radius:15px;font-size:0.8em;display:inline-block;margin-bottom:10px}
+</style>
+</head>
+<body>
+<a href="digital-literacy-homepage.html" class="home-link">← Volver</a>
 
+<div class="header">
+<div class="title">⌨️ Escritura + Quiz</div>
+<div class="grade">🚀 Grados 6-8 • Edades 11-14</div>
+</div>
+
+<div class="box">
+<div id="startScreen">
+<div class="topic-badge">🔐 Temas de Seguridad Digital</div>
+<p style="margin-bottom:15px;line-height:1.6">¡Escribe pasajes sobre seguridad en internet, luego responde una pregunta para probar tu comprensión!</p>
+<div class="info">
+<div class="info-item"><b>5</b><span>Pasajes</span></div>
+<div class="info-item"><b>PPM</b><span>Velocidad</span></div>
+<div class="info-item"><b>Quiz</b><span>Después</span></div>
+</div>
+<button class="btn btn-start" onclick="startGame()">▶️ ¡Comenzar!</button>
+</div>
+
+<div id="typeScreen" class="hidden">
+<div class="info">
+<div class="info-item"><b id="passageNum">1</b><span>Pasaje</span></div>
+<div class="info-item"><b id="wpmDisplay">0</b><span>PPM</span></div>
+<div class="info-item"><b id="accuracyDisplay">100%</b><span>Precisión</span></div>
+</div>
+<div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+<div class="topic-badge" id="topicBadge">🔐 Contraseñas</div>
+<div class="passage-box" id="passageBox"></div>
+<div class="input-area">
+<input type="text" class="type-input" id="typeInput" placeholder="Comienza a escribir..." autocomplete="off" autocapitalize="off">
+</div>
+</div>
+
+<div id="quizScreen" class="hidden">
+<div class="quiz-section">
+<div class="topic-badge" id="quizTopic">🔐 ¡Quiz!</div>
+<div class="quiz-question">
+<h4 id="quizQuestion">¿Pregunta aquí?</h4>
+<button class="quiz-option" onclick="selectOption(0)" id="opt0">Opción A</button>
+<button class="quiz-option" onclick="selectOption(1)" id="opt1">Opción B</button>
+<button class="quiz-option" onclick="selectOption(2)" id="opt2">Opción C</button>
+<button class="quiz-option" onclick="selectOption(3)" id="opt3">Opción D</button>
+</div>
+<button class="btn btn-next hidden" id="nextBtn" onclick="nextPassage()">Siguiente Pasaje →</button>
+</div>
+</div>
+
+<div id="resultScreen" class="hidden">
+<div class="result">
+<h2>🎉 ¡Completado!</h2>
+<div class="score" id="finalWpm">0</div>
+<div class="label">PPM Promedio</div>
+<div class="result-stats">
+<div class="result-stat"><b id="finalAccuracy">0%</b><span>Precisión</span></div>
+<div class="result-stat"><b id="finalQuiz">0/5</b><span>Quiz</span></div>
+</div>
+<button class="btn btn-again" onclick="startGame()">🔄 ¡Jugar Otra Vez!</button>
+</div>
+</div>
+</div>
+
+<script>
+var passages = [
+    {
+        topic: "🔐 Contraseñas",
+        text: "Una contraseña segura debe tener al menos doce caracteres. Usa una mezcla de letras mayúsculas, minúsculas, números y símbolos. Nunca uses tu nombre o fecha de nacimiento.",
+        question: "¿Qué hace que una contraseña sea segura?",
+        options: ["Usar tu nombre", "Ser corta y simple", "Usar 12+ caracteres con tipos mezclados", "Usar solo números"],
+        correct: 2
+    },
+    {
+        topic: "🎣 Phishing",
+        text: "Los correos de phishing intentan engañarte para que des información personal. A menudo parecen mensajes reales de bancos o empresas. Siempre revisa la dirección del remitente cuidadosamente.",
+        question: "¿Qué es el phishing?",
+        options: ["Un tipo de pesca deportiva", "Correos que te engañan para compartir información", "Un virus de computadora", "Una aplicación de redes sociales"],
+        correct: 1
+    },
+    {
+        topic: "🔒 Autenticación de Dos Factores",
+        text: "La autenticación de dos factores añade una capa extra de seguridad. Después de escribir tu contraseña, también necesitas un código enviado a tu teléfono. Esto hace mucho más difícil que los hackers accedan a tus cuentas.",
+        question: "¿Qué hace la autenticación de dos factores?",
+        options: ["Hace las contraseñas más cortas", "Añade seguridad extra con un código del teléfono", "Elimina la necesidad de contraseñas", "Acelera el inicio de sesión"],
+        correct: 1
+    },
+    {
+        topic: "📶 Wi-Fi Público",
+        text: "Las redes Wi-Fi públicas pueden ser peligrosas. Los hackers pueden ver lo que haces en estas redes. Nunca ingreses contraseñas o información bancaria cuando uses Wi-Fi público sin un VPN.",
+        question: "¿Por qué es riesgoso el Wi-Fi público?",
+        options: ["Es muy lento", "Los hackers pueden ver tu actividad", "Cuesta dinero", "No funciona en teléfonos"],
+        correct: 1
+    },
+    {
+        topic: "🦠 Malware",
+        text: "El malware es software diseñado para dañar tu computadora. Puede robar tus datos o dañar tus archivos. Solo descarga software de fuentes confiables y mantén tu antivirus actualizado.",
+        question: "¿Qué es el malware?",
+        options: ["Software útil", "Software que daña tu computadora", "Un tipo de hardware", "Un servicio de correo"],
+        correct: 1
+    }
+];
+
+var currentPassage = 0;
+var words = [];
+var currentWordIndex = 0;
+var correctWords = 0;
+var totalTyped = 0;
+var startTime = 0;
+var wpmScores = [];
+var accuracyScores = [];
+var quizScore = 0;
+
+function $(id) { return document.getElementById(id); }
+
+function show(id) {
+    $('startScreen').classList.add('hidden');
+    $('typeScreen').classList.add('hidden');
+    $('quizScreen').classList.add('hidden');
+    $('resultScreen').classList.add('hidden');
+    $(id).classList.remove('hidden');
+}
+
+function startGame() {
+    currentPassage = 0;
+    wpmScores = [];
+    accuracyScores = [];
+    quizScore = 0;
+    show('typeScreen');
+    loadPassage();
+}
+
+function loadPassage() {
+    var p = passages[currentPassage];
+    $('passageNum').textContent = currentPassage + 1;
+    $('topicBadge').textContent = p.topic;
+    
+    words = p.text.split(' ');
+    currentWordIndex = 0;
+    correctWords = 0;
+    totalTyped = 0;
+    
+    renderPassage();
+    $('typeInput').value = '';
+    $('typeInput').focus();
+    $('typeInput').className = 'type-input';
+    $('wpmDisplay').textContent = '0';
+    $('accuracyDisplay').textContent = '100%';
+    $('progressBar').style.width = '0%';
+    
+    startTime = Date.now();
+}
+
+function renderPassage() {
+    var html = '';
+    words.forEach(function(word, i) {
+        var cls = 'word';
+        if (i < currentWordIndex) cls += ' correct';
+        if (i === currentWordIndex) cls += ' current';
+        html += '<span class="' + cls + '">' + word + '</span> ';
+    });
+    $('passageBox').innerHTML = html;
+}
+
+$('typeInput').addEventListener('input', function(e) {
+    var typed = e.target.value;
+    var currentWord = words[currentWordIndex];
+    
+    if (typed.endsWith(' ')) {
+        var typedWord = typed.trim();
+        totalTyped++;
+        
+        if (typedWord === currentWord) {
+            correctWords++;
+            e.target.className = 'type-input correct';
+        } else {
+            e.target.className = 'type-input incorrect';
+        }
+        
+        currentWordIndex++;
+        e.target.value = '';
+        
+        var elapsed = (Date.now() - startTime) / 1000 / 60;
+        var wpm = Math.round(correctWords / elapsed) || 0;
+        var accuracy = totalTyped > 0 ? Math.round((correctWords / totalTyped) * 100) : 100;
+        
+        $('wpmDisplay').textContent = wpm;
+        $('accuracyDisplay').textContent = accuracy + '%';
+        $('progressBar').style.width = ((currentWordIndex / words.length) * 100) + '%';
+        
+        renderPassage();
+        
+        if (currentWordIndex >= words.length) {
+            wpmScores.push(wpm);
+            accuracyScores.push(accuracy);
+            showQuiz();
+        }
+        
+        setTimeout(function() { e.target.className = 'type-input'; }, 200);
+    } else {
+        if (currentWord.startsWith(typed)) {
+            e.target.className = 'type-input';
+        } else {
+            e.target.className = 'type-input incorrect';
+        }
+    }
+});
+
+function showQuiz() {
+    show('quizScreen');
+    var p = passages[currentPassage];
+    $('quizTopic').textContent = p.topic + ' Quiz';
+    $('quizQuestion').textContent = p.question;
+    
+    p.options.forEach(function(opt, i) {
+        $('opt' + i).textContent = opt;
+        $('opt' + i).className = 'quiz-option';
+        $('opt' + i).disabled = false;
+    });
+    
+    $('nextBtn').classList.add('hidden');
+}
+
+function selectOption(idx) {
+    var p = passages[currentPassage];
+    
+    for (var i = 0; i < 4; i++) {
+        $('opt' + i).disabled = true;
+        if (i === p.correct) {
+            $('opt' + i).classList.add('correct');
+        } else if (i === idx && idx !== p.correct) {
+            $('opt' + i).classList.add('wrong');
+        }
+    }
+    
+    if (idx === p.correct) {
+        quizScore++;
+    }
+    
+    $('nextBtn').classList.remove('hidden');
+    
+    if (currentPassage >= passages.length - 1) {
+        $('nextBtn').textContent = 'Ver Resultados →';
+    }
+}
+
+function nextPassage() {
+    currentPassage++;
+    
+    if (currentPassage >= passages.length) {
+        showResults();
+    } else {
+        show('typeScreen');
+        loadPassage();
+    }
+}
+
+function showResults() {
+    show('resultScreen');
+    
+    var avgWpm = Math.round(wpmScores.reduce(function(a,b) { return a+b; }, 0) / wpmScores.length);
+    var avgAccuracy = Math.round(accuracyScores.reduce(function(a,b) { return a+b; }, 0) / accuracyScores.length);
+    
+    $('finalWpm').textContent = avgWpm;
+    $('finalAccuracy').textContent = avgAccuracy + '%';
+    $('finalQuiz').textContent = quizScore + '/' + passages.length;
+}
+</script>
+</body>
+</html>
