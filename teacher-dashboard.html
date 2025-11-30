@@ -2,200 +2,144 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Teacher Dashboard | Akashic Digital Literacy</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Teacher Dashboard | Akashic Academy</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Georgia,serif;background:linear-gradient(135deg,#1a1a2e,#16213e);min-height:100vh;color:#fff}
-.status-bar{background:rgba(0,0,0,0.4);padding:10px 20px;display:flex;justify-content:space-between;align-items:center;font-size:0.85em}
-.status{display:flex;align-items:center;gap:8px}
-.status-dot{width:10px;height:10px;border-radius:50%}
-.status-dot.online{background:#2ecc71;box-shadow:0 0 10px #2ecc71}
-.status-dot.offline{background:#e74c3c}
-.status-dot.connecting{background:#f1c40f;animation:blink 1s infinite}
-@keyframes blink{50%{opacity:0.5}}
 .header{background:rgba(0,0,0,0.3);padding:15px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
-.logo{font-size:1.5em;font-weight:bold}
+.logo{font-size:1.4em;font-weight:bold}
 .logo span{color:#ffd700}
 .btn{padding:10px 20px;border:none;border-radius:20px;cursor:pointer;font-weight:bold;font-size:0.9em;transition:all 0.2s;text-decoration:none;display:inline-block}
 .btn:hover{transform:translateY(-2px)}
-.btn-primary{background:linear-gradient(135deg,#2ecc71,#27ae60);color:#fff}
 .btn-secondary{background:rgba(255,255,255,0.1);color:#fff;border:2px solid rgba(255,255,255,0.3)}
 .btn-gold{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a1a2e}
-.container{max-width:1100px;margin:0 auto;padding:20px}
+.btn-green{background:linear-gradient(135deg,#2ecc71,#27ae60);color:#fff}
+.container{max-width:900px;margin:0 auto;padding:20px}
 
-/* Class Code Box */
-.code-box{background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,140,0,0.1));border:3px solid rgba(255,215,0,0.5);border-radius:20px;padding:30px;text-align:center;margin-bottom:25px}
-.code-box .label{font-size:1.1em;opacity:0.9;margin-bottom:10px}
-.code-box .code{font-size:3.5em;font-weight:bold;color:#ffd700;letter-spacing:10px;font-family:'Courier New',monospace;text-shadow:0 0 30px rgba(255,215,0,0.4)}
-.code-box .hint{font-size:0.9em;opacity:0.6;margin-top:15px}
+/* License Activation */
+.activate-box{background:linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,140,0,0.05));border:3px solid rgba(255,215,0,0.4);border-radius:20px;padding:40px;text-align:center;margin-bottom:30px}
+.activate-box h2{color:#ffd700;margin-bottom:10px}
+.activate-box p{opacity:0.8;margin-bottom:25px}
+.license-input{width:100%;max-width:400px;padding:15px;font-size:1.2em;text-align:center;border:3px solid rgba(255,255,255,0.3);border-radius:12px;background:rgba(0,0,0,0.3);color:#fff;letter-spacing:3px;text-transform:uppercase;font-family:monospace}
+.license-input:focus{outline:none;border-color:#ffd700}
+.license-input::placeholder{letter-spacing:normal;text-transform:none;font-family:Georgia,serif}
+
+/* Class Info */
+.class-box{background:rgba(46,204,113,0.1);border:3px solid rgba(46,204,113,0.4);border-radius:20px;padding:30px;text-align:center;margin-bottom:25px}
+.class-box .code{font-size:3em;color:#ffd700;font-weight:bold;letter-spacing:8px;font-family:monospace}
+.class-box .label{font-size:0.9em;opacity:0.7;margin-bottom:10px}
+.class-box .info{display:flex;justify-content:center;gap:30px;margin-top:20px;flex-wrap:wrap}
+.class-box .info-item{text-align:center}
+.class-box .info-item b{display:block;color:#2ecc71;font-size:1.5em}
 
 /* Stats */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:15px;margin-bottom:25px}
 .stat{background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.15);border-radius:16px;padding:20px;text-align:center}
-.stat .icon{font-size:1.8em;margin-bottom:8px}
-.stat .value{font-size:2.2em;font-weight:bold;color:#ffd700}
-.stat .label{font-size:0.8em;opacity:0.7;margin-top:5px}
+.stat .value{font-size:2em;font-weight:bold;color:#ffd700}
+.stat .label{font-size:0.8em;opacity:0.7}
 
 /* Sections */
 .section{background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:16px;padding:20px;margin-bottom:20px}
-.section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;flex-wrap:wrap;gap:10px}
-.section-title{font-size:1.25em;color:#ffd700}
-.live-tag{background:rgba(46,204,113,0.2);color:#2ecc71;padding:5px 12px;border-radius:15px;font-size:0.8em;display:flex;align-items:center;gap:5px}
-.live-tag .dot{width:8px;height:8px;background:#2ecc71;border-radius:50%;animation:pulse 1.5s infinite}
-@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.2);opacity:0.7}}
+.section h3{color:#ffd700;margin-bottom:15px}
 
-/* Live Feed */
-.feed{max-height:320px;overflow-y:auto}
-.feed-item{display:flex;justify-content:space-between;align-items:center;padding:12px 15px;background:rgba(255,255,255,0.05);border-radius:10px;margin-bottom:8px;border-left:4px solid #2ecc71}
+/* Feed */
+.feed{max-height:300px;overflow-y:auto}
+.feed-item{display:flex;justify-content:space-between;align-items:center;padding:12px;background:rgba(255,255,255,0.05);border-radius:10px;margin-bottom:8px;border-left:4px solid #2ecc71}
 .feed-item .name{font-weight:bold}
 .feed-item .game{font-size:0.85em;opacity:0.7}
-.feed-item .score{font-size:1.3em;font-weight:bold;color:#ffd700}
-.feed-item .time{font-size:0.75em;opacity:0.5}
+.feed-item .score{font-size:1.3em;color:#ffd700;font-weight:bold}
 
 /* Table */
-.table-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse}
 th,td{padding:12px 10px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.1)}
-th{color:#ffd700;font-size:0.8em;text-transform:uppercase;letter-spacing:1px}
-tr:hover{background:rgba(255,255,255,0.03)}
+th{color:#ffd700;font-size:0.8em;text-transform:uppercase}
 .badge{padding:4px 10px;border-radius:10px;font-size:0.75em;font-weight:bold}
 .badge-green{background:rgba(46,204,113,0.2);color:#2ecc71}
 .badge-yellow{background:rgba(241,196,15,0.2);color:#f1c40f}
 .badge-red{background:rgba(231,76,60,0.2);color:#e74c3c}
 
-/* Forms */
-.form-box{background:rgba(0,0,0,0.3);padding:25px;border-radius:16px}
-.form-box h2{text-align:center;margin-bottom:20px}
-.form-group{margin-bottom:15px}
-.form-group label{display:block;margin-bottom:5px;font-size:0.9em;opacity:0.8}
-.form-group input,.form-group select{width:100%;padding:12px 15px;border:2px solid rgba(255,255,255,0.2);border-radius:10px;background:rgba(255,255,255,0.1);color:#fff;font-size:1em}
-.form-group input:focus,.form-group select:focus{outline:none;border-color:#ffd700}
-.form-group select option{background:#1a1a2e}
+/* License Warning */
+.license-warning{background:rgba(241,196,15,0.2);border:2px solid rgba(241,196,15,0.4);padding:15px;border-radius:10px;margin-bottom:20px;display:flex;align-items:center;gap:10px}
 
-/* Empty State */
 .empty{text-align:center;padding:40px;opacity:0.6}
-.empty .icon{font-size:3em;margin-bottom:10px}
 
-/* Config Notice */
-.config-notice{background:rgba(231,76,60,0.2);border:2px solid rgba(231,76,60,0.4);border-radius:12px;padding:20px;margin-bottom:20px;text-align:center}
-.config-notice h3{color:#e74c3c;margin-bottom:10px}
-.config-notice code{background:rgba(0,0,0,0.3);padding:2px 8px;border-radius:4px}
-
-@media(max-width:600px){
-.code-box .code{font-size:2.2em;letter-spacing:5px}
-.stats{grid-template-columns:repeat(2,1fr)}
-}
+.hidden{display:none!important}
 </style>
 </head>
 <body>
 
-<!-- ====== CONFIGURE YOUR API URL HERE ====== -->
-<script>
-// CHANGE THIS to your Render URL after deployment!
-window.API_URL = 'https://digital-literacy-backend.onrender.com/api';
-// For local testing: window.API_URL = 'http://localhost:3000/api';
-</script>
-
-<div class="status-bar">
-<div class="status"><span class="status-dot connecting" id="statusDot"></span><span id="statusText">Connecting...</span></div>
-<div id="lastUpdate"></div>
-</div>
-
 <header class="header">
 <div class="logo">📊 <span>Teacher Dashboard</span></div>
-<div>
-<a href="https://akashic.academy/" class="btn btn-secondary">🎮 Games</a>
-</div>
+<a href="index.html" class="btn btn-secondary">🎮 Games</a>
 </header>
 
 <div class="container">
 
-<!-- Config Notice (shown if API not configured) -->
-<div class="config-notice" id="configNotice" style="display:none">
-<h3>⚠️ API Not Configured</h3>
-<p>Edit the <code>API_URL</code> at the top of this file to point to your Render backend.</p>
+<!-- Activation Screen -->
+<div id="activateScreen">
+<div class="activate-box">
+<h2>🔑 Activate Your License</h2>
+<p>Enter the license key provided by your school administrator</p>
+<input type="text" class="license-input" id="licenseKey" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="19">
+<br><br>
+<button class="btn btn-gold" onclick="activateLicense()" style="padding:15px 40px;font-size:1.1em">Activate License</button>
 </div>
 
-<!-- Setup View -->
-<div id="setupView">
-<div class="form-box">
-<h2>🎓 Get Started</h2>
-
-<div class="form-group">
-<label>Create a New Class</label>
-<input type="text" id="className" placeholder="Class name (e.g., 3rd Grade Room 201)">
-</div>
-
-<div class="form-group">
-<label>Grade Level</label>
-<select id="classGrade">
-<option value="k2">K-2 (Ages 5-8)</option>
-<option value="35">3-5 (Ages 8-11)</option>
-<option value="68">6-8 (Ages 11-14)</option>
-<option value="912">9-12 (Ages 14-18)</option>
-</select>
-</div>
-
-<div class="form-group">
-<label>Your Name (optional)</label>
-<input type="text" id="teacherName" placeholder="Teacher name">
-</div>
-
-<button class="btn btn-gold" onclick="createClass()" style="width:100%;padding:15px;font-size:1.1em">Create Class</button>
-
-<div style="text-align:center;margin:25px 0 15px;opacity:0.5">— or —</div>
-
-<div class="form-group">
-<label>Enter Existing Class Code</label>
-<input type="text" id="existingCode" placeholder="ABC123" style="text-align:center;text-transform:uppercase;letter-spacing:3px;font-size:1.2em">
-</div>
-
-<button class="btn btn-primary" onclick="loadClass()" style="width:100%">Open Dashboard</button>
+<div style="text-align:center;opacity:0.6">
+<p>Don't have a license? Contact your school administrator.</p>
+<p style="margin-top:10px"><a href="https://akashic.academy" style="color:#ffd700">Learn more at akashic.academy</a></p>
 </div>
 </div>
 
-<!-- Dashboard View -->
-<div id="dashboardView" style="display:none">
+<!-- Dashboard Screen -->
+<div id="dashboardScreen" class="hidden">
 
-<div class="code-box">
+<!-- License Info -->
+<div id="licenseWarning" class="license-warning hidden">
+<span>⚠️</span>
+<span id="licenseWarningText">License info</span>
+</div>
+
+<!-- Class Code -->
+<div class="class-box">
 <div class="label">📢 Share this code with your students</div>
-<div class="code" id="displayCode">------</div>
-<div class="hint">Students enter this at "My Profile" before playing games</div>
+<div class="code" id="classCode">------</div>
+<div class="info">
+<div class="info-item"><b id="studentLimit">0</b>Student Limit</div>
+<div class="info-item"><b id="studentsUsed">0</b>Enrolled</div>
+<div class="info-item"><b id="expiresIn">-</b>Days Left</div>
+</div>
 </div>
 
+<!-- Stats -->
 <div class="stats">
-<div class="stat"><div class="icon">👥</div><div class="value" id="statStudents">0</div><div class="label">Students</div></div>
-<div class="stat"><div class="icon">🎮</div><div class="value" id="statGames">0</div><div class="label">Games</div></div>
-<div class="stat"><div class="icon">📈</div><div class="value" id="statAvg">0%</div><div class="label">Avg Score</div></div>
-<div class="stat"><div class="icon">📅</div><div class="value" id="statToday">0</div><div class="label">Today</div></div>
+<div class="stat"><div class="value" id="statStudents">0</div><div class="label">Students</div></div>
+<div class="stat"><div class="value" id="statGames">0</div><div class="label">Games</div></div>
+<div class="stat"><div class="value" id="statAvg">0%</div><div class="label">Avg Score</div></div>
+<div class="stat"><div class="value" id="statToday">0</div><div class="label">Today</div></div>
 </div>
 
+<!-- Live Feed -->
 <div class="section">
-<div class="section-header">
-<h3 class="section-title">⚡ Live Scores</h3>
-<span class="live-tag"><span class="dot"></span> Auto-refresh</span>
-</div>
+<h3>⚡ Live Scores</h3>
 <div class="feed" id="liveFeed">
-<div class="empty"><div class="icon">📡</div><p>Waiting for scores...</p></div>
+<div class="empty">Waiting for scores...</div>
 </div>
 </div>
 
+<!-- Students -->
 <div class="section">
-<div class="section-header">
-<h3 class="section-title">👨‍🎓 Student Progress</h3>
-<button class="btn btn-secondary" onclick="exportCSV()">📊 Export</button>
-</div>
-<div class="table-wrap">
+<h3>👨‍🎓 Student Progress</h3>
 <table>
-<thead><tr><th>Student</th><th>Games</th><th>Avg</th><th>Best</th><th>Status</th></tr></thead>
-<tbody id="studentTable"><tr><td colspan="5" class="empty">No students yet</td></tr></tbody>
+<thead><tr><th>Student</th><th>Games</th><th>Avg</th><th>Status</th></tr></thead>
+<tbody id="studentTable"><tr><td colspan="4" class="empty">No students yet</td></tr></tbody>
 </table>
 </div>
-</div>
 
+<!-- Actions -->
 <div style="text-align:center;margin-top:20px">
-<button class="btn btn-secondary" onclick="switchClass()">🔄 Switch Class</button>
+<button class="btn btn-secondary" onclick="logout()">🔄 Switch License</button>
 <button class="btn btn-secondary" onclick="copyCode()" style="margin-left:10px">📋 Copy Code</button>
 </div>
 
@@ -204,182 +148,132 @@ window.API_URL = 'https://digital-literacy-backend.onrender.com/api';
 </div>
 
 <script>
+const API_URL = 'https://digital-literacy-backend.onrender.com/api';
+
 let classCode = localStorage.getItem('teacher_class_code');
-let dashboardData = null;
-let refreshTimer = null;
+let licenseKey = localStorage.getItem('teacher_license_key');
 
-// Initialize
-async function init() {
-    // Check if API is configured
-    if (window.API_URL.includes('your-backend')) {
-        document.getElementById('configNotice').style.display = 'block';
-    }
+// Format license input
+document.getElementById('licenseKey').addEventListener('input', function(e) {
+    let val = e.target.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+    let formatted = val.match(/.{1,4}/g)?.join('-') || val;
+    e.target.value = formatted.substring(0, 19);
+});
+
+async function activateLicense() {
+    const key = document.getElementById('licenseKey').value.trim();
     
-    if (classCode) {
-        showDashboard();
-        await loadDashboardData();
-        startAutoRefresh();
-    } else {
-        showSetup();
-    }
-    
-    checkConnection();
-}
-
-async function checkConnection() {
-    try {
-        const res = await fetch(window.API_URL + '/health');
-        const data = await res.json();
-        setStatus('online', data.counts);
-    } catch(e) {
-        setStatus('offline');
-    }
-}
-
-function setStatus(status, counts) {
-    const dot = document.getElementById('statusDot');
-    const text = document.getElementById('statusText');
-    dot.className = 'status-dot ' + status;
-    
-    if (status === 'online') {
-        text.textContent = 'Connected';
-        if (counts) text.textContent += ` • ${counts.classes} classes, ${counts.scores} scores`;
-    } else {
-        text.textContent = 'Offline - check API URL';
-    }
-}
-
-function showSetup() {
-    document.getElementById('setupView').style.display = 'block';
-    document.getElementById('dashboardView').style.display = 'none';
-}
-
-function showDashboard() {
-    document.getElementById('setupView').style.display = 'none';
-    document.getElementById('dashboardView').style.display = 'block';
-    document.getElementById('displayCode').textContent = classCode;
-}
-
-async function createClass() {
-    const name = document.getElementById('className').value.trim();
-    const grade = document.getElementById('classGrade').value;
-    const teacherName = document.getElementById('teacherName').value.trim();
-    
-    if (!name) {
-        alert('Please enter a class name');
+    if (key.length < 19) {
+        alert('Please enter a valid license key');
         return;
     }
     
     try {
-        const res = await fetch(window.API_URL + '/classes', {
+        const res = await fetch(`${API_URL}/licenses/activate`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, grade, teacherName })
+            body: JSON.stringify({ licenseKey: key })
         });
+        
         const data = await res.json();
         
         if (data.success) {
+            localStorage.setItem('teacher_license_key', key);
+            localStorage.setItem('teacher_class_code', data.classCode);
             classCode = data.classCode;
-            localStorage.setItem('teacher_class_code', classCode);
-            alert('Class created!\\n\\nYour code is: ' + classCode + '\\n\\nShare this with students!');
+            licenseKey = key;
+            
             showDashboard();
-            startAutoRefresh();
+            loadDashboard();
         } else {
-            alert('Error: ' + (data.error || 'Unknown error'));
+            alert('Error: ' + data.error);
         }
     } catch(e) {
-        alert('Could not connect to server. Check your API URL.');
+        alert('Connection error. Please try again.');
     }
 }
 
-function loadClass() {
-    const code = document.getElementById('existingCode').value.trim().toUpperCase();
-    if (code.length >= 4) {
-        classCode = code;
-        localStorage.setItem('teacher_class_code', code);
-        showDashboard();
-        loadDashboardData();
-        startAutoRefresh();
-    } else {
-        alert('Please enter a valid code');
-    }
+function showActivate() {
+    document.getElementById('activateScreen').classList.remove('hidden');
+    document.getElementById('dashboardScreen').classList.add('hidden');
 }
 
-function switchClass() {
-    if (confirm('Switch to a different class?')) {
-        stopAutoRefresh();
-        localStorage.removeItem('teacher_class_code');
-        classCode = null;
-        showSetup();
-    }
+function showDashboard() {
+    document.getElementById('activateScreen').classList.add('hidden');
+    document.getElementById('dashboardScreen').classList.remove('hidden');
+    document.getElementById('classCode').textContent = classCode;
 }
 
-function copyCode() {
-    navigator.clipboard.writeText(classCode);
-    alert('Copied: ' + classCode);
-}
-
-async function loadDashboardData() {
+async function loadDashboard() {
     if (!classCode) return;
     
     try {
-        const res = await fetch(window.API_URL + '/classes/' + classCode + '/dashboard');
-        if (!res.ok) throw new Error('Not found');
+        const res = await fetch(`${API_URL}/classes/${classCode}/dashboard`);
+        const data = await res.json();
         
-        dashboardData = await res.json();
-        updateUI();
-        setStatus('online');
-        document.getElementById('lastUpdate').textContent = 'Updated ' + new Date().toLocaleTimeString();
+        // License info
+        if (data.license) {
+            document.getElementById('studentLimit').textContent = data.license.studentLimit;
+            document.getElementById('studentsUsed').textContent = data.license.studentsUsed;
+            
+            const expires = new Date(data.license.expiresAt);
+            const daysLeft = Math.ceil((expires - new Date()) / (1000 * 60 * 60 * 24));
+            document.getElementById('expiresIn').textContent = daysLeft;
+            
+            // Show warning if low
+            if (daysLeft <= 30) {
+                document.getElementById('licenseWarning').classList.remove('hidden');
+                document.getElementById('licenseWarningText').textContent = 
+                    `License expires in ${daysLeft} days. Contact your administrator to renew.`;
+            }
+            
+            if (data.license.studentsRemaining <= 5) {
+                document.getElementById('licenseWarning').classList.remove('hidden');
+                document.getElementById('licenseWarningText').textContent = 
+                    `Only ${data.license.studentsRemaining} student seats remaining.`;
+            }
+        }
+        
+        // Stats
+        document.getElementById('statStudents').textContent = data.stats.totalStudents;
+        document.getElementById('statGames').textContent = data.stats.totalGames;
+        document.getElementById('statAvg').textContent = data.stats.avgScore + '%';
+        document.getElementById('statToday').textContent = data.stats.todayGames;
+        
+        // Live feed
+        const feed = document.getElementById('liveFeed');
+        if (data.recentScores && data.recentScores.length > 0) {
+            feed.innerHTML = data.recentScores.slice(0, 15).map(s => `
+                <div class="feed-item">
+                    <div><div class="name">${s.studentName}</div><div class="game">${formatGame(s.gameId)}</div></div>
+                    <span class="score">${s.percentage}%</span>
+                </div>
+            `).join('');
+        } else {
+            feed.innerHTML = '<div class="empty">Waiting for scores...</div>';
+        }
+        
+        // Student table
+        const tbody = document.getElementById('studentTable');
+        if (data.students && data.students.length > 0) {
+            tbody.innerHTML = data.students.map(s => {
+                const badge = s.avgScore >= 80 ? 'green' : s.avgScore >= 60 ? 'yellow' : 'red';
+                const status = s.avgScore >= 80 ? 'Excellent' : s.avgScore >= 60 ? 'Good' : 'Needs Help';
+                return `<tr>
+                    <td><strong>${s.name}</strong></td>
+                    <td>${s.gamesPlayed}</td>
+                    <td>${s.avgScore}%</td>
+                    <td><span class="badge badge-${badge}">${status}</span></td>
+                </tr>`;
+            }).join('');
+        }
+        
     } catch(e) {
-        console.log('Load error:', e);
+        console.error('Load error:', e);
     }
 }
 
-function updateUI() {
-    if (!dashboardData) return;
-    
-    const { stats, students, recentScores } = dashboardData;
-    
-    // Stats
-    document.getElementById('statStudents').textContent = stats.totalStudents;
-    document.getElementById('statGames').textContent = stats.totalGames;
-    document.getElementById('statAvg').textContent = stats.avgScore + '%';
-    document.getElementById('statToday').textContent = stats.todayGames;
-    
-    // Live feed
-    const feed = document.getElementById('liveFeed');
-    if (recentScores && recentScores.length > 0) {
-        feed.innerHTML = recentScores.slice(0, 15).map(s => {
-            const time = new Date(s.timestamp).toLocaleTimeString();
-            return `<div class="feed-item">
-                <div><div class="name">${s.studentName}</div><div class="game">${formatGame(s.gameId)}</div></div>
-                <div style="text-align:right"><span class="score">${s.percentage}%</span><div class="time">${time}</div></div>
-            </div>`;
-        }).join('');
-    } else {
-        feed.innerHTML = '<div class="empty"><div class="icon">📡</div><p>Waiting for scores...</p></div>';
-    }
-    
-    // Student table
-    const tbody = document.getElementById('studentTable');
-    if (students && students.length > 0) {
-        tbody.innerHTML = students.map(s => {
-            const badge = s.avgScore >= 80 ? 'green' : s.avgScore >= 60 ? 'yellow' : 'red';
-            const status = s.avgScore >= 80 ? 'Excellent' : s.avgScore >= 60 ? 'Good' : 'Needs Help';
-            return `<tr>
-                <td><strong>${s.name}</strong></td>
-                <td>${s.gamesPlayed}</td>
-                <td>${s.avgScore}%</td>
-                <td>${s.bestScore}%</td>
-                <td><span class="badge badge-${badge}">${status}</span></td>
-            </tr>`;
-        }).join('');
-    } else {
-        tbody.innerHTML = '<tr><td colspan="5" class="empty">No students yet</td></tr>';
-    }
-}
-
-function formatGame(gameId) {
+function formatGame(id) {
     const names = {
         'k2-visual-memory': '👁️ Visual Memory',
         'k2-color-match': '🎨 Color Match',
@@ -394,36 +288,32 @@ function formatGame(gameId) {
         '912-typing': '⌨️ Speed Type',
         '912-stroop-challenge': '🎨 Stroop'
     };
-    return names[gameId] || gameId;
+    return names[id] || id;
 }
 
-function startAutoRefresh() {
-    stopAutoRefresh();
-    refreshTimer = setInterval(loadDashboardData, 10000);
+function copyCode() {
+    navigator.clipboard.writeText(classCode);
+    alert('Class code copied: ' + classCode);
 }
 
-function stopAutoRefresh() {
-    if (refreshTimer) clearInterval(refreshTimer);
+function logout() {
+    if (confirm('Switch to a different license?')) {
+        localStorage.removeItem('teacher_class_code');
+        localStorage.removeItem('teacher_license_key');
+        classCode = null;
+        licenseKey = null;
+        showActivate();
+    }
 }
 
-function exportCSV() {
-    if (!dashboardData || !dashboardData.students) return;
-    
-    let csv = 'Student,Games Played,Avg Score,Best Score\\n';
-    dashboardData.students.forEach(s => {
-        csv += `"${s.name}",${s.gamesPlayed},${s.avgScore}%,${s.bestScore}%\\n`;
-    });
-    
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `class-${classCode}-report.csv`;
-    a.click();
+// Init
+if (classCode && licenseKey) {
+    showDashboard();
+    loadDashboard();
+    setInterval(loadDashboard, 15000); // Refresh every 15s
+} else {
+    showActivate();
 }
-
-// Start
-init();
 </script>
 
 </body>
