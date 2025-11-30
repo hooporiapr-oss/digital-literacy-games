@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Teacher Dashboard | Akashic Academy</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Georgia,serif;background:linear-gradient(135deg,#1a1a2e,#16213e);min-height:100vh;color:#fff}
+.header{background:rgba(0,0,0,0.3);padding:15px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.logo{font-size:1.4em;font-weight:bold}
+.logo span{color:#ffd700}
+.btn{padding:10px 20px;border:none;border-radius:20px;cursor:pointer;font-weight:bold;font-size:0.9em;transition:all 0.2s;text-decoration:none;display:inline-block}
+.btn:hover{transform:translateY(-2px)}
+.btn-secondary{background:rgba(255,255,255,0.1);color:#fff;border:2px solid rgba(255,255,255,0.3)}
+.btn-gold{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a1a2e}
+.btn-green{background:linear-gradient(135deg,#2ecc71,#27ae60);color:#fff}
+.container{max-width:900px;margin:0 auto;padding:20px}
+
+/* License Activation */
+.activate-box{background:linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,140,0,0.05));border:3px solid rgba(255,215,0,0.4);border-radius:20px;padding:40px;text-align:center;margin-bottom:30px}
+.activate-box h2{color:#ffd700;margin-bottom:10px}
+.activate-box p{opacity:0.8;margin-bottom:25px}
+.license-input{width:100%;max-width:400px;padding:15px;font-size:1.2em;text-align:center;border:3px solid rgba(255,255,255,0.3);border-radius:12px;background:rgba(0,0,0,0.3);color:#fff;letter-spacing:3px;text-transform:uppercase;font-family:monospace}
+.license-input:focus{outline:none;border-color:#ffd700}
+.license-input::placeholder{letter-spacing:normal;text-transform:none;font-family:Georgia,serif}
+
+/* Class Info */
+.class-box{background:rgba(46,204,113,0.1);border:3px solid rgba(46,204,113,0.4);border-radius:20px;padding:30px;text-align:center;margin-bottom:25px}
+.class-box .code{font-size:3em;color:#ffd700;font-weight:bold;letter-spacing:8px;font-family:monospace}
+.class-box .label{font-size:0.9em;opacity:0.7;margin-bottom:10px}
+.class-box .info{display:flex;justify-content:center;gap:30px;margin-top:20px;flex-wrap:wrap}
+.class-box .info-item{text-align:center}
+.class-box .info-item b{display:block;color:#2ecc71;font-size:1.5em}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:15px;margin-bottom:25px}
+.stat{background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.15);border-radius:16px;padding:20px;text-align:center}
+.stat .value{font-size:2em;font-weight:bold;color:#ffd700}
+.stat .label{font-size:0.8em;opacity:0.7}
+
+/* Sections */
+.section{background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:16px;padding:20px;margin-bottom:20px}
+.section h3{color:#ffd700;margin-bottom:15px}
+
+/* Feed */
+.feed{max-height:300px;overflow-y:auto}
+.feed-item{display:flex;justify-content:space-between;align-items:center;padding:12px;background:rgba(255,255,255,0.05);border-radius:10px;margin-bottom:8px;border-left:4px solid #2ecc71}
+.feed-item .name{font-weight:bold}
+.feed-item .game{font-size:0.85em;opacity:0.7}
+.feed-item .score{font-size:1.3em;color:#ffd700;font-weight:bold}
+
+/* Table */
+table{width:100%;border-collapse:collapse}
+th,td{padding:12px 10px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.1)}
+th{color:#ffd700;font-size:0.8em;text-transform:uppercase}
+.badge{padding:4px 10px;border-radius:10px;font-size:0.75em;font-weight:bold}
+.badge-green{background:rgba(46,204,113,0.2);color:#2ecc71}
+.badge-yellow{background:rgba(241,196,15,0.2);color:#f1c40f}
+.badge-red{background:rgba(231,76,60,0.2);color:#e74c3c}
+
+/* License Warning */
+.license-warning{background:rgba(241,196,15,0.2);border:2px solid rgba(241,196,15,0.4);padding:15px;border-radius:10px;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+
+.empty{text-align:center;padding:40px;opacity:0.6}
+
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<header class="header">
+<div class="logo">📊 <span>Teacher Dashboard</span></div>
+<a href="index.html" class="btn btn-secondary">🎮 Games</a>
+</header>
+
+<div class="container">
+
+<!-- Activation Screen -->
+<div id="activateScreen">
+<div class="activate-box">
+<h2>🔑 Activate Your License</h2>
+<p>Enter the license key provided by your school administrator</p>
+<input type="text" class="license-input" id="licenseKey" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="19">
+<br><br>
+<button class="btn btn-gold" onclick="activateLicense()" style="padding:15px 40px;font-size:1.1em">Activate License</button>
+</div>
+
+<div style="text-align:center;opacity:0.6">
+<p>Don't have a license? Contact your school administrator.</p>
+<p style="margin-top:10px"><a href="https://akashic.academy" style="color:#ffd700">Learn more at akashic.academy</a></p>
+</div>
+</div>
+
+<!-- Dashboard Screen -->
+<div id="dashboardScreen" class="hidden">
+
+<!-- License Info -->
+<div id="licenseWarning" class="license-warning hidden">
+<span>⚠️</span>
+<span id="licenseWarningText">License info</span>
+</div>
+
+<!-- Class Code -->
+<div class="class-box">
+<div class="label">📢 Share this code with your students</div>
+<div class="code" id="classCode">------</div>
+<div class="info">
+<div class="info-item"><b id="studentLimit">0</b>Student Limit</div>
+<div class="info-item"><b id="studentsUsed">0</b>Enrolled</div>
+<div class="info-item"><b id="expiresIn">-</b>Days Left</div>
+</div>
+</div>
+
+<!-- Stats -->
+<div class="stats">
+<div class="stat"><div class="value" id="statStudents">0</div><div class="label">Students</div></div>
+<div class="stat"><div class="value" id="statGames">0</div><div class="label">Games</div></div>
+<div class="stat"><div class="value" id="statAvg">0%</div><div class="label">Avg Score</div></div>
+<div class="stat"><div class="value" id="statToday">0</div><div class="label">Today</div></div>
+</div>
+
+<!-- Live Feed -->
+<div class="section">
+<h3>⚡ Live Scores</h3>
+<div class="feed" id="liveFeed">
+<div class="empty">Waiting for scores...</div>
+</div>
+</div>
+
+<!-- Students -->
+<div class="section">
+<h3>👨‍🎓 Student Progress</h3>
+<table>
+<thead><tr><th>Student</th><th>Games</th><th>Avg</th><th>Status</th></tr></thead>
+<tbody id="studentTable"><tr><td colspan="4" class="empty">No students yet</td></tr></tbody>
+</table>
+</div>
+
+<!-- Actions -->
+<div style="text-align:center;margin-top:20px">
+<button class="btn btn-secondary" onclick="logout()">🔄 Switch License</button>
+<button class="btn btn-secondary" onclick="copyCode()" style="margin-left:10px">📋 Copy Code</button>
+</div>
+
+</div>
+
+</div>
+
+<script>
+const API_URL = 'https://digital-literacy-backend.onrender.com/api';
+
+let classCode = localStorage.getItem('teacher_class_code');
+let licenseKey = localStorage.getItem('teacher_license_key');
+
+// Format license input
+document.getElementById('licenseKey').addEventListener('input', function(e) {
+    let val = e.target.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+    let formatted = val.match(/.{1,4}/g)?.join('-') || val;
+    e.target.value = formatted.substring(0, 19);
+});
+
+async function activateLicense() {
+    const key = document.getElementById('licenseKey').value.trim();
+    
+    if (key.length < 19) {
+        alert('Please enter a valid license key');
+        return;
+    }
+    
+    try {
+        const res = await fetch(`${API_URL}/licenses/activate`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ licenseKey: key })
+        });
+        
+        const data = await res.json();
+        
+        if (data.success) {
+            localStorage.setItem('teacher_license_key', key);
+            localStorage.setItem('teacher_class_code', data.classCode);
+            classCode = data.classCode;
+            licenseKey = key;
+            
+            showDashboard();
+            loadDashboard();
+        } else {
+            alert('Error: ' + data.error);
+        }
+    } catch(e) {
+        alert('Connection error. Please try again.');
+    }
+}
+
+function showActivate() {
+    document.getElementById('activateScreen').classList.remove('hidden');
+    document.getElementById('dashboardScreen').classList.add('hidden');
+}
+
+function showDashboard() {
+    document.getElementById('activateScreen').classList.add('hidden');
+    document.getElementById('dashboardScreen').classList.remove('hidden');
+    document.getElementById('classCode').textContent = classCode;
+}
+
+async function loadDashboard() {
+    if (!classCode) return;
+    
+    try {
+        const res = await fetch(`${API_URL}/classes/${classCode}/dashboard`);
+        const data = await res.json();
+        
+        // License info
+        if (data.license) {
+            document.getElementById('studentLimit').textContent = data.license.studentLimit;
+            document.getElementById('studentsUsed').textContent = data.license.studentsUsed;
+            
+            const expires = new Date(data.license.expiresAt);
+            const daysLeft = Math.ceil((expires - new Date()) / (1000 * 60 * 60 * 24));
+            document.getElementById('expiresIn').textContent = daysLeft;
+            
+            // Show warning if low
+            if (daysLeft <= 30) {
+                document.getElementById('licenseWarning').classList.remove('hidden');
+                document.getElementById('licenseWarningText').textContent = 
+                    `License expires in ${daysLeft} days. Contact your administrator to renew.`;
+            }
+            
+            if (data.license.studentsRemaining <= 5) {
+                document.getElementById('licenseWarning').classList.remove('hidden');
+                document.getElementById('licenseWarningText').textContent = 
+                    `Only ${data.license.studentsRemaining} student seats remaining.`;
+            }
+        }
+        
+        // Stats
+        document.getElementById('statStudents').textContent = data.stats.totalStudents;
+        document.getElementById('statGames').textContent = data.stats.totalGames;
+        document.getElementById('statAvg').textContent = data.stats.avgScore + '%';
+        document.getElementById('statToday').textContent = data.stats.todayGames;
+        
+        // Live feed
+        const feed = document.getElementById('liveFeed');
+        if (data.recentScores && data.recentScores.length > 0) {
+            feed.innerHTML = data.recentScores.slice(0, 15).map(s => `
+                <div class="feed-item">
+                    <div><div class="name">${s.studentName}</div><div class="game">${formatGame(s.gameId)}</div></div>
+                    <span class="score">${s.percentage}%</span>
+                </div>
+            `).join('');
+        } else {
+            feed.innerHTML = '<div class="empty">Waiting for scores...</div>';
+        }
+        
+        // Student table
+        const tbody = document.getElementById('studentTable');
+        if (data.students && data.students.length > 0) {
+            tbody.innerHTML = data.students.map(s => {
+                const badge = s.avgScore >= 80 ? 'green' : s.avgScore >= 60 ? 'yellow' : 'red';
+                const status = s.avgScore >= 80 ? 'Excellent' : s.avgScore >= 60 ? 'Good' : 'Needs Help';
+                return `<tr>
+                    <td><strong>${s.name}</strong></td>
+                    <td>${s.gamesPlayed}</td>
+                    <td>${s.avgScore}%</td>
+                    <td><span class="badge badge-${badge}">${status}</span></td>
+                </tr>`;
+            }).join('');
+        }
+        
+    } catch(e) {
+        console.error('Load error:', e);
+    }
+}
+
+function formatGame(id) {
+    const names = {
+        'k2-visual-memory': '👁️ Visual Memory',
+        'k2-color-match': '🎨 Color Match',
+        'k2-sequence-memory': '🔲 Sequence',
+        '35-number-memory': '🔢 Numbers',
+        '35-word-search': '🔍 Word Search',
+        '35-visual-memory': '👁️ Visual+',
+        '68-typing-quiz': '⌨️ Typing',
+        '68-word-search': '🔍 Words',
+        '68-number-memory': '🔢 Numbers Pro',
+        '912-assessment': '📝 Assessment',
+        '912-typing': '⌨️ Speed Type',
+        '912-stroop-challenge': '🎨 Stroop'
+    };
+    return names[id] || id;
+}
+
+function copyCode() {
+    navigator.clipboard.writeText(classCode);
+    alert('Class code copied: ' + classCode);
+}
+
+function logout() {
+    if (confirm('Switch to a different license?')) {
+        localStorage.removeItem('teacher_class_code');
+        localStorage.removeItem('teacher_license_key');
+        classCode = null;
+        licenseKey = null;
+        showActivate();
+    }
+}
+
+// Init
+if (classCode && licenseKey) {
+    showDashboard();
+    loadDashboard();
+    setInterval(loadDashboard, 15000); // Refresh every 15s
+} else {
+    showActivate();
+}
+</script>
+
+</body>
+</html>
