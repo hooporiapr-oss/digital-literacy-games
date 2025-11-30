@@ -1,1 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Tech Word Search - Grades 3-5 | Akashic</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Georgia,serif;background:linear-gradient(135deg,#1e3a5f,#2d5a87);min-height:100vh;color:#fff;display:flex;flex-direction:column;align-items:center;padding:15px}
+.header{text-align:center;margin-bottom:10px}
+.title{font-size:1.6em;margin-bottom:5px}
+.grade{background:rgba(255,255,255,0.2);padding:5px 15px;border-radius:20px;font-size:0.85em;display:inline-block}
+.box{background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.3);border-radius:16px;padding:15px;width:100%;max-width:400px}
+.info{display:flex;justify-content:space-around;margin-bottom:12px;text-align:center}
+.info-item b{display:block;font-size:1.3em;color:#ffd700}
+.info-item span{font-size:0.7em;opacity:0.8}
+.grid-container{background:rgba(0,0,0,0.3);border-radius:12px;padding:10px;margin-bottom:12px;overflow-x:auto}
+.grid{display:grid;gap:2px;width:fit-content;margin:0 auto;user-select:none}
+.cell{width:28px;height:28px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.2);border-radius:4px;font-size:0.9em;font-weight:bold;cursor:pointer;transition:all 0.15s;text-transform:uppercase}
+.cell:hover{background:rgba(255,255,255,0.2)}
+.cell.selected{background:rgba(52,152,219,0.5);border-color:#3498db}
+.cell.found{background:rgba(46,204,113,0.5);border-color:#2ecc71;color:#2ecc71}
+.word-list{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:12px}
+.word-item{padding:5px 12px;background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.3);border-radius:15px;font-size:0.8em;transition:all 0.2s}
+.word-item.found{background:rgba(46,204,113,0.3);border-color:#2ecc71;text-decoration:line-through;opacity:0.7}
+.status{text-align:center;font-size:1em;margin-bottom:10px;min-height:25px;color:#ffd700}
+.timer{text-align:center;font-size:1.2em;color:#ffd700;margin-bottom:10px}
+.btn{width:100%;padding:12px;font-size:1em;font-weight:bold;border:none;border-radius:20px;cursor:pointer;margin-top:8px}
+.btn-start{background:linear-gradient(135deg,#2ecc71,#27ae60);color:#fff}
+.btn-again{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1e3a5f}
+.btn:active{transform:scale(0.98)}
+.result{text-align:center;padding:15px}
+.result h2{color:#ffd700;font-size:1.4em;margin-bottom:8px}
+.result .score{font-size:2.5em;color:#ffd700;font-weight:bold}
+.result .label{opacity:0.8;margin-bottom:10px}
+.stars{font-size:1.8em;margin:12px 0}
+.hidden{display:none!important}
+.home-link{position:absolute;top:15px;left:15px;color:#fff;text-decoration:none;font-size:0.9em;opacity:0.8}
+.encouragement{background:rgba(255,215,0,0.2);padding:8px;border-radius:8px;text-align:center;margin-bottom:12px;font-size:0.85em}
+.definition{background:rgba(52,152,219,0.2);padding:8px;border-radius:8px;text-align:center;font-size:0.8em;margin-top:8px;min-height:40px}
+</style>
+</head>
+<body>
+<a href="digital-literacy-homepage.html" class="home-link">← Back</a>
 
+<div class="header">
+<div class="title">🔍 Tech Word Search</div>
+<div class="grade">📚 Grades 3-5 • Ages 8-11</div>
+</div>
+
+<div class="box">
+<div id="startScreen">
+<div class="encouragement">🧠 Find tech words and learn what they mean!</div>
+<div class="info">
+<div class="info-item"><b>10</b><span>Words</span></div>
+<div class="info-item"><b>10x10</b><span>Grid</span></div>
+<div class="info-item"><b>⏱️</b><span>Timed</span></div>
+</div>
+<button class="btn btn-start" onclick="startGame()">▶️ Play!</button>
+</div>
+
+<div id="gameScreen" class="hidden">
+<div class="info">
+<div class="info-item"><b id="foundCount">0</b><span>Found</span></div>
+<div class="info-item"><b id="timerDisplay">3:00</b><span>Time</span></div>
+<div class="info-item"><b id="totalWords">10</b><span>Total</span></div>
+</div>
+<div class="word-list" id="wordList"></div>
+<div class="grid-container">
+<div class="grid" id="grid"></div>
+</div>
+<div class="status" id="status">Drag to select words!</div>
+<div class="definition" id="definition">Find a word to see its meaning!</div>
+</div>
+
+<div id="resultScreen" class="hidden">
+<div class="result">
+<h2 id="resultTitle">Great Job!</h2>
+<div class="score" id="finalScore">0</div>
+<div class="label">Words Found</div>
+<div class="stars" id="stars">⭐⭐⭐</div>
+<div id="timeBonus" style="color:#2ecc71;margin-bottom:10px"></div>
+<button class="btn btn-again" onclick="startGame()">🔄 Play Again!</button>
+</div>
+</div>
+</div>
+
+<script>
+var words = [
+    {word: 'PASSWORD', def: 'A secret code to access your account'},
+    {word: 'VIRUS', def: 'Bad software that can harm your computer'},
+    {word: 'EMAIL', def: 'Electronic messages sent over the internet'},
+    {word: 'BROWSER', def: 'Program used to visit websites'},
+    {word: 'WIFI', def: 'Wireless internet connection'},
+    {word: 'CLICK', def: 'Press a button on your mouse'},
+    {word: 'DOWNLOAD', def: 'Get a file from the internet'},
+    {word: 'LOGIN', def: 'Enter your account with username and password'},
+    {word: 'SEARCH', def: 'Look for information online'},
+    {word: 'LINK', def: 'A clickable connection to another page'},
+    {word: 'SAFE', def: 'Protected from danger or harm'},
+    {word: 'SCAM', def: 'A trick to steal your information'},
+    {word: 'SPAM', def: 'Unwanted junk messages'},
+    {word: 'HACK', def: 'Break into a computer without permission'}
+];
+
+var gridSize = 10;
+var grid = [];
+var selectedCells = [];
+var isSelecting = false;
+var gameWords = [];
+var foundWords = [];
+var timer = null;
+var timeLeft = 180;
+var definitions = {};
+
+function $(id) { return document.getElementById(id); }
+
+function show(id) {
+    $('startScreen').classList.add('hidden');
+    $('gameScreen').classList.add('hidden');
+    $('resultScreen').classList.add('hidden');
+    $(id).classList.remove('hidden');
+}
+
+function shuffle(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
+}
+
+function startGame() {
+    // Pick 10 random words
+    gameWords = shuffle(words.slice()).slice(0, 10).map(function(w) { return w.word; });
+    foundWords = [];
+    timeLeft = 180;
+    
+    // Store definitions
+    definitions = {};
+    words.forEach(function(w) { definitions[w.word] = w.def; });
+    
+    // Create empty grid
+    grid = [];
+    for (var i = 0; i < gridSize; i++) {
+        grid[i] = [];
+        for (var j = 0; j < gridSize; j++) {
+            grid[i][j] = {letter: '', wordPart: false};
+        }
+    }
+    
+    // Place words
+    gameWords.forEach(function(word) {
+        placeWord(word);
+    });
+    
+    // Fill empty cells with random letters
+    var letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    for (var i = 0; i < gridSize; i++) {
+        for (var j = 0; j < gridSize; j++) {
+            if (!grid[i][j].letter) {
+                grid[i][j].letter = letters[Math.floor(Math.random() * letters.length)];
+            }
+        }
+    }
+    
+    renderGrid();
+    renderWordList();
+    $('foundCount').textContent = '0';
+    $('totalWords').textContent = gameWords.length;
+    $('status').textContent = 'Drag to select words!';
+    $('definition').textContent = 'Find a word to see its meaning!';
+    
+    show('gameScreen');
+    startTimer();
+}
+
+function placeWord(word) {
+    var directions = [
+        {dr: 0, dc: 1},  // horizontal
+        {dr: 1, dc: 0},  // vertical
+        {dr: 1, dc: 1},  // diagonal down-right
+        {dr: 1, dc: -1}  // diagonal down-left
+    ];
+    
+    var placed = false;
+    var attempts = 0;
+    
+    while (!placed && attempts < 100) {
+        var dir = directions[Math.floor(Math.random() * directions.length)];
+        var row = Math.floor(Math.random() * gridSize);
+        var col = Math.floor(Math.random() * gridSize);
+        
+        if (canPlace(word, row, col, dir.dr, dir.dc)) {
+            for (var i = 0; i < word.length; i++) {
+                grid[row + i * dir.dr][col + i * dir.dc] = {
+                    letter: word[i],
+                    wordPart: true,
+                    words: (grid[row + i * dir.dr][col + i * dir.dc].words || []).concat(word)
+                };
+            }
+            placed = true;
+        }
+        attempts++;
+    }
+}
+
+function canPlace(word, row, col, dr, dc) {
+    for (var i = 0; i < word.length; i++) {
+        var r = row + i * dr;
+        var c = col + i * dc;
+        
+        if (r < 0 || r >= gridSize || c < 0 || c >= gridSize) return false;
+        if (grid[r][c].letter && grid[r][c].letter !== word[i]) return false;
+    }
+    return true;
+}
+
+function renderGrid() {
+    var container = $('grid');
+    container.innerHTML = '';
+    container.style.gridTemplateColumns = 'repeat(' + gridSize + ', 28px)';
+    
+    for (var i = 0; i < gridSize; i++) {
+        for (var j = 0; j < gridSize; j++) {
+            var cell = document.createElement('div');
+            cell.className = 'cell';
+            cell.textContent = grid[i][j].letter;
+            cell.dataset.row = i;
+            cell.dataset.col = j;
+            
+            cell.addEventListener('mousedown', startSelect);
+            cell.addEventListener('mouseover', continueSelect);
+            cell.addEventListener('touchstart', handleTouch);
+            cell.addEventListener('touchmove', handleTouchMove);
+            
+            container.appendChild(cell);
+        }
+    }
+    
+    document.addEventListener('mouseup', endSelect);
+    document.addEventListener('touchend', endSelect);
+}
+
+function renderWordList() {
+    var list = $('wordList');
+    list.innerHTML = '';
+    
+    gameWords.forEach(function(word) {
+        var item = document.createElement('span');
+        item.className = 'word-item';
+        item.textContent = word;
+        item.id = 'word-' + word;
+        list.appendChild(item);
+    });
+}
+
+function startSelect(e) {
+    e.preventDefault();
+    isSelecting = true;
+    selectedCells = [{row: parseInt(e.target.dataset.row), col: parseInt(e.target.dataset.col)}];
+    updateSelection();
+}
+
+function continueSelect(e) {
+    if (!isSelecting) return;
+    var row = parseInt(e.target.dataset.row);
+    var col = parseInt(e.target.dataset.col);
+    
+    if (isNaN(row) || isNaN(col)) return;
+    
+    // Check if valid selection (straight line)
+    if (selectedCells.length === 1 || isValidLine(row, col)) {
+        var exists = selectedCells.some(function(c) { return c.row === row && c.col === col; });
+        if (!exists) {
+            selectedCells.push({row: row, col: col});
+            updateSelection();
+        }
+    }
+}
+
+function handleTouch(e) {
+    e.preventDefault();
+    var touch = e.touches[0];
+    var cell = document.elementFromPoint(touch.clientX, touch.clientY);
+    if (cell && cell.classList.contains('cell')) {
+        isSelecting = true;
+        selectedCells = [{row: parseInt(cell.dataset.row), col: parseInt(cell.dataset.col)}];
+        updateSelection();
+    }
+}
+
+function handleTouchMove(e) {
+    e.preventDefault();
+    var touch = e.touches[0];
+    var cell = document.elementFromPoint(touch.clientX, touch.clientY);
+    if (cell && cell.classList.contains('cell')) {
+        var row = parseInt(cell.dataset.row);
+        var col = parseInt(cell.dataset.col);
+        if (!isNaN(row) && !isNaN(col)) {
+            if (selectedCells.length === 1 || isValidLine(row, col)) {
+                var exists = selectedCells.some(function(c) { return c.row === row && c.col === col; });
+                if (!exists) {
+                    selectedCells.push({row: row, col: col});
+                    updateSelection();
+                }
+            }
+        }
+    }
+}
+
+function isValidLine(row, col) {
+    if (selectedCells.length < 1) return true;
+    var first = selectedCells[0];
+    var dr = row - first.row;
+    var dc = col - first.col;
+    var len = Math.max(Math.abs(dr), Math.abs(dc));
+    if (len === 0) return false;
+    dr = dr / len;
+    dc = dc / len;
+    
+    // Must be horizontal, vertical, or diagonal
+    if (Math.abs(dr) > 1 || Math.abs(dc) > 1) return false;
+    if (dr !== 0 && dc !== 0 && Math.abs(dr) !== Math.abs(dc)) return false;
+    
+    return true;
+}
+
+function updateSelection() {
+    var cells = document.querySelectorAll('.cell');
+    cells.forEach(function(c) { c.classList.remove('selected'); });
+    
+    selectedCells.forEach(function(pos) {
+        var idx = pos.row * gridSize + pos.col;
+        cells[idx].classList.add('selected');
+    });
+}
+
+function endSelect() {
+    if (!isSelecting) return;
+    isSelecting = false;
+    
+    // Check if selected word matches any game word
+    var selected = selectedCells.map(function(c) { return grid[c.row][c.col].letter; }).join('');
+    var reversed = selected.split('').reverse().join('');
+    
+    var matchedWord = null;
+    gameWords.forEach(function(word) {
+        if ((selected === word || reversed === word) && foundWords.indexOf(word) === -1) {
+            matchedWord = word;
+        }
+    });
+    
+    if (matchedWord) {
+        foundWords.push(matchedWord);
+        $('foundCount').textContent = foundWords.length;
+        $('word-' + matchedWord).classList.add('found');
+        $('status').textContent = '✓ Found: ' + matchedWord + '!';
+        $('definition').textContent = '💡 ' + matchedWord + ': ' + definitions[matchedWord];
+        
+        // Mark cells as found
+        var cells = document.querySelectorAll('.cell');
+        selectedCells.forEach(function(pos) {
+            var idx = pos.row * gridSize + pos.col;
+            cells[idx].classList.add('found');
+        });
+        
+        if (foundWords.length === gameWords.length) {
+            clearInterval(timer);
+            setTimeout(showResult, 1000);
+        }
+    } else {
+        $('status').textContent = 'Keep looking!';
+    }
+    
+    // Clear selection
+    var cells = document.querySelectorAll('.cell');
+    cells.forEach(function(c) { c.classList.remove('selected'); });
+    selectedCells = [];
+}
+
+function startTimer() {
+    if (timer) clearInterval(timer);
+    timer = setInterval(function() {
+        timeLeft--;
+        var min = Math.floor(timeLeft / 60);
+        var sec = timeLeft % 60;
+        $('timerDisplay').textContent = min + ':' + (sec < 10 ? '0' : '') + sec;
+        
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            showResult();
+        }
+    }, 1000);
+}
+
+function showResult() {
+    show('resultScreen');
+    $('finalScore').textContent = foundWords.length + '/' + gameWords.length;
+    
+    var pct = foundWords.length / gameWords.length;
+    var title, stars;
+    
+    if (pct === 1) { title = '🏆 Perfect!'; stars = '⭐⭐⭐'; }
+    else if (pct >= 0.7) { title = '🎉 Great Job!'; stars = '⭐⭐'; }
+    else if (pct >= 0.5) { title = '👍 Good Try!'; stars = '⭐'; }
+    else { title = '💪 Keep Practicing!'; stars = ''; }
+    
+    $('resultTitle').textContent = title;
+    $('stars').textContent = stars;
+    
+    if (timeLeft > 0 && pct === 1) {
+        $('timeBonus').textContent = '⏱️ Finished with ' + Math.floor(timeLeft / 60) + ':' + (timeLeft % 60 < 10 ? '0' : '') + (timeLeft % 60) + ' left!';
+    } else {
+        $('timeBonus').textContent = '';
+    }
+}
+</script>
+</body>
+</html>
