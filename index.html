@@ -3,323 +3,301 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Akashic Digital Literacy | School Program</title>
+<title>Akashic Academy | Digital Literacy for Schools</title>
 <meta name="description" content="Digital literacy skills training for schools K-12. Assessment, games, and progress tracking. Bilingual English/Spanish.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Georgia,serif;background:#f8fafc;color:#1e293b;min-height:100vh}
-.header{background:linear-gradient(135deg,#1e3a5f,#2d5a87);color:#fff;padding:30px 20px;text-align:center}
-.header-inner{max-width:900px;margin:0 auto}
-.logo-row{display:flex;align-items:center;justify-content:center;gap:15px;margin-bottom:12px}
+body{font-family:Georgia,serif;background:#0a0a1a;color:#fff;min-height:100vh}
+
+/* Header */
+.header{background:linear-gradient(135deg,#1a1a2e,#16213e);padding:20px;text-align:center;border-bottom:3px solid #ffd700}
+.logo-row{display:flex;align-items:center;justify-content:center;gap:15px}
 .logo{font-size:2.5em}
-.brand{font-size:1.8em;font-weight:bold}
-.tagline{color:rgba(255,255,255,0.85);font-size:1em}
-.nav{background:#fff;border-bottom:1px solid #e2e8f0;padding:15px 20px;position:sticky;top:0;z-index:100}
-.nav-inner{max-width:900px;margin:0 auto;display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
-.nav-link{padding:10px 20px;border-radius:25px;text-decoration:none;font-size:0.9em;transition:all 0.2s;display:flex;align-items:center;gap:6px;color:#64748b;border:2px solid transparent}
-.nav-link:hover{color:#1e3a5f;background:#f1f5f9}
-.nav-link.active{background:#1e3a5f;color:#fff}
-.main{max-width:900px;margin:0 auto;padding:30px 20px}
-.hero-card{background:linear-gradient(135deg,#059669,#10b981);border-radius:20px;padding:35px 30px;color:#fff;text-align:center;margin-bottom:30px;position:relative;overflow:hidden}
-.hero-card::before{content:"";position:absolute;top:-50%;right:-50%;width:100%;height:200%;background:radial-gradient(circle,rgba(255,255,255,0.1) 0%,transparent 70%);pointer-events:none}
-.hero-icon{font-size:3em;margin-bottom:15px}
-.hero-title{font-size:1.5em;margin-bottom:5px}
-.hero-subtitle{font-size:1.1em;opacity:0.9;margin-bottom:15px}
-.hero-desc{opacity:0.9;margin-bottom:20px;line-height:1.5;max-width:500px;margin-left:auto;margin-right:auto;font-size:0.95em}
-.hero-buttons{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
-.hero-btn{display:inline-block;padding:14px 30px;background:#fff;color:#059669;border-radius:30px;text-decoration:none;font-weight:bold;font-size:0.95em;transition:all 0.2s}
-.hero-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,0.2)}
-.hero-btn.es{background:rgba(255,255,255,0.15);color:#fff;border:2px solid rgba(255,255,255,0.5)}
-.hero-btn.es:hover{background:rgba(255,255,255,0.25)}
-.hero-features{display:flex;justify-content:center;gap:25px;margin-top:25px;flex-wrap:wrap}
-.hero-feature{display:flex;align-items:center;gap:8px;font-size:0.9em}
-.section{margin-bottom:35px}
-.section-title{font-size:1.2em;color:#1e3a5f;margin-bottom:18px;display:flex;align-items:center;gap:10px}
-.grade-band{margin-bottom:30px}
-.grade-header{display:flex;align-items:center;gap:12px;margin-bottom:15px;padding:12px 18px;background:linear-gradient(135deg,#f1f5f9,#e2e8f0);border-radius:12px}
-.grade-icon{font-size:1.5em}
-.grade-label{font-size:1.2em;font-weight:bold;color:#1e3a5f}
-.grade-ages{color:#64748b;font-size:0.9em;margin-left:auto}
-.games-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
-.game-card{background:#fff;border:2px solid #e2e8f0;border-radius:16px;padding:22px;transition:all 0.2s;display:block}
-.game-card:hover{border-color:#1e3a5f;box-shadow:0 8px 25px rgba(0,0,0,0.08)}
-.game-card.featured{border-color:#059669;background:linear-gradient(135deg,#ecfdf5,#fff)}
-.game-card.featured:hover{border-color:#047857}
-.game-header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-.game-icon{font-size:2em}
-.game-info{flex:1}
-.game-title{color:#1e3a5f;font-size:1.05em;font-weight:600}
-.game-title-es{color:#64748b;font-size:0.85em;font-style:italic}
-.game-desc{color:#64748b;font-size:0.9em;line-height:1.5;margin-bottom:12px}
-.game-links{display:flex;gap:8px;flex-wrap:wrap}
-.game-link{padding:8px 16px;border-radius:20px;text-decoration:none;font-size:0.85em;font-weight:600;transition:all 0.2s;display:inline-flex;align-items:center;gap:5px}
-.game-link.en{background:#1e3a5f;color:#fff}
-.game-link.en:hover{background:#2d5a87}
-.game-link.es{background:#f1f5f9;color:#1e3a5f;border:2px solid #e2e8f0}
-.game-link.es:hover{background:#e2e8f0;border-color:#cbd5e1}
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
-.skill-item{background:#fff;border:2px solid #e2e8f0;border-radius:12px;padding:15px;display:flex;align-items:center;gap:12px}
-.skill-icon{font-size:1.5em}
-.skill-info{flex:1}
-.skill-en{color:#1e3a5f;font-size:0.95em}
-.skill-es{color:#64748b;font-size:0.8em;font-style:italic}
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:30px}
-.stat-card{background:#fff;border:2px solid #e2e8f0;border-radius:12px;padding:20px;text-align:center}
-.stat-value{font-size:1.8em;color:#1e3a5f;font-weight:bold}
-.stat-label{color:#64748b;font-size:0.8em;margin-top:5px;line-height:1.3}
-.cta-section{background:#fff;border:2px solid #e2e8f0;border-radius:16px;padding:30px;text-align:center}
-.cta-title{color:#1e3a5f;font-size:1.3em;margin-bottom:10px}
-.cta-desc{color:#64748b;margin-bottom:20px;font-size:0.95em}
-.cta-btn{display:inline-block;padding:12px 30px;background:#1e3a5f;color:#fff;border-radius:25px;text-decoration:none;font-size:0.95em;transition:all 0.2s}
-.cta-btn:hover{background:#2d5a87}
-.footer{text-align:center;padding:30px 20px;color:#94a3b8;font-size:0.85em;border-top:1px solid #e2e8f0;margin-top:40px}
-.footer a{color:#1e3a5f;text-decoration:none}
-@media(max-width:700px){.stats-row{grid-template-columns:repeat(2,1fr)}.hero-features{flex-direction:column;gap:10px}.nav-inner{gap:5px}.nav-link{padding:8px 14px;font-size:0.85em}}
-@media(max-width:500px){.brand{font-size:1.4em}.hero-title{font-size:1.2em}.games-grid{grid-template-columns:1fr}.skills-grid{grid-template-columns:1fr}}
+.brand{font-size:1.8em;font-weight:bold;color:#ffd700}
+.tagline{color:rgba(255,255,255,0.7);margin-top:8px}
+
+/* Nav */
+.nav{background:rgba(0,0,0,0.3);padding:15px;display:flex;justify-content:center;gap:15px;flex-wrap:wrap}
+.nav a{color:#fff;text-decoration:none;padding:10px 20px;border-radius:25px;transition:all 0.2s;border:2px solid transparent}
+.nav a:hover{border-color:#ffd700;color:#ffd700}
+.nav a.active{background:#ffd700;color:#1a1a2e;font-weight:bold}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,#1e3a5f,#2d5a87);padding:60px 20px;text-align:center}
+.hero h1{font-size:2.5em;margin-bottom:15px}
+.hero h1 span{color:#ffd700}
+.hero p{font-size:1.2em;opacity:0.9;max-width:600px;margin:0 auto 30px}
+.hero-buttons{display:flex;justify-content:center;gap:15px;flex-wrap:wrap}
+.btn{padding:15px 35px;border-radius:30px;text-decoration:none;font-weight:bold;font-size:1em;transition:all 0.2s;display:inline-block;border:none;cursor:pointer}
+.btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,0.3)}
+.btn-gold{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a1a2e}
+.btn-outline{background:transparent;border:3px solid #fff;color:#fff}
+.btn-green{background:linear-gradient(135deg,#2ecc71,#27ae60);color:#fff}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:900px;margin:-40px auto 40px;padding:0 20px;position:relative;z-index:10}
+.stat{background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:2px solid rgba(255,255,255,0.2);border-radius:16px;padding:25px;text-align:center}
+.stat-value{font-size:2.5em;color:#ffd700;font-weight:bold}
+.stat-label{font-size:0.9em;opacity:0.8;margin-top:5px}
+
+/* Main Content */
+.main{max-width:1000px;margin:0 auto;padding:40px 20px}
+
+/* Section */
+.section{margin-bottom:50px}
+.section-title{font-size:1.8em;color:#ffd700;margin-bottom:25px;text-align:center}
+
+/* Pricing */
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.price-card{background:linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03));border:2px solid rgba(255,255,255,0.15);border-radius:20px;padding:30px;text-align:center;transition:all 0.3s}
+.price-card:hover{border-color:#ffd700;transform:translateY(-5px)}
+.price-card.featured{border-color:#ffd700;background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,140,0,0.08))}
+.price-card .tier{font-size:0.9em;opacity:0.7;margin-bottom:5px}
+.price-card .students{font-size:1.4em;color:#ffd700;font-weight:bold;margin-bottom:15px}
+.price-card .price{font-size:3em;font-weight:bold}
+.price-card .price span{font-size:0.4em;opacity:0.7}
+.price-card .per{font-size:0.85em;opacity:0.6;margin-bottom:20px}
+.price-card .example{background:rgba(0,0,0,0.3);padding:12px;border-radius:10px;font-size:0.9em}
+.price-card .example b{color:#2ecc71}
+
+/* Features */
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.feature{background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:16px;padding:25px;display:flex;gap:15px;align-items:flex-start}
+.feature-icon{font-size:2em;flex-shrink:0}
+.feature h3{color:#ffd700;margin-bottom:8px}
+.feature p{opacity:0.8;font-size:0.95em;line-height:1.5}
+
+/* Games Preview */
+.games-preview{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px}
+.game-preview{background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:12px;padding:20px;text-align:center;opacity:0.7}
+.game-preview .icon{font-size:2.5em;margin-bottom:10px}
+.game-preview .name{font-weight:bold}
+.game-preview .grade{font-size:0.8em;opacity:0.6;margin-top:5px}
+.locked-overlay{position:relative}
+.locked-overlay::after{content:"🔒";position:absolute;top:10px;right:10px;font-size:1.2em}
+
+/* CTA Box */
+.cta-box{background:linear-gradient(135deg,#2ecc71,#27ae60);border-radius:20px;padding:50px 30px;text-align:center;margin:50px 0}
+.cta-box h2{font-size:2em;margin-bottom:15px}
+.cta-box p{font-size:1.1em;opacity:0.9;max-width:500px;margin:0 auto 25px}
+.cta-buttons{display:flex;justify-content:center;gap:15px;flex-wrap:wrap}
+
+/* Access Gate */
+.access-gate{background:rgba(255,215,0,0.1);border:3px solid rgba(255,215,0,0.4);border-radius:20px;padding:40px;text-align:center;margin:30px 0}
+.access-gate h2{color:#ffd700;margin-bottom:15px}
+.access-gate p{opacity:0.8;margin-bottom:25px}
+.access-buttons{display:flex;justify-content:center;gap:15px;flex-wrap:wrap}
+
+/* Footer */
+.footer{text-align:center;padding:40px 20px;border-top:1px solid rgba(255,255,255,0.1);margin-top:50px}
+.footer p{opacity:0.6;font-size:0.9em}
+.footer a{color:#ffd700}
+
+/* Responsive */
+@media(max-width:700px){
+.stats{grid-template-columns:repeat(2,1fr);margin-top:-20px}
+.hero h1{font-size:1.8em}
+.stat-value{font-size:1.8em}
+.price-card .price{font-size:2em}
+}
+@media(max-width:500px){
+.stats{grid-template-columns:1fr}
+.brand{font-size:1.4em}
+}
 </style>
 </head>
 <body>
 
 <header class="header">
-<div class="header-inner">
 <div class="logo-row">
-<span class="logo">💻</span>
-<span class="brand">Akashic Digital Literacy</span>
+<span class="logo">🎓</span>
+<span class="brand">Akashic Academy</span>
 </div>
-<p class="tagline">School Program • Programa Escolar</p>
-</div>
+<p class="tagline">Digital Literacy for Schools • Alfabetización Digital para Escuelas</p>
 </header>
 
 <nav class="nav">
-<div class="nav-inner">
-<a href="#assessment" class="nav-link active">📝 Assessment</a>
-<a href="#games" class="nav-link">🎮 Games</a>
-<a href="#skills" class="nav-link">🎯 Skills</a>
-<a href="student-setup.html" class="nav-link">🎓 My Profile</a>
-<a href="teacher-dashboard.html" class="nav-link">👩‍🏫 Teachers</a>
-</div>
+<a href="#features">Features</a>
+<a href="#pricing">Pricing</a>
+<a href="#games">Games</a>
+<a href="teacher-dashboard.html">Teachers</a>
+<a href="student-setup.html" class="active">Students</a>
 </nav>
+
+<!-- Hero -->
+<section class="hero">
+<h1>Build <span>Digital Skills</span> for the Future</h1>
+<p>Comprehensive K-12 digital literacy program with games, assessments, and real-time progress tracking. Fully bilingual English/Spanish.</p>
+<div class="hero-buttons">
+<a href="mailto:info@akashicworks.com?subject=Free%20Trial%20Request%20-%20Akashic%20Academy&body=Hello,%0A%0AI'm%20interested%20in%20a%20free%20trial%20of%20Akashic%20Academy.%0A%0ASchool/Organization:%20%0ANumber%20of%20Students:%20%0AGrade%20Levels:%20%0A%0AThank%20you!" class="btn btn-gold">🎁 Request Free Trial</a>
+<a href="#pricing" class="btn btn-outline">💰 View Pricing</a>
+</div>
+</section>
+
+<!-- Stats -->
+<div class="stats">
+<div class="stat"><div class="stat-value">24</div><div class="stat-label">Learning Games</div></div>
+<div class="stat"><div class="stat-value">K-12</div><div class="stat-label">All Grade Levels</div></div>
+<div class="stat"><div class="stat-value">2</div><div class="stat-label">Languages</div></div>
+<div class="stat"><div class="stat-value">100%</div><div class="stat-label">Progress Tracking</div></div>
+</div>
 
 <main class="main">
 
-<div class="stats-row">
-<div class="stat-card"><div class="stat-value">20</div><div class="stat-label">Questions<br>Preguntas</div></div>
-<div class="stat-card"><div class="stat-value">4</div><div class="stat-label">Skill Areas<br>Áreas</div></div>
-<div class="stat-card"><div class="stat-value">K-12</div><div class="stat-label">Grade Levels<br>Grados</div></div>
-<div class="stat-card"><div class="stat-value">2</div><div class="stat-label">Languages<br>Idiomas</div></div>
-</div>
-
-<section id="assessment">
-<div class="hero-card">
-<div class="hero-icon">📝</div>
-<h2 class="hero-title">Digital Literacy Assessment</h2>
-<p class="hero-subtitle">Evaluación de Alfabetización Digital</p>
-<p class="hero-desc">Evaluate student knowledge across security, internet basics, communication, and digital tools. Instant results with personalized recommendations.</p>
-<div class="hero-buttons">
-<a href="https://hooporiapr-oss.github.io/academy-digital-assessment/" class="hero-btn">🇺🇸 English</a>
-<a href="https://hooporiapr-oss.github.io/academy-digital-assessment/" class="hero-btn es">🇵🇷 Español</a>
-</div>
-<div class="hero-features">
-<div class="hero-feature"><span>⏱️</span> 15-20 min</div>
-<div class="hero-feature"><span>📊</span> Instant Results</div>
-<div class="hero-feature"><span>💡</span> Recommendations</div>
+<!-- Features Section -->
+<section class="section" id="features">
+<h2 class="section-title">✨ Why Akashic Academy?</h2>
+<div class="features-grid">
+<div class="feature">
+<span class="feature-icon">🎮</span>
+<div>
+<h3>Game-Based Learning</h3>
+<p>24 engaging games covering memory, typing, problem-solving, and digital skills. Students learn while having fun.</p>
 </div>
 </div>
-</section>
-
-<section id="games" class="section">
-<h3 class="section-title"><span>🎮</span> Games by Grade Level • Juegos por Grado</h3>
-
-<div class="grade-band">
-<div class="grade-header">
-<span class="grade-icon">🌟</span>
-<span class="grade-label">K-2</span>
-<span class="grade-ages">Ages 5-8 • Edades 5-8</span>
-</div>
-<div class="games-grid">
-
-<div class="game-card">
-<div class="game-header"><span class="game-icon">👁️</span><div class="game-info"><div class="game-title">Visual Memory</div><div class="game-title-es">Memoria Visual</div></div></div>
-<p class="game-desc">Remember which squares light up. Simple patterns that grow.</p>
-<div class="game-links">
-<a href="games-k2-visual-memory-en.html" class="game-link en">🇺🇸 English</a>
-<a href="games-k2-visual-memory-es.html" class="game-link es">🇵🇷 Español</a>
+<div class="feature">
+<span class="feature-icon">🌎</span>
+<div>
+<h3>Fully Bilingual</h3>
+<p>Every game available in English and Spanish. Perfect for Puerto Rico schools and bilingual programs.</p>
 </div>
 </div>
-
-<div class="game-card">
-<div class="game-header"><span class="game-icon">🎨</span><div class="game-info"><div class="game-title">Color Match</div><div class="game-title-es">Combina Colores</div></div></div>
-<p class="game-desc">Does the word match the color? Look before you click!</p>
-<div class="game-links">
-<a href="games-k2-color-match-en.html" class="game-link en">🇺🇸 English</a>
-<a href="games-k2-color-match-es.html" class="game-link es">🇵🇷 Español</a>
+<div class="feature">
+<span class="feature-icon">📊</span>
+<div>
+<h3>Real-Time Dashboard</h3>
+<p>Teachers see student progress instantly. Track scores, identify struggles, and celebrate successes.</p>
 </div>
 </div>
-
-<div class="game-card">
-<div class="game-header"><span class="game-icon">🔲</span><div class="game-info"><div class="game-title">Sequence Memory</div><div class="game-title-es">Memoria de Secuencia</div></div></div>
-<p class="game-desc">Watch the pattern, tap it back. Like Simon Says!</p>
-<div class="game-links">
-<a href="games-k2-sequence-memory-en.html" class="game-link en">🇺🇸 English</a>
-<a href="games-k2-sequence-memory-es.html" class="game-link es">🇵🇷 Español</a>
+<div class="feature">
+<span class="feature-icon">🔒</span>
+<div>
+<h3>Secure & Private</h3>
+<p>Student data stays private. No ads, no tracking, no selling data. COPPA compliant.</p>
 </div>
 </div>
-
+<div class="feature">
+<span class="feature-icon">📱</span>
+<div>
+<h3>Works Everywhere</h3>
+<p>Chromebooks, tablets, phones, computers. No downloads or installations required.</p>
 </div>
 </div>
-
-<div class="grade-band">
-<div class="grade-header">
-<span class="grade-icon">📚</span>
-<span class="grade-label">3-5</span>
-<span class="grade-ages">Ages 8-11 • Edades 8-11</span>
-</div>
-<div class="games-grid">
-
-<div class="game-card">
-<div class="game-header"><span class="game-icon">🔢</span><div class="game-info"><div class="game-title">Number Memory</div><div class="game-title-es">Memoria de Números</div></div></div>
-<p class="game-desc">Remember longer number sequences. Builds working memory.</p>
-<div class="game-links">
-<a href="games-35-number-memory-en.html" class="game-link en">🇺🇸 English</a>
-<a href="games-35-number-memory-es.html" class="game-link es">🇵🇷 Español</a>
+<div class="feature">
+<span class="feature-icon">🎯</span>
+<div>
+<h3>Age-Appropriate</h3>
+<p>Four grade bands (K-2, 3-5, 6-8, 9-12) with content matched to developmental levels.</p>
 </div>
 </div>
-
-<div class="game-card">
-<div class="game-header"><span class="game-icon">🔍</span><div class="game-info"><div class="game-title">Tech Word Search</div><div class="game-title-es">Sopa de Letras Tech</div></div></div>
-<p class="game-desc">Find PASSWORD, VIRUS, and more. Learn tech vocabulary!</p>
-<div class="game-links">
-<a href="games-35-word-search-en.html" class="game-link en">🇺🇸 English</a>
-<a href="games-35-word-search-es.html" class="game-link es">🇵🇷 Español</a>
-</div>
-</div>
-
-<div class="game-card">
-<div class="game-header"><span class="game-icon">👁️</span><div class="game-info"><div class="game-title">Visual Memory+</div><div class="game-title-es">Memoria Visual+</div></div></div>
-<p class="game-desc">Harder patterns with more squares. Challenge yourself!</p>
-<div class="game-links">
-<a href="games-35-visual-memory-en.html" class="game-link en">🇺🇸 English</a>
-<a href="games-35-visual-memory-es.html" class="game-link es">🇵🇷 Español</a>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="grade-band">
-<div class="grade-header">
-<span class="grade-icon">🚀</span>
-<span class="grade-label">6-8</span>
-<span class="grade-ages">Ages 11-14 • Edades 11-14</span>
-</div>
-<div class="games-grid">
-
-<div class="game-card">
-<div class="game-header"><span class="game-icon">⌨️</span><div class="game-info"><div class="game-title">Typing + Quiz</div><div class="game-title-es">Escritura + Quiz</div></div></div>
-<p class="game-desc">Type passages about internet safety, then answer questions.</p>
-<div class="game-links">
-<a href="games-68-typing-quiz-en.html" class="game-link en">🇺🇸 English</a>
-<a href="games-68-typing-quiz-es.html" class="game-link es">🇵🇷 Español</a>
-</div>
-</div>
-
-<div class="game-card">
-<div class="game-header"><span class="game-icon">🔍</span><div class="game-info"><div class="game-title">Advanced Word Search</div><div class="game-title-es">Sopa Avanzada</div></div></div>
-<p class="game-desc">Find PHISHING, MALWARE, ENCRYPTION. Timed mode.</p>
-<div class="game-links">
-<a href="games-68-word-search-en.html" class="game-link en">🇺🇸 English</a>
-<a href="games-68-word-search-es.html" class="game-link es">🇵🇷 Español</a>
-</div>
-</div>
-
-<div class="game-card">
-<div class="game-header"><span class="game-icon">🔢</span><div class="game-info"><div class="game-title">Number Memory Pro</div><div class="game-title-es">Memoria de Números Pro</div></div></div>
-<p class="game-desc">Remember 10+ digits. Train for PINs and passwords.</p>
-<div class="game-links">
-<a href="games-68-number-memory-en.html" class="game-link en">🇺🇸 English</a>
-<a href="games-68-number-memory-es.html" class="game-link es">🇵🇷 Español</a>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="grade-band">
-<div class="grade-header">
-<span class="grade-icon">🎓</span>
-<span class="grade-label">9-12</span>
-<span class="grade-ages">Ages 14-18 • Edades 14-18</span>
-</div>
-<div class="games-grid">
-
-<div class="game-card featured">
-<div class="game-header"><span class="game-icon">📝</span><div class="game-info"><div class="game-title">Full Assessment</div><div class="game-title-es">Evaluación Completa</div></div></div>
-<p class="game-desc">20-question evaluation covering all digital literacy skills.</p>
-<div class="game-links">
-<a href="https://hooporiapr-oss.github.io/9-12-assessment-en/" class="game-link en">🇺🇸 English</a>
-<a href="https://hooporiapr-oss.github.io/9-12-assessment-es/" class="game-link es">🇵🇷 Español</a>
-</div>
-</div>
-
-<div class="game-card">
-<div class="game-header"><span class="game-icon">⌨️</span><div class="game-info"><div class="game-title">Speed Typing</div><div class="game-title-es">Escritura Rápida</div></div></div>
-<p class="game-desc">Build professional typing speed with digital literacy content.</p>
-<div class="game-links">
-<a href="games-912-typing-en.html" class="game-link en">🇺🇸 English</a>
-<a href="games-912-typing-es.html" class="game-link es">🇵🇷 Español</a>
-</div>
-</div>
-
-<div class="game-card">
-<div class="game-header"><span class="game-icon">🎨</span><div class="game-info"><div class="game-title">Stroop Challenge</div><div class="game-title-es">Desafío Stroop</div></div></div>
-<p class="game-desc">Train focus for spotting fake buttons and phishing tricks.</p>
-<div class="game-links">
-<a href="games-912-stroop-challenge-en.html" class="game-link en">🇺🇸 English</a>
-<a href="games-912-stroop-challenge-es.html" class="game-link es">🇵🇷 Español</a>
-</div>
-</div>
-
-</div>
-</div>
-
-</section>
-
-<section id="skills" class="section">
-<h3 class="section-title"><span>🎯</span> Skills Covered • Habilidades</h3>
-<div class="skills-grid">
-<div class="skill-item"><span class="skill-icon">🔐</span><div class="skill-info"><div class="skill-en">Password Security</div><div class="skill-es">Contraseñas Seguras</div></div></div>
-<div class="skill-item"><span class="skill-icon">🎣</span><div class="skill-info"><div class="skill-en">Spotting Phishing</div><div class="skill-es">Detectar Phishing</div></div></div>
-<div class="skill-item"><span class="skill-icon">🌐</span><div class="skill-info"><div class="skill-en">Browser Basics</div><div class="skill-es">Usar Navegadores</div></div></div>
-<div class="skill-item"><span class="skill-icon">📧</span><div class="skill-info"><div class="skill-en">Email Safety</div><div class="skill-es">Seguridad de Correo</div></div></div>
-<div class="skill-item"><span class="skill-icon">🔍</span><div class="skill-info"><div class="skill-en">Smart Searching</div><div class="skill-es">Búsquedas Inteligentes</div></div></div>
-<div class="skill-item"><span class="skill-icon">📱</span><div class="skill-info"><div class="skill-en">Social Media Privacy</div><div class="skill-es">Privacidad en Redes</div></div></div>
-<div class="skill-item"><span class="skill-icon">⬇️</span><div class="skill-info"><div class="skill-en">Safe Downloads</div><div class="skill-es">Descargas Seguras</div></div></div>
-<div class="skill-item"><span class="skill-icon">☁️</span><div class="skill-info"><div class="skill-en">Cloud Storage</div><div class="skill-es">Almacenamiento Nube</div></div></div>
-<div class="skill-item"><span class="skill-icon">🔒</span><div class="skill-info"><div class="skill-en">Two-Factor Auth</div><div class="skill-es">Autenticación 2FA</div></div></div>
-<div class="skill-item"><span class="skill-icon">📶</span><div class="skill-info"><div class="skill-en">Wi-Fi Security</div><div class="skill-es">Seguridad Wi-Fi</div></div></div>
-<div class="skill-item"><span class="skill-icon">🦠</span><div class="skill-info"><div class="skill-en">Malware Awareness</div><div class="skill-es">Malware y Virus</div></div></div>
-<div class="skill-item"><span class="skill-icon">👣</span><div class="skill-info"><div class="skill-en">Digital Footprint</div><div class="skill-es">Huella Digital</div></div></div>
 </div>
 </section>
 
-<section class="cta-section">
-<h3 class="cta-title">Ready to Get Started? • ¿Listo para Comenzar?</h3>
-<p class="cta-desc">Contact us to bring digital literacy training to your school.</p>
-<a href="/cdn-cgi/l/email-protection#b0d1dbd1c3d8d9d3c0c2f0c0c2dfc4dfde9eddd5" class="cta-btn">📧 Contact Us</a>
+<!-- Pricing Section -->
+<section class="section" id="pricing">
+<h2 class="section-title">💰 Simple, Affordable Pricing</h2>
+<p style="text-align:center;opacity:0.8;margin-bottom:30px">Per student, per year. Volume discounts available. Minimum 25 students.</p>
+
+<div class="pricing-grid">
+<div class="price-card">
+<div class="tier">Starter</div>
+<div class="students">25-99 Students</div>
+<div class="price">$4<span>/student/year</span></div>
+<div class="per">Full access to all 24 games</div>
+<div class="example">25 students = <b>$100/year</b></div>
+</div>
+
+<div class="price-card featured">
+<div class="tier">⭐ Most Popular</div>
+<div class="students">100-249 Students</div>
+<div class="price">$3.50<span>/student/year</span></div>
+<div class="per">Save 12.5%</div>
+<div class="example">150 students = <b>$525/year</b></div>
+</div>
+
+<div class="price-card">
+<div class="tier">School</div>
+<div class="students">250-499 Students</div>
+<div class="price">$3<span>/student/year</span></div>
+<div class="per">Save 25%</div>
+<div class="example">300 students = <b>$900/year</b></div>
+</div>
+
+<div class="price-card">
+<div class="tier">District</div>
+<div class="students">500+ Students</div>
+<div class="price">$2.50<span>/student/year</span></div>
+<div class="per">Save 37.5%</div>
+<div class="example">500 students = <b>$1,250/year</b></div>
+</div>
+</div>
+
+<div style="text-align:center;margin-top:30px">
+<a href="mailto:info@akashicworks.com?subject=Pricing%20Inquiry%20-%20Akashic%20Academy&body=Hello,%0A%0AI'm%20interested%20in%20licensing%20Akashic%20Academy.%0A%0ASchool/Organization:%20%0ANumber%20of%20Students:%20%0AGrade%20Levels:%20%0A%0APlease%20send%20me%20more%20information.%0A%0AThank%20you!" class="btn btn-gold">📧 Contact for Quote</a>
+</div>
+</section>
+
+<!-- Games Preview -->
+<section class="section" id="games">
+<h2 class="section-title">🎮 24 Learning Games</h2>
+<p style="text-align:center;opacity:0.8;margin-bottom:30px">Cognitive training and digital literacy across all grade levels</p>
+
+<h3 style="color:#ffd700;margin:25px 0 15px">👶 Grades K-2 (Ages 5-8)</h3>
+<div class="games-preview">
+<div class="game-preview locked-overlay"><div class="icon">👁️</div><div class="name">Visual Memory</div><div class="grade">Memoria Visual</div></div>
+<div class="game-preview locked-overlay"><div class="icon">🎨</div><div class="name">Color Match</div><div class="grade">Combinar Colores</div></div>
+<div class="game-preview locked-overlay"><div class="icon">🔲</div><div class="name">Sequence Memory</div><div class="grade">Memoria de Secuencia</div></div>
+</div>
+
+<h3 style="color:#ffd700;margin:25px 0 15px">📚 Grades 3-5 (Ages 8-11)</h3>
+<div class="games-preview">
+<div class="game-preview locked-overlay"><div class="icon">🔢</div><div class="name">Number Memory</div><div class="grade">Memoria de Números</div></div>
+<div class="game-preview locked-overlay"><div class="icon">🔍</div><div class="name">Word Search</div><div class="grade">Sopa de Letras</div></div>
+<div class="game-preview locked-overlay"><div class="icon">👁️</div><div class="name">Visual Memory+</div><div class="grade">Memoria Visual+</div></div>
+</div>
+
+<h3 style="color:#ffd700;margin:25px 0 15px">🎒 Grades 6-8 (Ages 11-14)</h3>
+<div class="games-preview">
+<div class="game-preview locked-overlay"><div class="icon">⌨️</div><div class="name">Typing Quiz</div><div class="grade">Prueba de Tecleo</div></div>
+<div class="game-preview locked-overlay"><div class="icon">🔍</div><div class="name">Word Search Pro</div><div class="grade">Sopa de Letras Pro</div></div>
+<div class="game-preview locked-overlay"><div class="icon">🔢</div><div class="name">Number Memory Pro</div><div class="grade">Memoria de Números Pro</div></div>
+</div>
+
+<h3 style="color:#ffd700;margin:25px 0 15px">🎓 Grades 9-12 (Ages 14-18)</h3>
+<div class="games-preview">
+<div class="game-preview locked-overlay"><div class="icon">📝</div><div class="name">Digital Assessment</div><div class="grade">Evaluación Digital</div></div>
+<div class="game-preview locked-overlay"><div class="icon">⌨️</div><div class="name">Speed Typing</div><div class="grade">Tecleo Rápido</div></div>
+<div class="game-preview locked-overlay"><div class="icon">🧠</div><div class="name">Stroop Challenge</div><div class="grade">Desafío Stroop</div></div>
+</div>
+</section>
+
+<!-- Access Gate for Students -->
+<section class="access-gate">
+<h2>🔑 Student Access</h2>
+<p>Already have a class code from your teacher? Join your class to start playing!</p>
+<div class="access-buttons">
+<a href="student-setup.html" class="btn btn-gold">🎓 Join My Class</a>
+<a href="teacher-dashboard.html" class="btn btn-outline" style="border-color:#ffd700;color:#ffd700">👩‍🏫 Teacher Login</a>
+</div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-box">
+<h2>🎁 Try It Free!</h2>
+<p>Get a 14-day free trial for your classroom. No credit card required. See why teachers love Akashic Academy.</p>
+<div class="cta-buttons">
+<a href="mailto:info@akashicworks.com?subject=Free%20Trial%20Request%20-%20Akashic%20Academy&body=Hello,%0A%0AI'd%20like%20to%20request%20a%20free%20trial%20of%20Akashic%20Academy.%0A%0AMy%20Name:%20%0ASchool/Organization:%20%0AEmail:%20%0ANumber%20of%20Students:%20%0AGrade%20Levels:%20%0A%0AThank%20you!" class="btn btn-gold">📧 Request Free Trial</a>
+<a href="mailto:info@akashicworks.com?subject=Question%20about%20Akashic%20Academy" class="btn btn-outline">💬 Ask a Question</a>
+</div>
 </section>
 
 </main>
 
 <footer class="footer">
-<p>© 2024 <a href="https://akashic.live">Akashic Works LLC</a> • San Juan, Puerto Rico 🇵🇷</p>
-<p style="margin-top:8px">Building digital skills through play • Desarrollando habilidades digitales</p>
+<p>© 2024 <a href="https://akashicworks.com">Akashic Works LLC</a> • San Juan, Puerto Rico</p>
+<p style="margin-top:10px"><a href="mailto:info@akashicworks.com">info@akashicworks.com</a></p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-document.querySelectorAll('.nav-link[href^="#"]').forEach(function(link) {
-    link.addEventListener('click', function(e) {
-        e.preventDefault();
-        var target = document.querySelector(this.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        document.querySelecto
+</body>
+</html>
