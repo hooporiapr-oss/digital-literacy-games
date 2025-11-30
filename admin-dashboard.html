@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin Dashboard | Akashic Digital Literacy</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,sans-serif;background:#0a0a1a;color:#fff;min-height:100vh}
+.header{background:linear-gradient(135deg,#1a1a2e,#16213e);padding:20px;border-bottom:2px solid #ffd700}
+.header h1{color:#ffd700;font-size:1.5em}
+.header p{opacity:0.7;font-size:0.9em}
+.container{max-width:1200px;margin:0 auto;padding:20px}
+
+.login-box{max-width:400px;margin:100px auto;background:#1a1a2e;padding:30px;border-radius:16px;border:2px solid #333}
+.login-box h2{text-align:center;margin-bottom:20px;color:#ffd700}
+.login-box input{width:100%;padding:15px;margin-bottom:15px;border:2px solid #333;border-radius:8px;background:#0a0a1a;color:#fff;font-size:1em}
+.login-box input:focus{outline:none;border-color:#ffd700}
+.login-box button{width:100%;padding:15px;background:#ffd700;color:#000;border:none;border-radius:8px;font-size:1em;font-weight:bold;cursor:pointer}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px;margin-bottom:30px}
+.stat{background:#1a1a2e;padding:20px;border-radius:12px;text-align:center;border:2px solid #333}
+.stat .value{font-size:2em;color:#ffd700;font-weight:bold}
+.stat .label{font-size:0.85em;opacity:0.7;margin-top:5px}
+
+.section{background:#1a1a2e;border-radius:12px;padding:20px;margin-bottom:20px;border:2px solid #333}
+.section h2{color:#ffd700;margin-bottom:15px;font-size:1.2em}
+
+.btn{padding:10px 20px;border:none;border-radius:8px;cursor:pointer;font-weight:bold;font-size:0.9em}
+.btn-gold{background:#ffd700;color:#000}
+.btn-green{background:#2ecc71;color:#fff}
+.btn-red{background:#e74c3c;color:#fff}
+.btn-blue{background:#3498db;color:#fff}
+
+.form-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-bottom:15px}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-group label{font-size:0.85em;opacity:0.8}
+.form-group input,.form-group select{padding:12px;border:2px solid #333;border-radius:8px;background:#0a0a1a;color:#fff}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:#ffd700}
+
+table{width:100%;border-collapse:collapse}
+th,td{padding:12px;text-align:left;border-bottom:1px solid #333}
+th{color:#ffd700;font-size:0.85em;text-transform:uppercase}
+tr:hover{background:rgba(255,255,255,0.05)}
+
+.badge{padding:4px 10px;border-radius:20px;font-size:0.75em;font-weight:bold}
+.badge-green{background:rgba(46,204,113,0.2);color:#2ecc71}
+.badge-red{background:rgba(231,76,60,0.2);color:#e74c3c}
+.badge-yellow{background:rgba(241,196,15,0.2);color:#f1c40f}
+
+.license-key{font-family:monospace;background:#0a0a1a;padding:5px 10px;border-radius:4px;font-size:0.9em}
+
+.modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);align-items:center;justify-content:center;z-index:1000}
+.modal.show{display:flex}
+.modal-content{background:#1a1a2e;padding:30px;border-radius:16px;max-width:500px;width:90%;border:2px solid #ffd700}
+.modal-content h3{color:#ffd700;margin-bottom:20px}
+
+.price-preview{background:#0a0a1a;padding:20px;border-radius:8px;text-align:center;margin:15px 0}
+.price-preview .amount{font-size:2em;color:#ffd700;font-weight:bold}
+.price-preview .details{font-size:0.9em;opacity:0.7}
+
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<!-- Login Screen -->
+<div id="loginScreen" class="login-box">
+<h2>🔐 Admin Login</h2>
+<input type="password" id="adminKey" placeholder="Enter Admin Key">
+<button onclick="login()">Login</button>
+</div>
+
+<!-- Main Dashboard -->
+<div id="dashboard" class="hidden">
+
+<div class="header">
+<h1>🎛️ Akashic Admin Dashboard</h1>
+<p>License & Revenue Management</p>
+</div>
+
+<div class="container">
+
+<!-- Stats -->
+<div class="stats">
+<div class="stat"><div class="value" id="statLicenses">0</div><div class="label">Total Licenses</div></div>
+<div class="stat"><div class="value" id="statActive">0</div><div class="label">Active</div></div>
+<div class="stat"><div class="value" id="statStudents">0</div><div class="label">Students</div></div>
+<div class="stat"><div class="value" id="statRevenue">$0</div><div class="label">Revenue</div></div>
+</div>
+
+<!-- Create License -->
+<div class="section">
+<h2>➕ Create New License</h2>
+<div class="form-row">
+<div class="form-group">
+<label>Customer Name *</label>
+<input type="text" id="customerName" placeholder="School or Teacher name">
+</div>
+<div class="form-group">
+<label>Email</label>
+<input type="email" id="customerEmail" placeholder="email@school.edu">
+</div>
+<div class="form-group">
+<label>Number of Students *</label>
+<input type="number" id="studentCount" placeholder="25" min="25" value="25" onchange="updatePrice()">
+</div>
+</div>
+
+<div class="price-preview">
+<div class="amount" id="priceAmount">$100.00</div>
+<div class="details" id="priceDetails">25 students × $4.00/student</div>
+</div>
+
+<div class="form-group">
+<label>Notes (optional)</label>
+<input type="text" id="licenseNotes" placeholder="Payment reference, PO number, etc.">
+</div>
+
+<button class="btn btn-gold" onclick="createLicense()" style="width:100%;padding:15px;font-size:1.1em">Create License</button>
+</div>
+
+<!-- Licenses Table -->
+<div class="section">
+<h2>📋 All Licenses</h2>
+<div style="overflow-x:auto">
+<table>
+<thead>
+<tr>
+<th>License Key</th>
+<th>Customer</th>
+<th>Students</th>
+<th>Used</th>
+<th>Price</th>
+<th>Status</th>
+<th>Expires</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody id="licensesTable">
+<tr><td colspan="8" style="text-align:center;opacity:0.5">No licenses yet</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- Pricing Reference -->
+<div class="section">
+<h2>💰 Pricing Tiers</h2>
+<table>
+<tr><th>Students</th><th>Price/Student</th><th>Min. Total</th></tr>
+<tr><td>25 - 99</td><td>$4.00</td><td>$100</td></tr>
+<tr><td>100 - 249</td><td>$3.50</td><td>$350</td></tr>
+<tr><td>250 - 499</td><td>$3.00</td><td>$750</td></tr>
+<tr><td>500+</td><td>$2.50</td><td>$1,250</td></tr>
+</table>
+</div>
+
+</div>
+</div>
+
+<!-- License Created Modal -->
+<div class="modal" id="licenseModal">
+<div class="modal-content">
+<h3>✅ License Created!</h3>
+<p style="margin-bottom:15px">Send this license key to the customer:</p>
+<div style="background:#0a0a1a;padding:20px;border-radius:8px;text-align:center;margin-bottom:20px">
+<div class="license-key" style="font-size:1.5em;color:#ffd700" id="newLicenseKey">XXXX-XXXX-XXXX-XXXX</div>
+</div>
+<div id="newLicenseDetails" style="font-size:0.9em;opacity:0.8;margin-bottom:20px"></div>
+<button class="btn btn-gold" onclick="copyLicense()" style="width:100%;margin-bottom:10px">📋 Copy License Key</button>
+<button class="btn btn-blue" onclick="closeModal()" style="width:100%">Close</button>
+</div>
+</div>
+
+<script>
+const API_URL = 'https://digital-literacy-backend.onrender.com/api';
+let adminKey = '';
+
+function login() {
+    adminKey = document.getElementById('adminKey').value;
+    loadStats();
+}
+
+async function loadStats() {
+    try {
+        const res = await fetch(`${API_URL}/admin/stats`, {
+            headers: { 'x-admin-key': adminKey }
+        });
+        
+        if (!res.ok) {
+            alert('Invalid admin key');
+            return;
+        }
+        
+        const stats = await res.json();
+        
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('dashboard').classList.remove('hidden');
+        
+        document.getElementById('statLicenses').textContent = stats.totalLicenses;
+        document.getElementById('statActive').textContent = stats.activeLicenses;
+        document.getElementById('statStudents').textContent = stats.totalStudentsRegistered;
+        document.getElementById('statRevenue').textContent = '$' + stats.totalRevenue;
+        
+        loadLicenses();
+    } catch(e) {
+        alert('Connection error');
+    }
+}
+
+async function loadLicenses() {
+    const res = await fetch(`${API_URL}/admin/licenses`, {
+        headers: { 'x-admin-key': adminKey }
+    });
+    const licenses = await res.json();
+    
+    const tbody = document.getElementById('licensesTable');
+    
+    if (licenses.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;opacity:0.5">No licenses yet</td></tr>';
+        return;
+    }
+    
+    tbody.innerHTML = licenses.map(lic => {
+        const statusClass = lic.isValid ? 'green' : 'red';
+        const statusText = lic.isValid ? 'Active' : (lic.active ? 'Expired' : 'Disabled');
+        const expires = new Date(lic.expiresAt).toLocaleDateString();
+        
+        return `<tr>
+            <td><span class="license-key">${lic.licenseKey}</span></td>
+            <td>${lic.customerName}<br><small style="opacity:0.6">${lic.customerEmail || '-'}</small></td>
+            <td>${lic.studentCount}</td>
+            <td>${lic.studentsUsed}</td>
+            <td>$${lic.pricing.total}</td>
+            <td><span class="badge badge-${statusClass}">${statusText}</span></td>
+            <td>${expires}</td>
+            <td>
+                <button class="btn btn-blue" onclick="copyKey('${lic.licenseKey}')" style="padding:5px 10px;font-size:0.8em">Copy</button>
+                ${lic.active ? 
+                    `<button class="btn btn-red" onclick="toggleLicense('${lic.licenseKey}', false)" style="padding:5px 10px;font-size:0.8em">Disable</button>` :
+                    `<button class="btn btn-green" onclick="toggleLicense('${lic.licenseKey}', true)" style="padding:5px 10px;font-size:0.8em">Enable</button>`
+                }
+            </td>
+        </tr>`;
+    }).join('');
+}
+
+function updatePrice() {
+    const count = parseInt(document.getElementById('studentCount').value) || 25;
+    let price = 4.00;
+    
+    if (count >= 500) price = 2.50;
+    else if (count >= 250) price = 3.00;
+    else if (count >= 100) price = 3.50;
+    
+    const total = (count * price).toFixed(2);
+    
+    document.getElementById('priceAmount').textContent = '$' + total;
+    document.getElementById('priceDetails').textContent = `${count} students × $${price.toFixed(2)}/student`;
+}
+
+async function createLicense() {
+    const customerName = document.getElementById('customerName').value.trim();
+    const customerEmail = document.getElementById('customerEmail').value.trim();
+    const studentCount = parseInt(document.getElementById('studentCount').value);
+    const notes = document.getElementById('licenseNotes').value.trim();
+    
+    if (!customerName) {
+        alert('Customer name required');
+        return;
+    }
+    
+    if (studentCount < 25) {
+        alert('Minimum 25 students required');
+        return;
+    }
+    
+    const res = await fetch(`${API_URL}/admin/licenses`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-admin-key': adminKey
+        },
+        body: JSON.stringify({ customerName, customerEmail, studentCount, notes })
+    });
+    
+    const data = await res.json();
+    
+    if (data.success) {
+        document.getElementById('newLicenseKey').textContent = data.license.licenseKey;
+        document.getElementById('newLicenseDetails').innerHTML = `
+            <strong>Customer:</strong> ${data.license.customerName}<br>
+            <strong>Students:</strong> ${data.license.studentCount}<br>
+            <strong>Total:</strong> $${data.license.pricing.total}<br>
+            <strong>Expires:</strong> ${new Date(data.license.expiresAt).toLocaleDateString()}
+        `;
+        document.getElementById('licenseModal').classList.add('show');
+        
+        // Clear form
+        document.getElementById('customerName').value = '';
+        document.getElementById('customerEmail').value = '';
+        document.getElementById('studentCount').value = '25';
+        document.getElementById('licenseNotes').value = '';
+        updatePrice();
+        
+        loadStats();
+        loadLicenses();
+    } else {
+        alert('Error: ' + data.error);
+    }
+}
+
+async function toggleLicense(key, active) {
+    await fetch(`${API_URL}/admin/licenses/${key}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-admin-key': adminKey
+        },
+        body: JSON.stringify({ active })
+    });
+    loadLicenses();
+}
+
+function copyKey(key) {
+    navigator.clipboard.writeText(key);
+    alert('Copied: ' + key);
+}
+
+function copyLicense() {
+    const key = document.getElementById('newLicenseKey').textContent;
+    navigator.clipboard.writeText(key);
+    alert('License key copied!');
+}
+
+function closeModal() {
+    document.getElementById('licenseModal').classList.remove('show');
+}
+
+// Init
+updatePrice();
+</script>
+
+</body>
+</html>
