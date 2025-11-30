@@ -9,21 +9,19 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Georgia,serif;background:#0a0a1a;color:#fff;min-height:100vh}
-
-/* Header */
+.lang-toggle{position:fixed;top:20px;right:20px;z-index:1000;display:flex;background:rgba(0,0,0,0.6);border-radius:25px;padding:5px;backdrop-filter:blur(10px);border:2px solid rgba(255,215,0,0.4)}
+.lang-btn{padding:10px 18px;border:none;border-radius:20px;cursor:pointer;font-weight:bold;font-size:0.9em;transition:all 0.2s;background:transparent;color:#fff}
+.lang-btn.active{background:#ffd700;color:#1a1a2e}
+.lang-btn:hover:not(.active){background:rgba(255,255,255,0.1)}
 .header{background:linear-gradient(135deg,#1a1a2e,#16213e);padding:20px;text-align:center;border-bottom:3px solid #ffd700}
 .logo-row{display:flex;align-items:center;justify-content:center;gap:15px}
 .logo{font-size:2.5em}
 .brand{font-size:1.8em;font-weight:bold;color:#ffd700}
 .tagline{color:rgba(255,255,255,0.7);margin-top:8px}
-
-/* Nav */
 .nav{background:rgba(0,0,0,0.3);padding:15px;display:flex;justify-content:center;gap:15px;flex-wrap:wrap}
 .nav a{color:#fff;text-decoration:none;padding:10px 20px;border-radius:25px;transition:all 0.2s;border:2px solid transparent}
 .nav a:hover{border-color:#ffd700;color:#ffd700}
 .nav a.active{background:#ffd700;color:#1a1a2e;font-weight:bold}
-
-/* Hero */
 .hero{background:linear-gradient(135deg,#1e3a5f,#2d5a87);padding:60px 20px;text-align:center}
 .hero h1{font-size:2.5em;margin-bottom:15px}
 .hero h1 span{color:#ffd700}
@@ -33,22 +31,13 @@ body{font-family:Georgia,serif;background:#0a0a1a;color:#fff;min-height:100vh}
 .btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,0.3)}
 .btn-gold{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a1a2e}
 .btn-outline{background:transparent;border:3px solid #fff;color:#fff}
-.btn-green{background:linear-gradient(135deg,#2ecc71,#27ae60);color:#fff}
-
-/* Stats */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:900px;margin:-40px auto 40px;padding:0 20px;position:relative;z-index:10}
 .stat{background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:2px solid rgba(255,255,255,0.2);border-radius:16px;padding:25px;text-align:center}
 .stat-value{font-size:2.5em;color:#ffd700;font-weight:bold}
 .stat-label{font-size:0.9em;opacity:0.8;margin-top:5px}
-
-/* Main Content */
 .main{max-width:1000px;margin:0 auto;padding:40px 20px}
-
-/* Section */
 .section{margin-bottom:50px}
 .section-title{font-size:1.8em;color:#ffd700;margin-bottom:25px;text-align:center}
-
-/* Pricing */
 .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
 .price-card{background:linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03));border:2px solid rgba(255,255,255,0.15);border-radius:20px;padding:30px;text-align:center;transition:all 0.3s}
 .price-card:hover{border-color:#ffd700;transform:translateY(-5px)}
@@ -60,244 +49,242 @@ body{font-family:Georgia,serif;background:#0a0a1a;color:#fff;min-height:100vh}
 .price-card .per{font-size:0.85em;opacity:0.6;margin-bottom:20px}
 .price-card .example{background:rgba(0,0,0,0.3);padding:12px;border-radius:10px;font-size:0.9em}
 .price-card .example b{color:#2ecc71}
-
-/* Features */
 .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
 .feature{background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:16px;padding:25px;display:flex;gap:15px;align-items:flex-start}
 .feature-icon{font-size:2em;flex-shrink:0}
 .feature h3{color:#ffd700;margin-bottom:8px}
 .feature p{opacity:0.8;font-size:0.95em;line-height:1.5}
-
-/* Games Preview */
 .games-preview{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px}
-.game-preview{background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:12px;padding:20px;text-align:center;opacity:0.7}
+.game-preview{background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:12px;padding:20px;text-align:center;opacity:0.7;position:relative}
 .game-preview .icon{font-size:2.5em;margin-bottom:10px}
 .game-preview .name{font-weight:bold}
-.game-preview .grade{font-size:0.8em;opacity:0.6;margin-top:5px}
-.locked-overlay{position:relative}
-.locked-overlay::after{content:"🔒";position:absolute;top:10px;right:10px;font-size:1.2em}
-
-/* CTA Box */
+.game-preview::after{content:"🔒";position:absolute;top:10px;right:10px;font-size:1.2em}
 .cta-box{background:linear-gradient(135deg,#2ecc71,#27ae60);border-radius:20px;padding:50px 30px;text-align:center;margin:50px 0}
 .cta-box h2{font-size:2em;margin-bottom:15px}
 .cta-box p{font-size:1.1em;opacity:0.9;max-width:500px;margin:0 auto 25px}
 .cta-buttons{display:flex;justify-content:center;gap:15px;flex-wrap:wrap}
-
-/* Access Gate */
 .access-gate{background:rgba(255,215,0,0.1);border:3px solid rgba(255,215,0,0.4);border-radius:20px;padding:40px;text-align:center;margin:30px 0}
 .access-gate h2{color:#ffd700;margin-bottom:15px}
 .access-gate p{opacity:0.8;margin-bottom:25px}
 .access-buttons{display:flex;justify-content:center;gap:15px;flex-wrap:wrap}
-
-/* Footer */
 .footer{text-align:center;padding:40px 20px;border-top:1px solid rgba(255,255,255,0.1);margin-top:50px}
 .footer p{opacity:0.6;font-size:0.9em}
 .footer a{color:#ffd700}
-
-/* Responsive */
-@media(max-width:700px){
-.stats{grid-template-columns:repeat(2,1fr);margin-top:-20px}
-.hero h1{font-size:1.8em}
-.stat-value{font-size:1.8em}
-.price-card .price{font-size:2em}
-}
-@media(max-width:500px){
-.stats{grid-template-columns:1fr}
-.brand{font-size:1.4em}
-}
+[data-lang="es"]{display:none}
+body.es [data-lang="en"]{display:none}
+body.es [data-lang="es"]{display:inline}
+@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr);margin-top:-20px}.hero h1{font-size:1.8em}.stat-value{font-size:1.8em}.price-card .price{font-size:2em}.lang-toggle{top:10px;right:10px}}
+@media(max-width:500px){.stats{grid-template-columns:1fr}.brand{font-size:1.4em}}
 </style>
 </head>
-<body>
+<body class="en">
+
+<div class="lang-toggle">
+<button class="lang-btn active" id="btnEn" onclick="setLang('en')">🇺🇸 EN</button>
+<button class="lang-btn" id="btnEs" onclick="setLang('es')">🇵🇷 ES</button>
+</div>
 
 <header class="header">
 <div class="logo-row">
 <span class="logo">🎓</span>
 <span class="brand">Akashic Academy</span>
 </div>
-<p class="tagline">Digital Literacy for Schools • Alfabetización Digital para Escuelas</p>
+<p class="tagline">
+<span data-lang="en">Digital Literacy for Schools</span>
+<span data-lang="es">Alfabetización Digital para Escuelas</span>
+</p>
 </header>
 
 <nav class="nav">
-<a href="#features">Features</a>
-<a href="#pricing">Pricing</a>
-<a href="#games">Games</a>
-<a href="teacher-dashboard.html">Teachers</a>
-<a href="student-setup.html" class="active">Students</a>
+<a href="#features"><span data-lang="en">Features</span><span data-lang="es">Características</span></a>
+<a href="#pricing"><span data-lang="en">Pricing</span><span data-lang="es">Precios</span></a>
+<a href="#games"><span data-lang="en">Games</span><span data-lang="es">Juegos</span></a>
+<a href="teacher-dashboard.html"><span data-lang="en">Teachers</span><span data-lang="es">Maestros</span></a>
+<a href="student-setup.html" class="active"><span data-lang="en">Students</span><span data-lang="es">Estudiantes</span></a>
 </nav>
 
-<!-- Hero -->
 <section class="hero">
-<h1>Build <span>Digital Skills</span> for the Future</h1>
-<p>Comprehensive K-12 digital literacy program with games, assessments, and real-time progress tracking. Fully bilingual English/Spanish.</p>
+<h1>
+<span data-lang="en">Build <span>Digital Skills</span> for the Future</span>
+<span data-lang="es">Desarrolla <span>Habilidades Digitales</span> para el Futuro</span>
+</h1>
+<p>
+<span data-lang="en">Comprehensive K-12 digital literacy program with games, assessments, and real-time progress tracking. Fully bilingual English/Spanish.</span>
+<span data-lang="es">Programa completo de alfabetización digital K-12 con juegos, evaluaciones y seguimiento en tiempo real. Totalmente bilingüe inglés/español.</span>
+</p>
 <div class="hero-buttons">
-<a href="mailto:info@akashicworks.com?subject=Free%20Trial%20Request%20-%20Akashic%20Academy&body=Hello,%0A%0AI'm%20interested%20in%20a%20free%20trial%20of%20Akashic%20Academy.%0A%0ASchool/Organization:%20%0ANumber%20of%20Students:%20%0AGrade%20Levels:%20%0A%0AThank%20you!" class="btn btn-gold">🎁 Request Free Trial</a>
-<a href="#pricing" class="btn btn-outline">💰 View Pricing</a>
+<a href="mailto:info@akashicworks.com?subject=Free%20Trial%20Request%20-%20Akashic%20Academy&body=Hello,%0A%0AI'm%20interested%20in%20a%20free%20trial%20of%20Akashic%20Academy.%0A%0ASchool/Organization:%20%0ANumber%20of%20Students:%20%0AGrade%20Levels:%20%0A%0AThank%20you!" class="btn btn-gold">
+<span data-lang="en">🎁 Request Free Trial</span>
+<span data-lang="es">🎁 Solicitar Prueba Gratis</span>
+</a>
+<a href="#pricing" class="btn btn-outline">
+<span data-lang="en">💰 View Pricing</span>
+<span data-lang="es">💰 Ver Precios</span>
+</a>
 </div>
 </section>
 
-<!-- Stats -->
 <div class="stats">
-<div class="stat"><div class="stat-value">24</div><div class="stat-label">Learning Games</div></div>
-<div class="stat"><div class="stat-value">K-12</div><div class="stat-label">All Grade Levels</div></div>
-<div class="stat"><div class="stat-value">2</div><div class="stat-label">Languages</div></div>
-<div class="stat"><div class="stat-value">100%</div><div class="stat-label">Progress Tracking</div></div>
+<div class="stat"><div class="stat-value">24</div><div class="stat-label"><span data-lang="en">Learning Games</span><span data-lang="es">Juegos Educativos</span></div></div>
+<div class="stat"><div class="stat-value">K-12</div><div class="stat-label"><span data-lang="en">All Grade Levels</span><span data-lang="es">Todos los Grados</span></div></div>
+<div class="stat"><div class="stat-value">2</div><div class="stat-label"><span data-lang="en">Languages</span><span data-lang="es">Idiomas</span></div></div>
+<div class="stat"><div class="stat-value">100%</div><div class="stat-label"><span data-lang="en">Progress Tracking</span><span data-lang="es">Seguimiento</span></div></div>
 </div>
 
 <main class="main">
 
-<!-- Features Section -->
 <section class="section" id="features">
-<h2 class="section-title">✨ Why Akashic Academy?</h2>
+<h2 class="section-title"><span data-lang="en">✨ Why Akashic Academy?</span><span data-lang="es">✨ ¿Por qué Akashic Academy?</span></h2>
 <div class="features-grid">
 <div class="feature">
 <span class="feature-icon">🎮</span>
-<div>
-<h3>Game-Based Learning</h3>
-<p>24 engaging games covering memory, typing, problem-solving, and digital skills. Students learn while having fun.</p>
-</div>
+<div><h3><span data-lang="en">Game-Based Learning</span><span data-lang="es">Aprendizaje con Juegos</span></h3>
+<p><span data-lang="en">24 engaging games covering memory, typing, problem-solving, and digital skills. Students learn while having fun.</span><span data-lang="es">24 juegos atractivos que cubren memoria, mecanografía, resolución de problemas y habilidades digitales. Los estudiantes aprenden mientras se divierten.</span></p></div>
 </div>
 <div class="feature">
 <span class="feature-icon">🌎</span>
-<div>
-<h3>Fully Bilingual</h3>
-<p>Every game available in English and Spanish. Perfect for Puerto Rico schools and bilingual programs.</p>
-</div>
+<div><h3><span data-lang="en">Fully Bilingual</span><span data-lang="es">Totalmente Bilingüe</span></h3>
+<p><span data-lang="en">Every game available in English and Spanish. Perfect for Puerto Rico schools and bilingual programs.</span><span data-lang="es">Cada juego disponible en inglés y español. Perfecto para escuelas de Puerto Rico y programas bilingües.</span></p></div>
 </div>
 <div class="feature">
 <span class="feature-icon">📊</span>
-<div>
-<h3>Real-Time Dashboard</h3>
-<p>Teachers see student progress instantly. Track scores, identify struggles, and celebrate successes.</p>
-</div>
+<div><h3><span data-lang="en">Real-Time Dashboard</span><span data-lang="es">Panel en Tiempo Real</span></h3>
+<p><span data-lang="en">Teachers see student progress instantly. Track scores, identify struggles, and celebrate successes.</span><span data-lang="es">Los maestros ven el progreso al instante. Rastrea puntuaciones, identifica dificultades y celebra éxitos.</span></p></div>
 </div>
 <div class="feature">
 <span class="feature-icon">🔒</span>
-<div>
-<h3>Secure & Private</h3>
-<p>Student data stays private. No ads, no tracking, no selling data. COPPA compliant.</p>
-</div>
+<div><h3><span data-lang="en">Secure & Private</span><span data-lang="es">Seguro y Privado</span></h3>
+<p><span data-lang="en">Student data stays private. No ads, no tracking, no selling data. COPPA compliant.</span><span data-lang="es">Los datos de estudiantes permanecen privados. Sin anuncios, sin rastreo, sin vender datos.</span></p></div>
 </div>
 <div class="feature">
 <span class="feature-icon">📱</span>
-<div>
-<h3>Works Everywhere</h3>
-<p>Chromebooks, tablets, phones, computers. No downloads or installations required.</p>
-</div>
+<div><h3><span data-lang="en">Works Everywhere</span><span data-lang="es">Funciona en Todas Partes</span></h3>
+<p><span data-lang="en">Chromebooks, tablets, phones, computers. No downloads or installations required.</span><span data-lang="es">Chromebooks, tabletas, teléfonos, computadoras. No se requieren descargas ni instalaciones.</span></p></div>
 </div>
 <div class="feature">
 <span class="feature-icon">🎯</span>
-<div>
-<h3>Age-Appropriate</h3>
-<p>Four grade bands (K-2, 3-5, 6-8, 9-12) with content matched to developmental levels.</p>
-</div>
+<div><h3><span data-lang="en">Age-Appropriate</span><span data-lang="es">Apropiado para Cada Edad</span></h3>
+<p><span data-lang="en">Four grade bands (K-2, 3-5, 6-8, 9-12) with content matched to developmental levels.</span><span data-lang="es">Cuatro niveles (K-2, 3-5, 6-8, 9-12) con contenido adaptado a cada nivel de desarrollo.</span></p></div>
 </div>
 </div>
 </section>
 
-<!-- Pricing Section -->
 <section class="section" id="pricing">
-<h2 class="section-title">💰 Simple, Affordable Pricing</h2>
-<p style="text-align:center;opacity:0.8;margin-bottom:30px">Per student, per year. Volume discounts available. Minimum 25 students.</p>
-
+<h2 class="section-title"><span data-lang="en">💰 Simple, Affordable Pricing</span><span data-lang="es">💰 Precios Simples y Accesibles</span></h2>
+<p style="text-align:center;opacity:0.8;margin-bottom:30px">
+<span data-lang="en">Per student, per year. Volume discounts available. Minimum 25 students.</span>
+<span data-lang="es">Por estudiante, por año. Descuentos por volumen. Mínimo 25 estudiantes.</span>
+</p>
 <div class="pricing-grid">
 <div class="price-card">
-<div class="tier">Starter</div>
-<div class="students">25-99 Students</div>
-<div class="price">$4<span>/student/year</span></div>
-<div class="per">Full access to all 24 games</div>
-<div class="example">25 students = <b>$100/year</b></div>
+<div class="tier"><span data-lang="en">Starter</span><span data-lang="es">Inicial</span></div>
+<div class="students">25-99 <span data-lang="en">Students</span><span data-lang="es">Estudiantes</span></div>
+<div class="price">$4<span>/<span data-lang="en">student/yr</span><span data-lang="es">est./año</span></span></div>
+<div class="per"><span data-lang="en">Full access to all 24 games</span><span data-lang="es">Acceso completo a 24 juegos</span></div>
+<div class="example">25 est. = <b>$100/<span data-lang="en">year</span><span data-lang="es">año</span></b></div>
 </div>
-
 <div class="price-card featured">
-<div class="tier">⭐ Most Popular</div>
-<div class="students">100-249 Students</div>
-<div class="price">$3.50<span>/student/year</span></div>
-<div class="per">Save 12.5%</div>
-<div class="example">150 students = <b>$525/year</b></div>
+<div class="tier">⭐ <span data-lang="en">Most Popular</span><span data-lang="es">Más Popular</span></div>
+<div class="students">100-249 <span data-lang="en">Students</span><span data-lang="es">Estudiantes</span></div>
+<div class="price">$3.50<span>/<span data-lang="en">student/yr</span><span data-lang="es">est./año</span></span></div>
+<div class="per"><span data-lang="en">Save 12.5%</span><span data-lang="es">Ahorra 12.5%</span></div>
+<div class="example">150 est. = <b>$525/<span data-lang="en">year</span><span data-lang="es">año</span></b></div>
 </div>
-
 <div class="price-card">
-<div class="tier">School</div>
-<div class="students">250-499 Students</div>
-<div class="price">$3<span>/student/year</span></div>
-<div class="per">Save 25%</div>
-<div class="example">300 students = <b>$900/year</b></div>
+<div class="tier"><span data-lang="en">School</span><span data-lang="es">Escuela</span></div>
+<div class="students">250-499 <span data-lang="en">Students</span><span data-lang="es">Estudiantes</span></div>
+<div class="price">$3<span>/<span data-lang="en">student/yr</span><span data-lang="es">est./año</span></span></div>
+<div class="per"><span data-lang="en">Save 25%</span><span data-lang="es">Ahorra 25%</span></div>
+<div class="example">300 est. = <b>$900/<span data-lang="en">year</span><span data-lang="es">año</span></b></div>
 </div>
-
 <div class="price-card">
-<div class="tier">District</div>
-<div class="students">500+ Students</div>
-<div class="price">$2.50<span>/student/year</span></div>
-<div class="per">Save 37.5%</div>
-<div class="example">500 students = <b>$1,250/year</b></div>
+<div class="tier"><span data-lang="en">District</span><span data-lang="es">Distrito</span></div>
+<div class="students">500+ <span data-lang="en">Students</span><span data-lang="es">Estudiantes</span></div>
+<div class="price">$2.50<span>/<span data-lang="en">student/yr</span><span data-lang="es">est./año</span></span></div>
+<div class="per"><span data-lang="en">Save 37.5%</span><span data-lang="es">Ahorra 37.5%</span></div>
+<div class="example">500 est. = <b>$1,250/<span data-lang="en">year</span><span data-lang="es">año</span></b></div>
 </div>
 </div>
-
 <div style="text-align:center;margin-top:30px">
-<a href="mailto:info@akashicworks.com?subject=Pricing%20Inquiry%20-%20Akashic%20Academy&body=Hello,%0A%0AI'm%20interested%20in%20licensing%20Akashic%20Academy.%0A%0ASchool/Organization:%20%0ANumber%20of%20Students:%20%0AGrade%20Levels:%20%0A%0APlease%20send%20me%20more%20information.%0A%0AThank%20you!" class="btn btn-gold">📧 Contact for Quote</a>
+<a href="mailto:info@akashicworks.com?subject=Pricing%20Inquiry%20-%20Akashic%20Academy" class="btn btn-gold">
+<span data-lang="en">📧 Contact for Quote</span><span data-lang="es">📧 Contactar para Cotización</span>
+</a>
 </div>
 </section>
 
-<!-- Games Preview -->
 <section class="section" id="games">
-<h2 class="section-title">🎮 24 Learning Games</h2>
-<p style="text-align:center;opacity:0.8;margin-bottom:30px">Cognitive training and digital literacy across all grade levels</p>
+<h2 class="section-title"><span data-lang="en">🎮 24 Learning Games</span><span data-lang="es">🎮 24 Juegos Educativos</span></h2>
+<p style="text-align:center;opacity:0.8;margin-bottom:30px">
+<span data-lang="en">Cognitive training and digital literacy across all grade levels</span>
+<span data-lang="es">Entrenamiento cognitivo y alfabetización digital en todos los niveles</span>
+</p>
 
-<h3 style="color:#ffd700;margin:25px 0 15px">👶 Grades K-2 (Ages 5-8)</h3>
+<h3 style="color:#ffd700;margin:25px 0 15px">👶 <span data-lang="en">Grades K-2 (Ages 5-8)</span><span data-lang="es">Grados K-2 (Edades 5-8)</span></h3>
 <div class="games-preview">
-<div class="game-preview locked-overlay"><div class="icon">👁️</div><div class="name">Visual Memory</div><div class="grade">Memoria Visual</div></div>
-<div class="game-preview locked-overlay"><div class="icon">🎨</div><div class="name">Color Match</div><div class="grade">Combinar Colores</div></div>
-<div class="game-preview locked-overlay"><div class="icon">🔲</div><div class="name">Sequence Memory</div><div class="grade">Memoria de Secuencia</div></div>
+<div class="game-preview"><div class="icon">👁️</div><div class="name"><span data-lang="en">Visual Memory</span><span data-lang="es">Memoria Visual</span></div></div>
+<div class="game-preview"><div class="icon">🎨</div><div class="name"><span data-lang="en">Color Match</span><span data-lang="es">Combinar Colores</span></div></div>
+<div class="game-preview"><div class="icon">🔲</div><div class="name"><span data-lang="en">Sequence Memory</span><span data-lang="es">Memoria de Secuencia</span></div></div>
 </div>
 
-<h3 style="color:#ffd700;margin:25px 0 15px">📚 Grades 3-5 (Ages 8-11)</h3>
+<h3 style="color:#ffd700;margin:25px 0 15px">📚 <span data-lang="en">Grades 3-5 (Ages 8-11)</span><span data-lang="es">Grados 3-5 (Edades 8-11)</span></h3>
 <div class="games-preview">
-<div class="game-preview locked-overlay"><div class="icon">🔢</div><div class="name">Number Memory</div><div class="grade">Memoria de Números</div></div>
-<div class="game-preview locked-overlay"><div class="icon">🔍</div><div class="name">Word Search</div><div class="grade">Sopa de Letras</div></div>
-<div class="game-preview locked-overlay"><div class="icon">👁️</div><div class="name">Visual Memory+</div><div class="grade">Memoria Visual+</div></div>
+<div class="game-preview"><div class="icon">🔢</div><div class="name"><span data-lang="en">Number Memory</span><span data-lang="es">Memoria de Números</span></div></div>
+<div class="game-preview"><div class="icon">🔍</div><div class="name"><span data-lang="en">Word Search</span><span data-lang="es">Sopa de Letras</span></div></div>
+<div class="game-preview"><div class="icon">👁️</div><div class="name"><span data-lang="en">Visual Memory+</span><span data-lang="es">Memoria Visual+</span></div></div>
 </div>
 
-<h3 style="color:#ffd700;margin:25px 0 15px">🎒 Grades 6-8 (Ages 11-14)</h3>
+<h3 style="color:#ffd700;margin:25px 0 15px">🎒 <span data-lang="en">Grades 6-8 (Ages 11-14)</span><span data-lang="es">Grados 6-8 (Edades 11-14)</span></h3>
 <div class="games-preview">
-<div class="game-preview locked-overlay"><div class="icon">⌨️</div><div class="name">Typing Quiz</div><div class="grade">Prueba de Tecleo</div></div>
-<div class="game-preview locked-overlay"><div class="icon">🔍</div><div class="name">Word Search Pro</div><div class="grade">Sopa de Letras Pro</div></div>
-<div class="game-preview locked-overlay"><div class="icon">🔢</div><div class="name">Number Memory Pro</div><div class="grade">Memoria de Números Pro</div></div>
+<div class="game-preview"><div class="icon">⌨️</div><div class="name"><span data-lang="en">Typing Quiz</span><span data-lang="es">Prueba de Tecleo</span></div></div>
+<div class="game-preview"><div class="icon">🔍</div><div class="name"><span data-lang="en">Word Search Pro</span><span data-lang="es">Sopa de Letras Pro</span></div></div>
+<div class="game-preview"><div class="icon">🔢</div><div class="name"><span data-lang="en">Number Memory Pro</span><span data-lang="es">Memoria Números Pro</span></div></div>
 </div>
 
-<h3 style="color:#ffd700;margin:25px 0 15px">🎓 Grades 9-12 (Ages 14-18)</h3>
+<h3 style="color:#ffd700;margin:25px 0 15px">🎓 <span data-lang="en">Grades 9-12 (Ages 14-18)</span><span data-lang="es">Grados 9-12 (Edades 14-18)</span></h3>
 <div class="games-preview">
-<div class="game-preview locked-overlay"><div class="icon">📝</div><div class="name">Digital Assessment</div><div class="grade">Evaluación Digital</div></div>
-<div class="game-preview locked-overlay"><div class="icon">⌨️</div><div class="name">Speed Typing</div><div class="grade">Tecleo Rápido</div></div>
-<div class="game-preview locked-overlay"><div class="icon">🧠</div><div class="name">Stroop Challenge</div><div class="grade">Desafío Stroop</div></div>
+<div class="game-preview"><div class="icon">📝</div><div class="name"><span data-lang="en">Digital Assessment</span><span data-lang="es">Evaluación Digital</span></div></div>
+<div class="game-preview"><div class="icon">⌨️</div><div class="name"><span data-lang="en">Speed Typing</span><span data-lang="es">Tecleo Rápido</span></div></div>
+<div class="game-preview"><div class="icon">🧠</div><div class="name"><span data-lang="en">Stroop Challenge</span><span data-lang="es">Desafío Stroop</span></div></div>
 </div>
 </section>
 
-<!-- Access Gate for Students -->
 <section class="access-gate">
-<h2>🔑 Student Access</h2>
-<p>Already have a class code from your teacher? Join your class to start playing!</p>
+<h2><span data-lang="en">🔑 Student Access</span><span data-lang="es">🔑 Acceso de Estudiantes</span></h2>
+<p><span data-lang="en">Already have a class code from your teacher? Join your class to start playing!</span><span data-lang="es">¿Ya tienes un código de clase de tu maestro? ¡Únete a tu clase para comenzar!</span></p>
 <div class="access-buttons">
-<a href="student-setup.html" class="btn btn-gold">🎓 Join My Class</a>
-<a href="teacher-dashboard.html" class="btn btn-outline" style="border-color:#ffd700;color:#ffd700">👩‍🏫 Teacher Login</a>
+<a href="student-setup.html" class="btn btn-gold"><span data-lang="en">🎓 Join My Class</span><span data-lang="es">🎓 Unirme a Mi Clase</span></a>
+<a href="teacher-dashboard.html" class="btn btn-outline" style="border-color:#ffd700;color:#ffd700"><span data-lang="en">👩‍🏫 Teacher Login</span><span data-lang="es">👩‍🏫 Acceso Maestros</span></a>
 </div>
 </section>
 
-<!-- CTA Section -->
 <section class="cta-box">
-<h2>🎁 Try It Free!</h2>
-<p>Get a 14-day free trial for your classroom. No credit card required. See why teachers love Akashic Academy.</p>
+<h2><span data-lang="en">🎁 Try It Free!</span><span data-lang="es">🎁 ¡Pruébalo Gratis!</span></h2>
+<p><span data-lang="en">Get a 14-day free trial for your classroom. No credit card required. See why teachers love Akashic Academy.</span><span data-lang="es">Obtén una prueba gratis de 14 días para tu salón. No se requiere tarjeta de crédito. Descubre por qué los maestros aman Akashic Academy.</span></p>
 <div class="cta-buttons">
-<a href="mailto:info@akashicworks.com?subject=Free%20Trial%20Request%20-%20Akashic%20Academy&body=Hello,%0A%0AI'd%20like%20to%20request%20a%20free%20trial%20of%20Akashic%20Academy.%0A%0AMy%20Name:%20%0ASchool/Organization:%20%0AEmail:%20%0ANumber%20of%20Students:%20%0AGrade%20Levels:%20%0A%0AThank%20you!" class="btn btn-gold">📧 Request Free Trial</a>
-<a href="mailto:info@akashicworks.com?subject=Question%20about%20Akashic%20Academy" class="btn btn-outline">💬 Ask a Question</a>
+<a href="mailto:info@akashicworks.com?subject=Free%20Trial%20Request%20-%20Akashic%20Academy&body=Hello,%0A%0AI'd%20like%20to%20request%20a%20free%20trial.%0A%0ASchool:%20%0AStudents:%20%0AGrades:%20%0A%0AThank%20you!" class="btn btn-gold"><span data-lang="en">📧 Request Free Trial</span><span data-lang="es">📧 Solicitar Prueba Gratis</span></a>
+<a href="mailto:info@akashicworks.com?subject=Question%20about%20Akashic%20Academy" class="btn btn-outline"><span data-lang="en">💬 Ask a Question</span><span data-lang="es">💬 Hacer una Pregunta</span></a>
 </div>
 </section>
 
 </main>
 
 <footer class="footer">
-<p>© 2024 <a href="https://akashicworks.com">Akashic Works LLC</a> • San Juan, Puerto Rico</p>
+<p>© 2024 <a href="https://akashicworks.com">Akashic Works LLC</a> • San Juan, Puerto Rico 🇵🇷</p>
 <p style="margin-top:10px"><a href="mailto:info@akashicworks.com">info@akashicworks.com</a></p>
 </footer>
+
+<script>
+function setLang(lang) {
+    document.body.className = lang;
+    document.getElementById('btnEn').classList.toggle('active', lang === 'en');
+    document.getElementById('btnEs').classList.toggle('active', lang === 'es');
+    localStorage.setItem('akashic_lang', lang);
+}
+// Load saved or detect
+const saved = localStorage.getItem('akashic_lang');
+if (saved) setLang(saved);
+else if (navigator.language.startsWith('es')) setLang('es');
+</script>
 
 </body>
 </html>
