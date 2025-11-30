@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Student Setup | Digital Literacy Games</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Student Setup | Akashic Academy</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Georgia,serif;background:linear-gradient(135deg,#1e3a5f,#2d5a87);min-height:100vh;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
@@ -16,20 +16,27 @@ h1{font-size:1.5em;margin-bottom:5px}
 .form-group input{width:100%;padding:15px;font-size:1.1em;border:3px solid rgba(255,255,255,0.3);border-radius:12px;background:rgba(255,255,255,0.1);color:#fff;text-align:center}
 .form-group input:focus{outline:none;border-color:#ffd700}
 .form-group input::placeholder{color:rgba(255,255,255,0.5)}
+.form-group input.error{border-color:#e74c3c}
+.form-group input.success{border-color:#2ecc71}
+.form-group .hint{font-size:0.8em;margin-top:5px;opacity:0.7}
+.form-group .error-msg{font-size:0.85em;color:#e74c3c;margin-top:5px}
+.form-group .success-msg{font-size:0.85em;color:#2ecc71;margin-top:5px}
 .btn{width:100%;padding:15px;font-size:1.1em;font-weight:bold;border:none;border-radius:25px;cursor:pointer;margin-top:10px;transition:transform 0.2s}
+.btn:hover{transform:translateY(-2px)}
 .btn:active{transform:scale(0.98)}
+.btn:disabled{opacity:0.5;cursor:not-allowed}
 .btn-primary{background:linear-gradient(135deg,#2ecc71,#27ae60);color:#fff}
 .btn-secondary{background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.3);color:#fff;margin-top:15px}
-.info{background:rgba(255,215,0,0.2);padding:15px;border-radius:12px;margin-bottom:20px;font-size:0.9em;line-height:1.5}
-.info b{color:#ffd700}
-.current-info{background:rgba(46,204,113,0.2);padding:15px;border-radius:12px;margin-bottom:20px}
+.current-info{background:rgba(46,204,113,0.2);border:2px solid rgba(46,204,113,0.4);padding:20px;border-radius:12px;margin-bottom:20px}
 .current-info h3{color:#2ecc71;margin-bottom:10px}
 .current-info p{font-size:0.9em;margin-bottom:5px}
-.hidden{display:none}
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}
 .stat{background:rgba(0,0,0,0.2);padding:10px;border-radius:8px;text-align:center}
 .stat b{display:block;color:#ffd700;font-size:1.3em}
 .stat span{font-size:0.75em;opacity:0.8}
+.hidden{display:none}
+.spinner{display:inline-block;width:20px;height:20px;border:3px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -39,33 +46,33 @@ h1{font-size:1.5em;margin-bottom:5px}
 <h1>Student Setup</h1>
 <p class="subtitle">Configuración del Estudiante</p>
 
+<!-- Current Info (if registered) -->
 <div id="currentInfo" class="current-info hidden">
 <h3>✓ You're all set!</h3>
 <p><strong>Name:</strong> <span id="displayName"></span></p>
-<p><strong>Class Code:</strong> <span id="displayCode"></span></p>
+<p><strong>Class:</strong> <span id="displayClass"></span></p>
 <div class="stats">
-<div class="stat"><b id="displayGames">0</b><span>Games Played</span></div>
+<div class="stat"><b id="displayGames">0</b><span>Games</span></div>
 <div class="stat"><b id="displayAvg">0%</b><span>Avg Score</span></div>
 </div>
 </div>
 
+<!-- Setup Form -->
 <div id="setupForm">
-<div class="info">
-<b>💡 Why set up?</b><br>
-Your scores will be saved and your teacher can track your progress!
-</div>
-
 <div class="form-group">
 <label>👤 Your Name / Tu Nombre</label>
 <input type="text" id="studentName" placeholder="Enter your name...">
 </div>
 
 <div class="form-group">
-<label>🔑 Class Code (from your teacher) / Código de Clase</label>
-<input type="text" id="classCode" placeholder="ABC123" maxlength="10" style="text-transform:uppercase;letter-spacing:3px">
+<label>🔑 Class Code / Código de Clase</label>
+<input type="text" id="classCode" placeholder="ABC123" maxlength="6" style="text-transform:uppercase;letter-spacing:3px">
+<div class="hint">Get this code from your teacher</div>
+<div id="codeError" class="error-msg hidden"></div>
+<div id="codeSuccess" class="success-msg hidden"></div>
 </div>
 
-<button class="btn btn-primary" onclick="saveSetup()">✓ Save & Continue</button>
+<button class="btn btn-primary" id="saveBtn" onclick="saveSetup()">✓ Join Class</button>
 </div>
 
 <button class="btn btn-secondary" onclick="goToGames()">🎮 Go to Games</button>
@@ -76,67 +83,134 @@ Your scores will be saved and your teacher can track your progress!
 </div>
 
 <script>
-// Check for Firebase config from teacher
-var hasFirebase = !!localStorage.getItem('firebase_config');
+const API_URL = 'https://digital-literacy-backend.onrender.com/api';
+
+let validatedCode = null;
 
 function loadExisting() {
-    var name = localStorage.getItem('dl_student_name');
-    var code = localStorage.getItem('dl_class_code');
-    var stats = JSON.parse(localStorage.getItem('dl_student_stats') || '{}');
+    const name = localStorage.getItem('dl_student_name');
+    const code = localStorage.getItem('dl_class_code');
+    const stats = JSON.parse(localStorage.getItem('dl_student_stats') || '{}');
     
-    if (name) {
+    if (name && code) {
         document.getElementById('displayName').textContent = name;
-        document.getElementById('displayCode').textContent = code || 'None';
+        document.getElementById('displayClass').textContent = code;
         document.getElementById('displayGames').textContent = stats.gamesPlayed || 0;
         document.getElementById('displayAvg').textContent = (stats.avgScore || 0) + '%';
         
         document.getElementById('currentInfo').classList.remove('hidden');
         document.getElementById('setupForm').classList.add('hidden');
         document.getElementById('resetSection').classList.remove('hidden');
-        
-        // Pre-fill form
-        document.getElementById('studentName').value = name;
-        document.getElementById('classCode').value = code || '';
-    }
-    
-    // Show sync status
-    if (hasFirebase && code) {
-        document.getElementById('displayCode').innerHTML = code + ' <span style="color:#2ecc71">☁️ Syncing</span>';
     }
 }
 
-function saveSetup() {
-    var name = document.getElementById('studentName').value.trim();
-    var code = document.getElementById('classCode').value.trim().toUpperCase();
+// Validate class code as user types
+let validateTimeout;
+document.getElementById('classCode').addEventListener('input', function(e) {
+    e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+    
+    const code = e.target.value;
+    const errorEl = document.getElementById('codeError');
+    const successEl = document.getElementById('codeSuccess');
+    
+    errorEl.classList.add('hidden');
+    successEl.classList.add('hidden');
+    e.target.classList.remove('error', 'success');
+    validatedCode = null;
+    
+    if (code.length >= 6) {
+        clearTimeout(validateTimeout);
+        validateTimeout = setTimeout(() => validateCode(code), 300);
+    }
+});
+
+async function validateCode(code) {
+    const input = document.getElementById('classCode');
+    const errorEl = document.getElementById('codeError');
+    const successEl = document.getElementById('codeSuccess');
+    
+    try {
+        const res = await fetch(`${API_URL}/classes/${code}/validate`);
+        const data = await res.json();
+        
+        if (data.valid) {
+            input.classList.add('success');
+            successEl.textContent = `✓ ${data.className}`;
+            successEl.classList.remove('hidden');
+            validatedCode = code;
+        } else {
+            input.classList.add('error');
+            errorEl.textContent = data.error || 'Invalid code';
+            errorEl.classList.remove('hidden');
+            validatedCode = null;
+        }
+    } catch(e) {
+        input.classList.add('error');
+        errorEl.textContent = 'Could not verify code';
+        errorEl.classList.remove('hidden');
+    }
+}
+
+async function saveSetup() {
+    const name = document.getElementById('studentName').value.trim();
+    const code = document.getElementById('classCode').value.trim().toUpperCase();
+    const btn = document.getElementById('saveBtn');
     
     if (!name) {
         alert('Please enter your name');
         return;
     }
     
-    localStorage.setItem('dl_student_name', name);
-    if (code) {
-        localStorage.setItem('dl_class_code', code);
+    if (!code || code.length < 6) {
+        alert('Please enter a valid class code');
+        return;
     }
     
-    // Generate student ID if not exists
-    if (!localStorage.getItem('dl_student_id')) {
-        var id = 's_' + Date.now() + '_' + Math.random().toString(36).substr(2,6);
-        localStorage.setItem('dl_student_id', id);
+    if (!validatedCode) {
+        alert('Please wait for class code validation');
+        return;
     }
     
-    var msg = 'Saved! Your scores will now be tracked.\n\nName: ' + name;
-    if (code) msg += '\nClass: ' + code;
-    if (hasFirebase) msg += '\n\n☁️ Cloud sync enabled - your teacher will see your scores!';
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Joining...';
     
-    alert(msg);
-    loadExisting();
+    try {
+        // Register with backend
+        const studentId = localStorage.getItem('dl_student_id') || 's_' + Date.now() + '_' + Math.random().toString(36).substr(2,6);
+        
+        const res = await fetch(`${API_URL}/students`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ studentId, name, classCode: code })
+        });
+        
+        const data = await res.json();
+        
+        if (data.success) {
+            localStorage.setItem('dl_student_id', data.studentId);
+            localStorage.setItem('dl_student_name', name);
+            localStorage.setItem('dl_class_code', code);
+            
+            alert('Success! You\'ve joined the class.\n\nYou can now play games and your scores will be tracked.');
+            loadExisting();
+        } else {
+            alert('Error: ' + data.error);
+        }
+    } catch(e) {
+        alert('Connection error. Please try again.');
+    }
+    
+    btn.disabled = false;
+    btn.innerHTML = '✓ Join Class';
 }
 
 function resetSetup() {
-    if (confirm('This will reset your name and class code. Your game scores will be kept. Continue?')) {
+    if (confirm('This will reset your profile. Continue?')) {
         localStorage.removeItem('dl_student_name');
         localStorage.removeItem('dl_class_code');
+        localStorage.removeItem('dl_student_id');
+        localStorage.removeItem('dl_student_stats');
+        localStorage.removeItem('dl_scores');
         
         document.getElementById('currentInfo').classList.add('hidden');
         document.getElementById('setupForm').classList.remove('hidden');
@@ -147,16 +221,15 @@ function resetSetup() {
 }
 
 function goToGames() {
-    window.location.href = 'digital-literacy-homepage.html';
+    const code = localStorage.getItem('dl_class_code');
+    if (!code) {
+        alert('Please join a class first to access games.');
+        return;
+    }
+    window.location.href = 'index.html';
 }
 
-// Initialize
 loadExisting();
-
-// Auto-uppercase class code
-document.getElementById('classCode').addEventListener('input', function(e) {
-    e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
-});
 </script>
 
 </body>
