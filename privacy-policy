@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy | Akashic Academy</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Georgia,serif;background:#0a0a1a;color:#fff;line-height:1.8;padding-top:60px}
+.lang-bar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,10,26,0.95);backdrop-filter:blur(10px);padding:10px 20px;display:flex;justify-content:center;border-bottom:2px solid rgba(255,215,0,0.3)}
+.lang-toggle{display:flex;gap:5px;background:rgba(0,0,0,0.4);border-radius:25px;padding:4px;border:2px solid rgba(255,215,0,0.4)}
+.lang-btn{padding:8px 16px;border:none;border-radius:20px;cursor:pointer;font-weight:bold;font-size:0.85em;transition:all 0.2s;background:transparent;color:#fff}
+.lang-btn.active{background:#ffd700;color:#1a1a2e}
+.header{background:linear-gradient(135deg,#1a1a2e,#16213e);padding:30px 20px;text-align:center;border-bottom:3px solid #ffd700}
+.header h1{color:#ffd700;font-size:2em;margin-bottom:10px}
+.header p{opacity:0.7}
+.container{max-width:900px;margin:0 auto;padding:40px 20px}
+.back-link{display:inline-block;color:#ffd700;text-decoration:none;margin-bottom:30px;transition:all 0.2s}
+.back-link:hover{transform:translateX(-5px)}
+.section{background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:16px;padding:30px;margin-bottom:30px}
+.section h2{color:#ffd700;font-size:1.5em;margin-bottom:20px}
+.section h3{color:#ffd700;font-size:1.2em;margin:25px 0 15px}
+.section p{margin-bottom:15px;opacity:0.9}
+.section ul{margin-left:25px;margin-bottom:15px}
+.section li{margin-bottom:10px;opacity:0.9}
+.highlight{background:rgba(255,215,0,0.1);border-left:4px solid #ffd700;padding:15px;margin:20px 0;border-radius:8px}
+.footer{text-align:center;padding:40px 20px;border-top:1px solid rgba(255,255,255,0.1);margin-top:50px;opacity:0.6}
+.footer a{color:#ffd700;text-decoration:none}
+.en .lang-es{display:none}
+.es .lang-en{display:none}
+@media(max-width:700px){body{padding-top:55px}}
+</style>
+</head>
+<body class="en">
+
+<div class="lang-bar">
+<div class="lang-toggle">
+<button class="lang-btn active" id="btnEn" onclick="setLang('en')">🇺🇸 English</button>
+<button class="lang-btn" id="btnEs" onclick="setLang('es')">🇵🇷 Español</button>
+</div>
+</div>
+
+<div class="header">
+<h1>
+<span class="lang-en">Privacy Policy</span>
+<span class="lang-es">Política de Privacidad</span>
+</h1>
+<p>
+<span class="lang-en">Last Updated: December 3, 2024</span>
+<span class="lang-es">Última Actualización: 3 de diciembre de 2024</span>
+</p>
+</div>
+
+<div class="container">
+<a href="index.html" class="back-link">← <span class="lang-en">Back to Home</span><span class="lang-es">Volver al Inicio</span></a>
+
+<div class="lang-en">
+<div class="section">
+<h2>1. Introduction</h2>
+<p>Akashic Works LLC operates Akashic Academy, a digital literacy education platform. We are committed to protecting the privacy of students, teachers, and schools.</p>
+<div class="highlight">
+<strong>🔒 Key Commitment:</strong> We do NOT sell student data. We do NOT show ads. We do NOT track students across the internet.
+</div>
+</div>
+
+<div class="section">
+<h2>2. Information We Collect</h2>
+<h3>2.1 Student Information</h3>
+<ul>
+<li><strong>Student Name:</strong> First name or nickname</li>
+<li><strong>Class Code:</strong> Teacher-provided code</li>
+<li><strong>Game Scores:</strong> Performance data</li>
+<li><strong>Progress Data:</strong> Learning progress</li>
+</ul>
+<p><strong>We do NOT collect:</strong> Emails, phone numbers, addresses, photos, birthdates, SSN, or other PII from students.</p>
+</div>
+
+<div class="section">
+<h2>3. How We Use Information</h2>
+<p>We use data solely for educational purposes, teacher dashboards, service delivery, and compliance.</p>
+<p><strong>We do NOT use student data for:</strong> Advertising, selling, profiling, or behavioral targeting.</p>
+</div>
+
+<div class="section">
+<h2>4. COPPA & FERPA Compliance</h2>
+<p>We comply with COPPA and FERPA requirements for student privacy.</p>
+</div>
+
+<div class="section">
+<h2>5. Data Security</h2>
+<p>All data is encrypted (SSL/TLS), stored securely, with restricted access and regular backups.</p>
+</div>
+
+<div class="section">
+<h2>6. Contact</h2>
+<p><strong>Akashic Works LLC</strong><br>
+San Juan, Puerto Rico<br>
+<a href="mailto:privacy@akashicworks.com" style="color:#ffd700">privacy@akashicworks.com</a></p>
+</div>
+</div>
+
+<div class="lang-es">
+<div class="section">
+<h2>1. Introducción</h2>
+<p>Akashic Works LLC opera Akashic Academy, una plataforma de educación en alfabetización digital. Estamos comprometidos a proteger la privacidad de estudiantes, maestros y escuelas.</p>
+<div class="highlight">
+<strong>🔒 Compromiso Clave:</strong> NO vendemos datos. NO mostramos anuncios. NO rastreamos estudiantes en internet.
+</div>
+</div>
+
+<div class="section">
+<h2>2. Información Que Recopilamos</h2>
+<h3>2.1 Información del Estudiante</h3>
+<ul>
+<li><strong>Nombre:</strong> Primer nombre o apodo</li>
+<li><strong>Código de Clase:</strong> Código del maestro</li>
+<li><strong>Puntuaciones:</strong> Datos de rendimiento</li>
+<li><strong>Progreso:</strong> Datos de aprendizaje</li>
+</ul>
+<p><strong>NO recopilamos:</strong> Emails, teléfonos, direcciones, fotos, fechas de nacimiento, SSN u otra información personal.</p>
+</div>
+
+<div class="section">
+<h2>3. Cómo Usamos La Información</h2>
+<p>Usamos datos solo para propósitos educativos, paneles de maestros, entrega de servicio y cumplimiento.</p>
+<p><strong>NO usamos datos para:</strong> Publicidad, venta, perfiles o segmentación conductual.</p>
+</div>
+
+<div class="section">
+<h2>4. Cumplimiento COPPA & FERPA</h2>
+<p>Cumplimos con requisitos de COPPA y FERPA para privacidad estudiantil.</p>
+</div>
+
+<div class="section">
+<h2>5. Seguridad de Datos</h2>
+<p>Todos los datos están encriptados (SSL/TLS), almacenados de forma segura, con acceso restringido y respaldos regulares.</p>
+</div>
+
+<div class="section">
+<h2>6. Contacto</h2>
+<p><strong>Akashic Works LLC</strong><br>
+San Juan, Puerto Rico<br>
+<a href="mailto:privacy@akashicworks.com" style="color:#ffd700">privacy@akashicworks.com</a></p>
+</div>
+</div>
+
+</div>
+
+<footer class="footer">
+<p>© 2024 <a href="https://akashicworks.com">Akashic Works LLC</a> • San Juan, Puerto Rico 🇵🇷</p>
+<p style="margin-top:10px">
+<a href="index.html"><span class="lang-en">Home</span><span class="lang-es">Inicio</span></a> • 
+<a href="terms.html"><span class="lang-en">Terms of Use</span><span class="lang-es">Términos de Uso</span></a> • 
+<a href="privacy.html"><span class="lang-en">Privacy Policy</span><span class="lang-es">Política de Privacidad</span></a>
+</p>
+</footer>
+
+<script>
+function setLang(lang) {
+    document.body.classList.remove('en', 'es');
+    document.body.classList.add(lang);
+    document.getElementById('btnEn').classList.toggle('active', lang === 'en');
+    document.getElementById('btnEs').classList.toggle('active', lang === 'es');
+    document.documentElement.lang = lang;
+    localStorage.setItem('akashic_lang', lang);
+}
+var saved = localStorage.getItem('akashic_lang');
+if (saved) setLang(saved);
+else if (navigator.language && navigator.language.startsWith('es')) setLang('es');
+</script>
+
+</body>
+</html>
