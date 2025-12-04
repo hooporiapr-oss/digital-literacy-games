@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Games | Akashic Academy</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Georgia,serif;background:#0a0a1a;color:#fff;min-height:100vh}
+
+.loading{display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column}
+.spinner{width:50px;height:50px;border:5px solid rgba(255,215,0,0.3);border-top-color:#ffd700;border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.header{background:linear-gradient(135deg,#1a1a2e,#16213e);padding:20px;border-bottom:3px solid #ffd700;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.header h1{color:#ffd700;font-size:1.8em}
+.student-info{display:flex;align-items:center;gap:15px}
+.student-name{font-size:1.1em}
+.btn-logout{padding:10px 20px;background:rgba(231,76,60,0.2);border:2px solid #e74c3c;color:#e74c3c;border-radius:8px;cursor:pointer;font-weight:bold;transition:all 0.2s}
+.btn-logout:hover{background:#e74c3c;color:#fff}
+
+.container{max-width:1400px;margin:0 auto;padding:40px 20px}
+
+.welcome{background:rgba(46,204,113,0.1);border:2px solid rgba(46,204,113,0.3);border-radius:16px;padding:30px;margin-bottom:40px;text-align:center}
+.welcome h2{color:#2ecc71;margin-bottom:10px}
+.welcome p{opacity:0.8;font-size:1.1em}
+
+.games-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:25px}
+
+.game-card{background:linear-gradient(135deg,#1a1a2e,#16213e);border:2px solid rgba(255,215,0,0.3);border-radius:16px;padding:25px;text-align:center;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden}
+.game-card:hover{transform:translateY(-5px);border-color:#ffd700;box-shadow:0 10px 30px rgba(255,215,0,0.3)}
+.game-card:before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#ffd700,#ff8c00)}
+
+.game-icon{font-size:4em;margin-bottom:15px}
+.game-name{font-size:1.3em;color:#ffd700;margin-bottom:10px;font-weight:bold}
+.game-desc{font-size:0.9em;opacity:0.7;margin-bottom:15px}
+.game-grade{display:inline-block;padding:5px 15px;background:rgba(255,215,0,0.2);border-radius:20px;font-size:0.85em;color:#ffd700;margin-bottom:15px}
+
+.btn-play{padding:12px 30px;background:#ffd700;color:#000;border:none;border-radius:25px;font-weight:bold;font-size:1em;cursor:pointer;transition:all 0.2s}
+.btn-play:hover{background:#ffed4e;transform:scale(1.05)}
+
+.no-access{text-align:center;padding:100px 20px}
+.no-access h2{color:#e74c3c;margin-bottom:20px}
+.no-access p{opacity:0.8;margin-bottom:30px}
+.btn-setup{padding:15px 40px;background:#ffd700;color:#000;text-decoration:none;border-radius:25px;font-weight:bold;display:inline-block}
+
+@media(max-width:600px){
+.header{flex-direction:column;text-align:center}
+.header h1{font-size:1.5em;margin-bottom:10px}
+.games-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="loading" class="loading">
+<div class="spinner"></div>
+<p style="margin-top:20px;opacity:0.8">Loading your games...</p>
+</div>
+
+<div id="mainContent" style="display:none">
+
+<header class="header">
+<h1>🎮 My Games</h1>
+<div class="student-info">
+<span class="student-name" id="studentName">👤 Student</span>
+<button class="btn-logout" onclick="logout()">Logout</button>
+</div>
+</header>
+
+<div class="container">
+
+<div class="welcome">
+<h2>Welcome Back! 🎉</h2>
+<p>Choose a game below to practice your digital literacy skills</p>
+</div>
+
+<div class="games-grid" id="gamesGrid"></div>
+
+</div>
+
+</div>
+
+<div id="noAccess" class="no-access" style="display:none">
+<h2>⚠️ No Access</h2>
+<p>You need to join a class to play games.</p>
+<a href="student-setup.html" class="btn-setup">Join a Class</a>
+</div>
+
+<script>
+const API_URL = 'https://digital-literacy-backend.onrender.com/api';
+
+const GAMES = [
+  // K-2 Games
+  {id:'visual-memory-k2',name:'Visual Memory',nameEs:'Memoria Visual',icon:'👀',grade:'K-2',gradeEs:'K-2',desc:'Remember the squares',descEs:'Recuerda los cuadrados',url:'games-k2-visual-memory'},
+  {id:'sequence-memory-k2',name:'Sequence Memory',nameEs:'Memoria de Secuencia',icon:'🔢',grade:'K-2',gradeEs:'K-2',desc:'Follow the pattern',descEs:'Sigue el patrón',url:'games-k2-sequence-memory'},
+  {id:'color-match-k2',name:'Color Match',nameEs:'Emparejar Colores',icon:'🎨',grade:'K-2',gradeEs:'K-2',desc:'Match the colors',descEs:'Empareja colores',url:'games-k2-color-match'},
+  
+  // 3-5 Games
+  {id:'number-memory-35',name:'Number Memory',nameEs:'Memoria de Números',icon:'🔢',grade:'3-5',gradeEs:'3-5',desc:'Remember numbers',descEs:'Recuerda números',url:'games-35-number-memory'},
+  {id:'visual-memory-35',name:'Visual Memory',nameEs:'Memoria Visual',icon:'👁️',grade:'3-5',gradeEs:'3-5',desc:'Advanced memory',descEs:'Memoria avanzada',url:'games-35-visual-memory'},
+  {id:'word-search-35',name:'Word Search',nameEs:'Sopa de Letras',icon:'🔍',grade:'3-5',gradeEs:'3-5',desc:'Find hidden words',descEs:'Encuentra palabras',url:'games-35-word-search'},
+  
+  // 6-8 Games
+  {id:'typing-quiz-68',name:'Typing Quiz',nameEs:'Prueba de Tecleo',icon:'⌨️',grade:'6-8',gradeEs:'6-8',desc:'Test typing skills',descEs:'Prueba tu tecleo',url:'games-68-typing-quiz'},
+  {id:'word-search-68',name:'Word Search Pro',nameEs:'Sopa Letras Pro',icon:'🔍',grade:'6-8',gradeEs:'6-8',desc:'Advanced word search',descEs:'Sopa avanzada',url:'games-68-word-search'},
+  {id:'number-memory-68',name:'Number Memory Pro',nameEs:'Memoria Números Pro',icon:'🧮',grade:'6-8',gradeEs:'6-8',desc:'Advanced numbers',descEs:'Números avanzados',url:'games-68-number-memory'},
+  
+  // 9-12 Games
+  {id:'typing-912',name:'Speed Typing',nameEs:'Tecleo Rápido',icon:'⌨️',grade:'9-12',gradeEs:'9-12',desc:'Fast typing test',descEs:'Test de tecleo',url:'games-912-typing'},
+  {id:'assessment-912',name:'Digital Assessment',nameEs:'Evaluación Digital',icon:'📝',grade:'9-12',gradeEs:'9-12',desc:'Full assessment',descEs:'Evaluación completa',url:'games-912-assessment'},
+  {id:'stroop-912',name:'Stroop Challenge',nameEs:'Desafío Stroop',icon:'🧠',grade:'9-12',gradeEs:'9-12',desc:'Brain challenge',descEs:'Desafío cerebral',url:'games-912-stroop-challenge'}
+];
+
+let studentData = null;
+
+async function init() {
+  // Check if student is logged in
+  const studentId = localStorage.getItem('akashic_student_id');
+  const studentName = localStorage.getItem('akashic_student_name');
+  const classCode = localStorage.getItem('akashic_class_code');
+  
+  if (!studentId || !studentName || !classCode) {
+    // Not logged in
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('noAccess').style.display = 'block';
+    return;
+  }
+  
+  // Validate access
+  try {
+    const res = await fetch(`${API_URL}/classes/${classCode}/validate`);
+    const data = await res.json();
+    
+    if (!data.valid) {
+      throw new Error('Class not valid');
+    }
+    
+    // Show games
+    document.getElementById('studentName').textContent = `👤 ${studentName}`;
+    renderGames();
+    
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    
+  } catch (err) {
+    console.error('Access validation failed:', err);
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('noAccess').style.display = 'block';
+  }
+}
+
+function renderGames() {
+  const grid = document.getElementById('gamesGrid');
+  const lang = localStorage.getItem('akashic_lang') || 'en';
+  const isSpanish = lang === 'es';
+  
+  grid.innerHTML = GAMES.map(game => `
+    <div class="game-card" onclick="playGame('${game.url}', '${isSpanish ? 'es' : 'en'}')">
+      <div class="game-icon">${game.icon}</div>
+      <div class="game-name">${isSpanish ? game.nameEs : game.name}</div>
+      <div class="game-grade">${isSpanish ? game.gradeEs : game.grade}</div>
+      <div class="game-desc">${isSpanish ? game.descEs : game.desc}</div>
+      <button class="btn-play">${isSpanish ? '▶️ Jugar' : '▶️ Play'}</button>
+    </div>
+  `).join('');
+}
+
+function playGame(gameUrl, lang) {
+  const studentId = localStorage.getItem('akashic_student_id');
+  const classCode = localStorage.getItem('akashic_class_code');
+  window.location.href = `${gameUrl}-${lang}.html?studentId=${studentId}&classCode=${classCode}`;
+}
+
+function logout() {
+  if (confirm('Are you sure you want to logout?')) {
+    localStorage.removeItem('akashic_student_id');
+    localStorage.removeItem('akashic_student_name');
+    localStorage.removeItem('akashic_class_code');
+    window.location.href = 'index.html';
+  }
+}
+
+init();
+</script>
+
+</body>
+</html>
