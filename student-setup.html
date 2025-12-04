@@ -88,9 +88,9 @@ const API_URL = 'https://digital-literacy-backend.onrender.com/api';
 let validatedCode = null;
 
 function loadExisting() {
-    const name = localStorage.getItem('dl_student_name');
-    const code = localStorage.getItem('dl_class_code');
-    const stats = JSON.parse(localStorage.getItem('dl_student_stats') || '{}');
+    const name = localStorage.getItem('akashic_student_name');
+    const code = localStorage.getItem('akashic_class_code');
+    const stats = JSON.parse(localStorage.getItem('akashic_student_stats') || '{}');
     
     if (name && code) {
         document.getElementById('displayName').textContent = name;
@@ -176,7 +176,7 @@ async function saveSetup() {
     
     try {
         // Register with backend
-        const studentId = localStorage.getItem('dl_student_id') || 's_' + Date.now() + '_' + Math.random().toString(36).substr(2,6);
+        const studentId = localStorage.getItem('akashic_student_id') || 's_' + Date.now() + '_' + Math.random().toString(36).substr(2,6);
         
         const res = await fetch(`${API_URL}/students`, {
             method: 'POST',
@@ -187,9 +187,9 @@ async function saveSetup() {
         const data = await res.json();
         
         if (data.success) {
-            localStorage.setItem('dl_student_id', data.studentId);
-            localStorage.setItem('dl_student_name', name);
-            localStorage.setItem('dl_class_code', code);
+            localStorage.setItem('akashic_student_id', data.studentId);
+            localStorage.setItem('akashic_student_name', name);
+            localStorage.setItem('akashic_class_code', code);
             
             alert('Success! You\'ve joined the class.\n\nYou can now play games and your scores will be tracked.');
             loadExisting();
@@ -221,7 +221,7 @@ function resetSetup() {
 }
 
 function goToGames() {
-    const code = localStorage.getItem('dl_class_code');
+    const code = localStorage.getItem('akashic_class_code');
     if (!code) {
         alert('Please join a class first to access games.');
         return;
