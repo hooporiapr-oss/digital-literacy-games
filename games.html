@@ -121,8 +121,16 @@ async function init() {
   const studentName = localStorage.getItem('akashic_student_name');
   const classCode = localStorage.getItem('akashic_class_code');
   
+  // Debug logging
+  console.log('🔍 Games.html Debug Info:');
+  console.log('Student ID:', studentId);
+  console.log('Student Name:', studentName);
+  console.log('Class Code:', classCode);
+  console.log('All localStorage:', {...localStorage});
+  
   if (!studentId || !studentName || !classCode) {
     // Not logged in
+    console.error('❌ Missing required data:', {studentId, studentName, classCode});
     document.getElementById('loading').style.display = 'none';
     document.getElementById('noAccess').style.display = 'block';
     return;
@@ -130,8 +138,11 @@ async function init() {
   
   // Validate access
   try {
+    console.log('🔄 Validating class code...');
     const res = await fetch(`${API_URL}/classes/${classCode}/validate`);
     const data = await res.json();
+    
+    console.log('✅ Validation response:', data);
     
     if (!data.valid) {
       throw new Error('Class not valid');
@@ -144,8 +155,10 @@ async function init() {
     document.getElementById('loading').style.display = 'none';
     document.getElementById('mainContent').style.display = 'block';
     
+    console.log('✅ Games loaded successfully!');
+    
   } catch (err) {
-    console.error('Access validation failed:', err);
+    console.error('❌ Access validation failed:', err);
     document.getElementById('loading').style.display = 'none';
     document.getElementById('noAccess').style.display = 'block';
   }
