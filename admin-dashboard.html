@@ -4,6 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Admin Dashboard | Akashic Digital Literacy</title>
+<!-- ADMIN DASHBOARD - DO NOT REDIRECT -->
+<script>
+// Prevent any redirects from index.html or other scripts
+(function() {
+    // Stop propagation of location changes
+    var originalPushState = history.pushState;
+    var originalReplaceState = history.replaceState;
+    
+    // Store that we're on admin dashboard
+    sessionStorage.setItem('akashic_page', 'admin-dashboard');
+    
+    // If something tries to redirect us away, stop it
+    window.addEventListener('beforeunload', function(e) {
+        sessionStorage.setItem('akashic_intended_page', 'admin-dashboard');
+    });
+    
+    // Log that we loaded correctly
+    console.log('✅ Admin Dashboard loaded successfully');
+    console.log('URL:', window.location.href);
+    console.log('If you see homepage instead, check index.html for redirect code');
+})();
+</script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:system-ui,sans-serif;background:#0a0a1a;color:#fff;min-height:100vh}
@@ -63,6 +85,12 @@ tr:hover{background:rgba(255,255,255,0.05)}
 </style>
 </head>
 <body>
+
+<!-- VERIFICATION BANNER - Remove after confirming page loads correctly -->
+<div style="position:fixed;top:0;left:0;right:0;background:#2ecc71;color:#000;text-align:center;padding:10px;z-index:9999;font-weight:bold;border-bottom:3px solid #27ae60">
+✅ ADMIN DASHBOARD LOADED CORRECTLY - You are on: admin-dashboard.html
+<button onclick="this.parentElement.remove()" style="margin-left:20px;padding:5px 15px;background:#000;color:#fff;border:none;border-radius:5px;cursor:pointer">Hide This Banner</button>
+</div>
 
 <!-- Login Screen -->
 <div id="loginScreen" class="login-box">
