@@ -1,202 +1,455 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Games | Akashic Academy</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Georgia,serif;background:#0a0a1a;color:#fff;min-height:100vh;padding-top:60px}
-
-/* Sticky Language Toggle Bar */
-.lang-bar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,10,26,0.95);backdrop-filter:blur(10px);padding:10px 20px;display:flex;justify-content:center;align-items:center;border-bottom:2px solid rgba(255,215,0,0.3)}
-.lang-toggle{display:flex;gap:5px;background:rgba(0,0,0,0.4);border-radius:25px;padding:4px;border:2px solid rgba(255,215,0,0.4)}
-.lang-btn{padding:8px 16px;border:none;border-radius:20px;cursor:pointer;font-weight:bold;font-size:0.85em;transition:all 0.2s;background:transparent;color:#fff}
-.lang-btn.active{background:#ffd700;color:#1a1a2e}
-.lang-btn:hover:not(.active){background:rgba(255,255,255,0.1)}
-
-/* Language Switching */
-.en .lang-es{display:none!important}
-.es .lang-en{display:none!important}
-
-.header{background:linear-gradient(135deg,#1a1a2e,#16213e);padding:20px;text-align:center;border-bottom:3px solid #ffd700;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
-.header h1{color:#ffd700;font-size:1.8em;flex:1;text-align:center}
-.student-info{display:flex;gap:15px;align-items:center}
-.student-name{background:rgba(255,215,0,0.2);padding:10px 20px;border-radius:20px;font-weight:bold}
-.btn-logout{background:#e74c3c;color:#fff;border:none;padding:10px 20px;border-radius:20px;cursor:pointer;font-weight:bold;transition:all 0.2s}
-.btn-logout:hover{background:#c0392b;transform:translateY(-2px)}
-
-.main{max-width:1200px;margin:0 auto;padding:40px 20px}
-.welcome{text-align:center;margin-bottom:40px}
-.welcome h2{font-size:2em;color:#ffd700;margin-bottom:10px}
-.welcome p{opacity:0.8;font-size:1.1em}
-
-.games-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px}
-.game-card{background:linear-gradient(135deg,rgba(255,255,255,0.1),rgba(255,255,255,0.05));border:2px solid rgba(255,255,255,0.2);border-radius:16px;padding:25px;text-align:center;transition:all 0.3s;cursor:pointer}
-.game-card:hover{transform:translateY(-5px);border-color:#ffd700;box-shadow:0 10px 30px rgba(255,215,0,0.3)}
-.game-icon{font-size:3em;margin-bottom:15px}
-.game-name{font-size:1.3em;font-weight:bold;color:#ffd700;margin-bottom:8px}
-.game-grade{font-size:0.9em;opacity:0.7;margin-bottom:8px}
-.game-desc{font-size:0.95em;opacity:0.8;margin-bottom:15px;min-height:40px}
-.btn-play{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a1a2e;border:none;padding:12px 30px;border-radius:25px;font-weight:bold;font-size:1em;cursor:pointer;transition:all 0.2s;width:100%}
-.btn-play:hover{transform:scale(1.05)}
-
-.loading{text-align:center;padding:100px 20px}
-.loading h2{color:#ffd700;margin-bottom:20px}
-.no-access{text-align:center;padding:100px 20px}
-.no-access h2{color:#e74c3c;margin-bottom:20px}
-.no-access p{margin-bottom:30px;opacity:0.8}
-.btn-setup{background:#ffd700;color:#1a1a2e;padding:15px 40px;border-radius:30px;text-decoration:none;font-weight:bold;display:inline-block;transition:all 0.2s}
-.btn-setup:hover{transform:translateY(-3px);box-shadow:0 10px 20px rgba(255,215,0,0.3)}
-
-@media(max-width:700px){body{padding-top:55px}.header{flex-direction:column;gap:15px}.header h1{font-size:1.5em}.student-info{flex-direction:column;width:100%}.games-grid{grid-template-columns:1fr}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akashic Academy - Games</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        header h1 {
+            font-size: 2rem;
+            background: linear-gradient(90deg, #06b6d4, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+        header p { color: #94a3b8; }
+        
+        .student-bar {
+            background: rgba(6,182,212,0.1);
+            border: 1px solid rgba(6,182,212,0.3);
+            border-radius: 15px;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .student-info { display: flex; align-items: center; gap: 12px; }
+        .student-avatar {
+            width: 45px; height: 45px;
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem;
+        }
+        .student-name { font-weight: 600; }
+        .student-id { color: #94a3b8; font-size: 0.85rem; }
+        .logout-btn {
+            padding: 8px 20px;
+            background: rgba(239,68,68,0.2);
+            border: 1px solid rgba(239,68,68,0.4);
+            color: #f87171;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .logout-btn:hover { background: rgba(239,68,68,0.4); }
+        
+        .grade-band {
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .grade-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .grade-icon {
+            font-size: 1.8rem;
+            width: 50px; height: 50px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 12px;
+        }
+        .grade-k2 .grade-icon { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+        .grade-35 .grade-icon { background: linear-gradient(135deg, #34d399, #10b981); }
+        .grade-68 .grade-icon { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
+        .grade-912 .grade-icon { background: linear-gradient(135deg, #a78bfa, #8b5cf6); }
+        
+        .grade-label { font-size: 1.4rem; font-weight: 700; }
+        .grade-ages { color: #94a3b8; font-size: 0.85rem; margin-left: auto; }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .game-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: all 0.3s;
+        }
+        .game-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(6,182,212,0.4);
+            box-shadow: 0 8px 25px rgba(6,182,212,0.15);
+        }
+        .game-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .game-icon {
+            font-size: 1.6rem;
+            width: 42px; height: 42px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+        .game-title { font-size: 1.05rem; font-weight: 600; }
+        .game-title-es { font-size: 0.8rem; color: #64748b; }
+        .game-desc {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .game-links { display: flex; gap: 10px; }
+        .game-link {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .game-link.en {
+            background: rgba(59,130,246,0.2);
+            color: #60a5fa;
+            border: 1px solid rgba(59,130,246,0.3);
+        }
+        .game-link.en:hover { background: rgba(59,130,246,0.4); }
+        .game-link.es {
+            background: rgba(239,68,68,0.2);
+            color: #f87171;
+            border: 1px solid rgba(239,68,68,0.3);
+        }
+        .game-link.es:hover { background: rgba(239,68,68,0.4); }
+        
+        .no-access {
+            text-align: center;
+            padding: 80px 20px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .no-access h2 { color: #f87171; margin-bottom: 15px; }
+        .no-access p { color: #94a3b8; margin-bottom: 25px; }
+        .login-btn {
+            display: inline-block;
+            padding: 12px 35px;
+            background: linear-gradient(90deg, #06b6d4, #8b5cf6);
+            color: #fff;
+            font-size: 1rem;
+            border-radius: 25px;
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.5rem; }
+            .grade-header { flex-wrap: wrap; }
+            .grade-ages { margin-left: 0; width: 100%; margin-top: 5px; }
+            .games-grid { grid-template-columns: 1fr; }
+            .student-bar { justify-content: center; text-align: center; }
+        }
+    </style>
 </head>
-<body class="en">
-
-<div class="lang-bar">
-<div class="lang-toggle">
-<button class="lang-btn active" id="btnEn" onclick="setLang('en')">🇺🇸 English</button>
-<button class="lang-btn" id="btnEs" onclick="setLang('es')">🇵🇷 Español</button>
-</div>
-</div>
-
-<header class="header">
-<div style="flex:1"></div>
-<h1><span class="lang-en">🎮 My Games</span><span class="lang-es">🎮 Mis Juegos</span></h1>
-<div class="student-info">
-<span class="student-name" id="studentName">👤 Student</span>
-<button class="btn-logout" onclick="logout()"><span class="lang-en">Logout</span><span class="lang-es">Salir</span></button>
-</div>
-</header>
-
-<main class="main">
-
-<div id="loading" class="loading">
-<h2><span class="lang-en">Loading your games...</span><span class="lang-es">Cargando tus juegos...</span></h2>
-<p>⏳</p>
-</div>
-
-<div id="mainContent" style="display:none">
-<div class="welcome">
-<h2><span class="lang-en">Welcome Back! 🎉</span><span class="lang-es">¡Bienvenido de Nuevo! 🎉</span></h2>
-<p><span class="lang-en">All 24 games are unlocked and ready to play! Game badges show difficulty levels - start with basics or challenge yourself with advanced games.</span><span class="lang-es">¡Los 24 juegos están desbloqueados y listos para jugar! Las insignias muestran niveles de dificultad - comienza con lo básico o desafíate con juegos avanzados.</span></p>
-</div>
-<div id="gamesGrid" class="games-grid"></div>
-</div>
-
-<div id="noAccess" class="no-access" style="display:none">
-<h2>⚠️ <span class="lang-en">No Access</span><span class="lang-es">Sin Acceso</span></h2>
-<p><span class="lang-en">You need to join a class to play games.</span><span class="lang-es">Necesitas unirte a una clase para jugar juegos.</span></p>
-<a href="student-setup.html" class="btn-setup"><span class="lang-en">Join a Class</span><span class="lang-es">Unirse a una Clase</span></a>
-</div>
-
-</main>
-
-<script>
-const API_URL='https://digital-literacy-backend.onrender.com/api';
-const GAMES=[
-{id:'visual-k2',name:'Visual Memory',nameEs:'Memoria Visual',icon:'👀',grade:'K-2',gradeEs:'K-2',desc:'Remember squares',descEs:'Recuerda cuadrados',url:'games-k2-visual-memory'},
-{id:'sequence-k2',name:'Sequence Memory',nameEs:'Memoria Secuencia',icon:'🔢',grade:'K-2',gradeEs:'K-2',desc:'Follow pattern',descEs:'Sigue patrón',url:'games-k2-sequence-memory'},
-{id:'color-k2',name:'Color Match',nameEs:'Emparejar Colores',icon:'🎨',grade:'K-2',gradeEs:'K-2',desc:'Match colors',descEs:'Empareja colores',url:'games-k2-color-match'},
-{id:'memory-k2',name:'Memory Match',nameEs:'Juego Memoria',icon:'🃏',grade:'K-2',gradeEs:'K-2',desc:'Find pairs',descEs:'Encuentra pares',url:'games-k2-memory-match'},
-{id:'reaction-k2',name:'Reaction Time',nameEs:'Tiempo Reacción',icon:'⚡',grade:'K-2',gradeEs:'K-2',desc:'Click when ready',descEs:'Clic cuando listo',url:'games-k2-reaction-time'},
-{id:'reflex-k2',name:'Reflex Training',nameEs:'Entrenamiento Reflejos',icon:'🎯',grade:'K-2',gradeEs:'K-2',desc:'Click targets',descEs:'Clic objetivos',url:'games-k2-reflex-training'},
-{id:'number-35',name:'Number Memory',nameEs:'Memoria Números',icon:'🔢',grade:'3-5',gradeEs:'3-5',desc:'Remember numbers',descEs:'Recuerda números',url:'games-35-number-memory'},
-{id:'visual-35',name:'Visual Memory',nameEs:'Memoria Visual',icon:'👁️',grade:'3-5',gradeEs:'3-5',desc:'Advanced memory',descEs:'Memoria avanzada',url:'games-35-visual-memory'},
-{id:'word-35',name:'Word Search',nameEs:'Sopa de Letras',icon:'🔍',grade:'3-5',gradeEs:'3-5',desc:'Find words',descEs:'Encuentra palabras',url:'games-35-word-search'},
-{id:'sequence-35',name:'Sequence Memory',nameEs:'Memoria Secuencia',icon:'🔲',grade:'3-5',gradeEs:'3-5',desc:'Advanced patterns',descEs:'Patrones avanzados',url:'games-35-sequence-memory'},
-{id:'memory-35',name:'Memory Match',nameEs:'Juego Memoria',icon:'🃏',grade:'3-5',gradeEs:'3-5',desc:'Challenging pairs',descEs:'Pares desafiantes',url:'games-35-memory-match'},
-{id:'reaction-35',name:'Reaction Time',nameEs:'Tiempo Reacción',icon:'⚡',grade:'3-5',gradeEs:'3-5',desc:'Faster reactions',descEs:'Reacciones rápidas',url:'games-35-reaction-time'},
-{id:'typing-68',name:'Typing Quiz',nameEs:'Prueba Tecleo',icon:'⌨️',grade:'6-8',gradeEs:'6-8',desc:'Test typing',descEs:'Prueba tecleo',url:'games-68-typing-quiz'},
-{id:'word-68',name:'Word Search Pro',nameEs:'Sopa Letras Pro',icon:'🔍',grade:'6-8',gradeEs:'6-8',desc:'Advanced search',descEs:'Sopa avanzada',url:'games-68-word-search'},
-{id:'number-68',name:'Number Memory Pro',nameEs:'Memoria Números Pro',icon:'🧮',grade:'6-8',gradeEs:'6-8',desc:'Advanced numbers',descEs:'Números avanzados',url:'games-68-number-memory'},
-{id:'visual-68',name:'Visual Memory Pro',nameEs:'Memoria Visual Pro',icon:'👁️',grade:'6-8',gradeEs:'6-8',desc:'Expert memory',descEs:'Memoria experta',url:'games-68-visual-memory'},
-{id:'sequence-68',name:'Sequence Pro',nameEs:'Secuencia Pro',icon:'🔲',grade:'6-8',gradeEs:'6-8',desc:'Complex patterns',descEs:'Patrones complejos',url:'games-68-sequence-memory'},
-{id:'reflex-68',name:'Reflex Pro',nameEs:'Reflejos Pro',icon:'🎯',grade:'6-8',gradeEs:'6-8',desc:'Advanced reflexes',descEs:'Reflejos avanzados',url:'games-68-reflex-training'},
-{id:'typing-912',name:'Speed Typing',nameEs:'Tecleo Rápido',icon:'⌨️',grade:'9-12',gradeEs:'9-12',desc:'Fast typing',descEs:'Tecleo rápido',url:'games-912-typing'},
-{id:'assessment-912',name:'Digital Assessment',nameEs:'Evaluación Digital',icon:'📝',grade:'9-12',gradeEs:'9-12',desc:'Full assessment',descEs:'Evaluación completa',url:'games-912-assessment'},
-{id:'stroop-912',name:'Stroop Challenge',nameEs:'Desafío Stroop',icon:'🧠',grade:'9-12',gradeEs:'9-12',desc:'Brain challenge',descEs:'Desafío cerebral',url:'games-912-stroop-challenge'},
-{id:'number-912',name:'Number Memory Elite',nameEs:'Memoria Números Elite',icon:'🔢',grade:'9-12',gradeEs:'9-12',desc:'Expert numbers',descEs:'Números experto',url:'games-912-number-memory'},
-{id:'visual-912',name:'Visual Memory Elite',nameEs:'Memoria Visual Elite',icon:'👀',grade:'9-12',gradeEs:'9-12',desc:'Master memory',descEs:'Memoria maestro',url:'games-912-visual-memory'},
-{id:'word-912',name:'Word Search Elite',nameEs:'Sopa Letras Elite',icon:'🔍',grade:'9-12',gradeEs:'9-12',desc:'Expert search',descEs:'Sopa experta',url:'games-912-word-search'}
-];
-
-function setLang(lang){
-document.body.className=lang;
-document.getElementById('btnEn').classList.toggle('active',lang==='en');
-document.getElementById('btnEs').classList.toggle('active',lang==='es');
-localStorage.setItem('akashic_lang',lang);
-if(document.getElementById('mainContent').style.display!=='none'){
-renderGames();
-}
-}
-
-async function init(){
-const savedLang=localStorage.getItem('akashic_lang')||'en';
-setLang(savedLang);
-const studentId=localStorage.getItem('akashic_student_id');
-const studentName=localStorage.getItem('akashic_student_name');
-const classCode=localStorage.getItem('akashic_class_code');
-console.log('🔍 Student ID:',studentId);
-console.log('🔍 Student Name:',studentName);
-console.log('🔍 Class Code:',classCode);
-if(!studentId||!studentName||!classCode){
-console.error('❌ Missing data');
-document.getElementById('loading').style.display='none';
-document.getElementById('noAccess').style.display='block';
-return;
-}
-try{
-console.log('🔄 Validating...');
-const res=await fetch(`${API_URL}/classes/${classCode}/validate`);
-const data=await res.json();
-console.log('✅ Validation:',data);
-if(!data.valid)throw new Error('Invalid');
-document.getElementById('studentName').textContent=`👤 ${studentName}`;
-renderGames();
-document.getElementById('loading').style.display='none';
-document.getElementById('mainContent').style.display='block';
-console.log('✅ Games loaded!');
-}catch(err){
-console.error('❌ Error:',err);
-document.getElementById('loading').style.display='none';
-document.getElementById('noAccess').style.display='block';
-}
-}
-
-function renderGames(){
-const grid=document.getElementById('gamesGrid');
-const lang=localStorage.getItem('akashic_lang')||'en';
-const isEs=lang==='es';
-grid.innerHTML=GAMES.map(g=>`
-<div class="game-card" onclick="playGame('${g.url}','${isEs?'es':'en'}')">
-<div class="game-icon">${g.icon}</div>
-<div class="game-name">${isEs?g.nameEs:g.name}</div>
-<div class="game-grade">${isEs?g.gradeEs:g.grade}</div>
-<div class="game-desc">${isEs?g.descEs:g.desc}</div>
-<button class="btn-play">${isEs?'▶️ Jugar':'▶️ Play'}</button>
-</div>
-`).join('');
-}
-
-function playGame(url,lang){
-const studentId=localStorage.getItem('akashic_student_id');
-const classCode=localStorage.getItem('akashic_class_code');
-window.location.href=`${url}-${lang}.html?studentId=${studentId}&classCode=${classCode}`;
-}
-
-function logout(){
-const lang=localStorage.getItem('akashic_lang')||'en';
-if(confirm(lang==='es'?'¿Cerrar sesión?':'Logout?')){
-localStorage.removeItem('akashic_student_id');
-localStorage.removeItem('akashic_student_name');
-localStorage.removeItem('akashic_class_code');
-window.location.href='student-setup.html';
-}
-}
-
-window.addEventListener('DOMContentLoaded',init);
-</script>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧠 Akashic Academy</h1>
+            <p>Cognitive Training Games • Juegos de Entrenamiento Cognitivo</p>
+        </header>
+        
+        <div class="student-bar" id="studentBar" style="display: none;">
+            <div class="student-info">
+                <div class="student-avatar">👤</div>
+                <div>
+                    <div class="student-name" id="studentName">Student</div>
+                    <div class="student-id" id="studentId">ID: 000000</div>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="logout()">Logout / Salir</button>
+        </div>
+        
+        <div id="gamesContent" style="display: none;">
+            
+            <!-- K-2 -->
+            <div class="grade-band grade-k2">
+                <div class="grade-header">
+                    <span class="grade-icon">🌟</span>
+                    <span class="grade-label">K-2</span>
+                    <span class="grade-ages">Ages 5-8 • Edades 5-8</span>
+                </div>
+                <div class="games-grid">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">👁️</span>
+                            <div>
+                                <div class="game-title">Visual Memory</div>
+                                <div class="game-title-es">Memoria Visual</div>
+                            </div>
+                        </div>
+                        <p class="game-desc">Remember which squares light up. Simple patterns that grow.</p>
+                        <div class="game-links">
+                            <a href="games-k2-visual-memory-en.html" class="game-link en">🇺🇸 English</a>
+                            <a href="games-k2-visual-memory-es.html" class="game-link es">🇵🇷 Español</a>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">🎨</span>
+                            <div>
+                                <div class="game-title">Color Match</div>
+                                <div class="game-title-es">Combina Colores</div>
+                            </div>
+                        </div>
+                        <p class="game-desc">Does the word match the color? Look before you click!</p>
+                        <div class="game-links">
+                            <a href="games-k2-color-match-en.html" class="game-link en">🇺🇸 English</a>
+                            <a href="games-k2-color-match-es.html" class="game-link es">🇵🇷 Español</a>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">🔲</span>
+                            <div>
+                                <div class="game-title">Sequence Memory</div>
+                                <div class="game-title-es">Memoria de Secuencia</div>
+                            </div>
+                        </div>
+                        <p class="game-desc">Watch the pattern, tap it back. Like Simon Says!</p>
+                        <div class="game-links">
+                            <a href="games-k2-sequence-memory-en.html" class="game-link en">🇺🇸 English</a>
+                            <a href="games-k2-sequence-memory-es.html" class="game-link es">🇵🇷 Español</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 3-5 -->
+            <div class="grade-band grade-35">
+                <div class="grade-header">
+                    <span class="grade-icon">📚</span>
+                    <span class="grade-label">3-5</span>
+                    <span class="grade-ages">Ages 8-11 • Edades 8-11</span>
+                </div>
+                <div class="games-grid">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">🔢</span>
+                            <div>
+                                <div class="game-title">Number Memory</div>
+                                <div class="game-title-es">Memoria de Números</div>
+                            </div>
+                        </div>
+                        <p class="game-desc">Remember longer number sequences. Builds working memory.</p>
+                        <div class="game-links">
+                            <a href="games-35-number-memory-en.html" class="game-link en">🇺🇸 English</a>
+                            <a href="games-35-number-memory-es.html" class="game-link es">🇵🇷 Español</a>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">🔍</span>
+                            <div>
+                                <div class="game-title">Tech Word Search</div>
+                                <div class="game-title-es">Sopa de Letras Tech</div>
+                            </div>
+                        </div>
+                        <p class="game-desc">Find PASSWORD, VIRUS, and more. Learn tech vocabulary!</p>
+                        <div class="game-links">
+                            <a href="games-35-word-search-en.html" class="game-link en">🇺🇸 English</a>
+                            <a href="games-35-word-search-es.html" class="game-link es">🇵🇷 Español</a>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">👁️</span>
+                            <div>
+                                <div class="game-title">Visual Memory+</div>
+                                <div class="game-title-es">Memoria Visual+</div>
+                            </div>
+                        </div>
+                        <p class="game-desc">Harder patterns with more squares. Challenge yourself!</p>
+                        <div class="game-links">
+                            <a href="games-35-visual-memory-en.html" class="game-link en">🇺🇸 English</a>
+                            <a href="games-35-visual-memory-es.html" class="game-link es">🇵🇷 Español</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 6-8 -->
+            <div class="grade-band grade-68">
+                <div class="grade-header">
+                    <span class="grade-icon">🚀</span>
+                    <span class="grade-label">6-8</span>
+                    <span class="grade-ages">Ages 11-14 • Edades 11-14</span>
+                </div>
+                <div class="games-grid">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">⌨️</span>
+                            <div>
+                                <div class="game-title">Typing + Quiz</div>
+                                <div class="game-title-es">Escritura + Quiz</div>
+                            </div>
+                        </div>
+                        <p class="game-desc">Type passages about internet safety, then answer questions.</p>
+                        <div class="game-links">
+                            <a href="games-68-typing-quiz-en.html" class="game-link en">🇺🇸 English</a>
+                            <a href="games-68-typing-quiz-es.html" class="game-link es">🇵🇷 Español</a>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">🔍</span>
+                            <div>
+                                <div class="game-title">Advanced Word Search</div>
+                                <div class="game-title-es">Sopa Avanzada</div>
+                            </div>
+                        </div>
+                        <p class="game-desc">Find PHISHING, MALWARE, ENCRYPTION. Timed mode.</p>
+                        <div class="game-links">
+                            <a href="games-68-word-search-en.html" class="game-link en">🇺🇸 English</a>
+                            <a href="games-68-word-search-es.html" class="game-link es">🇵🇷 Español</a>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">🔢</span>
+                            <div>
+                                <div class="game-title">Number Memory Pro</div>
+                                <div class="game-title-es">Memoria de Números Pro</div>
+                            </div>
+                        </div>
+                        <p class="game-desc">Remember 10+ digits. Train for PINs and passwords.</p>
+                        <div class="game-links">
+                            <a href="games-68-number-memory-en.html" class="game-link en">🇺🇸 English</a>
+                            <a href="games-68-number-memory-es.html" class="game-link es">🇵🇷 Español</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 9-12 -->
+            <div class="grade-band grade-912">
+                <div class="grade-header">
+                    <span class="grade-icon">🎓</span>
+                    <span class="grade-label">9-12</span>
+                    <span class="grade-ages">Ages 14-18 • Edades 14-18</span>
+                </div>
+                <div class="games-grid">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">📝</span>
+                            <div>
+                                <div class="game-title">Full Assessment</div>
+                                <div class="game-title-es">Evaluación Completa</div>
+                            </div>
+                        </div>
+                        <p class="game-desc">Complete cognitive skills evaluation with detailed results.</p>
+                        <div class="game-links">
+                            <a href="games-912-assessment-en.html" class="game-link en">🇺🇸 English</a>
+                            <a href="games-912-assessment-es.html" class="game-link es">🇵🇷 Español</a>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">⌨️</span>
+                            <div>
+                                <div class="game-title">Speed Typing</div>
+                                <div class="game-title-es">Escritura Rápida</div>
+                            </div>
+                        </div>
+                        <p class="game-desc">Professional typing test. Track WPM and accuracy.</p>
+                        <div class="game-links">
+                            <a href="games-912-typing-en.html" class="game-link en">🇺🇸 English</a>
+                            <a href="games-912-typing-es.html" class="game-link es">🇵🇷 Español</a>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">🎨</span>
+                            <div>
+                                <div class="game-title">Stroop Challenge</div>
+                                <div class="game-title-es">Desafío Stroop</div>
+                            </div>
+                        </div>
+                        <p class="game-desc">Advanced focus test. Ignore the word, name the color.</p>
+                        <div class="game-links">
+                            <a href="games-912-stroop-challenge-en.html" class="game-link en">🇺🇸 English</a>
+                            <a href="games-912-stroop-challenge-es.html" class="game-link es">🇵🇷 Español</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div class="no-access" id="noAccess" style="display: none;">
+            <h2>🔒 Access Required / Acceso Requerido</h2>
+            <p>Please register with your class code to access games.<br>Por favor regístrate con tu código de clase.</p>
+            <a href="student-setup.html" class="login-btn">Register / Registrarse</a>
+        </div>
+    </div>
+    
+    <script>
+        function checkAccess() {
+            const studentData = localStorage.getItem('akashic_student');
+            if (studentData) {
+                const student = JSON.parse(studentData);
+                document.getElementById('studentName').textContent = student.name || 'Student';
+                document.getElementById('studentId').textContent = 'ID: ' + (student.id || student.student_id || '000000');
+                document.getElementById('studentBar').style.display = 'flex';
+                document.getElementById('gamesContent').style.display = 'block';
+                document.getElementById('noAccess').style.display = 'none';
+            } else {
+                document.getElementById('studentBar').style.display = 'none';
+                document.getElementById('gamesContent').style.display = 'none';
+                document.getElementById('noAccess').style.display = 'block';
+            }
+        }
+        
+        function logout() {
+            localStorage.removeItem('akashic_student');
+            localStorage.removeItem('akashic_token');
+            window.location.href = 'student-setup.html';
+        }
+        
+        document.addEventListener('DOMContentLoaded', checkAccess);
+    </script>
 </body>
 </html>
