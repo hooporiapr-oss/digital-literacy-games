@@ -114,4 +114,89 @@ const GAMES=[
 {id:'visual-68',name:'Visual Memory Pro',nameEs:'Memoria Visual Pro',icon:'👁️',grade:'6-8',gradeEs:'6-8',desc:'Expert memory',descEs:'Memoria experta',url:'games-68-visual-memory'},
 {id:'sequence-68',name:'Sequence Pro',nameEs:'Secuencia Pro',icon:'🔲',grade:'6-8',gradeEs:'6-8',desc:'Complex patterns',descEs:'Patrones complejos',url:'games-68-sequence-memory'},
 {id:'reflex-68',name:'Reflex Pro',nameEs:'Reflejos Pro',icon:'🎯',grade:'6-8',gradeEs:'6-8',desc:'Advanced reflexes',descEs:'Reflejos avanzados',url:'games-68-reflex-training'},
-{id:'typing-912',name:'Speed Typing',nameEs:'Tecleo Rápido',icon:'⌨️',grade:'9-12',gradeEs:'9-12',desc:'Fast
+{id:'typing-912',name:'Speed Typing',nameEs:'Tecleo Rápido',icon:'⌨️',grade:'9-12',gradeEs:'9-12',desc:'Fast typing',descEs:'Tecleo rápido',url:'games-912-typing'},
+{id:'assessment-912',name:'Digital Assessment',nameEs:'Evaluación Digital',icon:'📝',grade:'9-12',gradeEs:'9-12',desc:'Full assessment',descEs:'Evaluación completa',url:'games-912-assessment'},
+{id:'stroop-912',name:'Stroop Challenge',nameEs:'Desafío Stroop',icon:'🧠',grade:'9-12',gradeEs:'9-12',desc:'Brain challenge',descEs:'Desafío cerebral',url:'games-912-stroop-challenge'},
+{id:'number-912',name:'Number Memory Elite',nameEs:'Memoria Números Elite',icon:'🔢',grade:'9-12',gradeEs:'9-12',desc:'Expert numbers',descEs:'Números experto',url:'games-912-number-memory'},
+{id:'visual-912',name:'Visual Memory Elite',nameEs:'Memoria Visual Elite',icon:'👀',grade:'9-12',gradeEs:'9-12',desc:'Master memory',descEs:'Memoria maestro',url:'games-912-visual-memory'},
+{id:'word-912',name:'Word Search Elite',nameEs:'Sopa Letras Elite',icon:'🔍',grade:'9-12',gradeEs:'9-12',desc:'Expert search',descEs:'Sopa experta',url:'games-912-word-search'}
+];
+
+function setLang(lang){
+document.body.className=lang;
+document.getElementById('btnEn').classList.toggle('active',lang==='en');
+document.getElementById('btnEs').classList.toggle('active',lang==='es');
+localStorage.setItem('akashic_lang',lang);
+if(document.getElementById('mainContent').style.display!=='none'){
+renderGames();
+}
+}
+
+async function init(){
+const savedLang=localStorage.getItem('akashic_lang')||'en';
+setLang(savedLang);
+const studentId=localStorage.getItem('akashic_student_id');
+const studentName=localStorage.getItem('akashic_student_name');
+const classCode=localStorage.getItem('akashic_class_code');
+console.log('🔍 Student ID:',studentId);
+console.log('🔍 Student Name:',studentName);
+console.log('🔍 Class Code:',classCode);
+if(!studentId||!studentName||!classCode){
+console.error('❌ Missing data');
+document.getElementById('loading').style.display='none';
+document.getElementById('noAccess').style.display='block';
+return;
+}
+try{
+console.log('🔄 Validating...');
+const res=await fetch(`${API_URL}/classes/${classCode}/validate`);
+const data=await res.json();
+console.log('✅ Validation:',data);
+if(!data.valid)throw new Error('Invalid');
+document.getElementById('studentName').textContent=`👤 ${studentName}`;
+renderGames();
+document.getElementById('loading').style.display='none';
+document.getElementById('mainContent').style.display='block';
+console.log('✅ Games loaded!');
+}catch(err){
+console.error('❌ Error:',err);
+document.getElementById('loading').style.display='none';
+document.getElementById('noAccess').style.display='block';
+}
+}
+
+function renderGames(){
+const grid=document.getElementById('gamesGrid');
+const lang=localStorage.getItem('akashic_lang')||'en';
+const isEs=lang==='es';
+grid.innerHTML=GAMES.map(g=>`
+<div class="game-card" onclick="playGame('${g.url}','${isEs?'es':'en'}')">
+<div class="game-icon">${g.icon}</div>
+<div class="game-name">${isEs?g.nameEs:g.name}</div>
+<div class="game-grade">${isEs?g.gradeEs:g.grade}</div>
+<div class="game-desc">${isEs?g.descEs:g.desc}</div>
+<button class="btn-play">${isEs?'▶️ Jugar':'▶️ Play'}</button>
+</div>
+`).join('');
+}
+
+function playGame(url,lang){
+const studentId=localStorage.getItem('akashic_student_id');
+const classCode=localStorage.getItem('akashic_class_code');
+window.location.href=`${url}-${lang}.html?studentId=${studentId}&classCode=${classCode}`;
+}
+
+function logout(){
+const lang=localStorage.getItem('akashic_lang')||'en';
+if(confirm(lang==='es'?'¿Cerrar sesión?':'Logout?')){
+localStorage.removeItem('akashic_student_id');
+localStorage.removeItem('akashic_student_name');
+localStorage.removeItem('akashic_class_code');
+window.location.href='student-setup.html';
+}
+}
+
+window.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
