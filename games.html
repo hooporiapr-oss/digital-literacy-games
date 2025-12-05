@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Akashic Academy - Games</title>
+    <title>My Games | Akashic Academy</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -11,8 +11,9 @@
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
             min-height: 100vh;
             color: #fff;
+            padding: 20px;
         }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
         
         header {
             text-align: center;
@@ -30,7 +31,19 @@
             background-clip: text;
             margin-bottom: 8px;
         }
-        header p { color: #94a3b8; }
+        #studentInfo { color: #94a3b8; margin-top: 10px; }
+        #studentName { color: #06b6d4; font-weight: 600; }
+        .logout-btn {
+            background: #ef4444;
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+        .logout-btn:hover { background: #dc2626; }
         
         .grade-band {
             background: rgba(255,255,255,0.03);
@@ -105,11 +118,12 @@
             flex: 1;
             padding: 10px;
             border-radius: 8px;
-            text-decoration: none;
+            border: none;
             font-size: 0.85rem;
             font-weight: 500;
             text-align: center;
             transition: all 0.3s;
+            cursor: pointer;
         }
         .game-link.en {
             background: rgba(59,130,246,0.2);
@@ -124,6 +138,12 @@
         }
         .game-link.es:hover { background: rgba(239,68,68,0.4); }
         
+        .loading {
+            text-align: center;
+            padding: 100px 20px;
+            color: #94a3b8;
+        }
+        
         @media (max-width: 768px) {
             header h1 { font-size: 1.5rem; }
             .grade-header { flex-wrap: wrap; }
@@ -134,223 +154,201 @@
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>🧠 Akashic Academy</h1>
-            <p>Cognitive Training Games • Juegos de Entrenamiento Cognitivo</p>
-        </header>
-        
-        <!-- K-2 -->
-        <div class="grade-band grade-k2">
-            <div class="grade-header">
-                <span class="grade-icon">🌟</span>
-                <span class="grade-label">K-2</span>
-                <span class="grade-ages">Ages 5-8 • Edades 5-8</span>
-            </div>
-            <div class="games-grid">
-                <div class="game-card">
-                    <div class="game-header">
-                        <span class="game-icon">👁️</span>
-                        <div>
-                            <div class="game-title">Visual Memory</div>
-                            <div class="game-title-es">Memoria Visual</div>
-                        </div>
-                    </div>
-                    <p class="game-desc">Remember which squares light up. Simple patterns that grow.</p>
-                    <div class="game-links">
-                        <a href="games-k2-visual-memory-en.html" class="game-link en">🇺🇸 English</a>
-                        <a href="games-k2-visual-memory-es.html" class="game-link es">🇵🇷 Español</a>
-                    </div>
-                </div>
-                <div class="game-card">
-                    <div class="game-header">
-                        <span class="game-icon">🎨</span>
-                        <div>
-                            <div class="game-title">Color Match</div>
-                            <div class="game-title-es">Combina Colores</div>
-                        </div>
-                    </div>
-                    <p class="game-desc">Does the word match the color? Look before you click!</p>
-                    <div class="game-links">
-                        <a href="games-k2-color-match-en.html" class="game-link en">🇺🇸 English</a>
-                        <a href="games-k2-color-match-es.html" class="game-link es">🇵🇷 Español</a>
-                    </div>
-                </div>
-                <div class="game-card">
-                    <div class="game-header">
-                        <span class="game-icon">🔲</span>
-                        <div>
-                            <div class="game-title">Sequence Memory</div>
-                            <div class="game-title-es">Memoria de Secuencia</div>
-                        </div>
-                    </div>
-                    <p class="game-desc">Watch the pattern, tap it back. Like Simon Says!</p>
-                    <div class="game-links">
-                        <a href="games-k2-sequence-memory-en.html" class="game-link en">🇺🇸 English</a>
-                        <a href="games-k2-sequence-memory-es.html" class="game-link es">🇵🇷 Español</a>
-                    </div>
-                </div>
-            </div>
+        <div id="loading" class="loading">
+            <h2>Loading games...</h2>
         </div>
         
-        <!-- 3-5 -->
-        <div class="grade-band grade-35">
-            <div class="grade-header">
-                <span class="grade-icon">📚</span>
-                <span class="grade-label">3-5</span>
-                <span class="grade-ages">Ages 8-11 • Edades 8-11</span>
-            </div>
-            <div class="games-grid">
-                <div class="game-card">
-                    <div class="game-header">
-                        <span class="game-icon">🔢</span>
-                        <div>
-                            <div class="game-title">Number Memory</div>
-                            <div class="game-title-es">Memoria de Números</div>
-                        </div>
-                    </div>
-                    <p class="game-desc">Remember longer number sequences. Builds working memory.</p>
-                    <div class="game-links">
-                        <a href="games-35-number-memory-en.html" class="game-link en">🇺🇸 English</a>
-                        <a href="games-35-number-memory-es.html" class="game-link es">🇵🇷 Español</a>
-                    </div>
+        <div id="content" style="display:none;">
+            <header>
+                <h1>🎮 My Games</h1>
+                <div id="studentInfo">
+                    <span id="studentName"></span>
+                    <br>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
                 </div>
-                <div class="game-card">
-                    <div class="game-header">
-                        <span class="game-icon">🔍</span>
-                        <div>
-                            <div class="game-title">Tech Word Search</div>
-                            <div class="game-title-es">Sopa de Letras Tech</div>
-                        </div>
-                    </div>
-                    <p class="game-desc">Find PASSWORD, VIRUS, and more. Learn tech vocabulary!</p>
-                    <div class="game-links">
-                        <a href="games-35-word-search-en.html" class="game-link en">🇺🇸 English</a>
-                        <a href="games-35-word-search-es.html" class="game-link es">🇵🇷 Español</a>
-                    </div>
+            </header>
+            
+            <!-- K-2 -->
+            <div class="grade-band grade-k2">
+                <div class="grade-header">
+                    <span class="grade-icon">🌟</span>
+                    <span class="grade-label">K-2</span>
+                    <span class="grade-ages">Ages 5-8 • Edades 5-8</span>
                 </div>
-                <div class="game-card">
-                    <div class="game-header">
-                        <span class="game-icon">👁️</span>
-                        <div>
-                            <div class="game-title">Visual Memory+</div>
-                            <div class="game-title-es">Memoria Visual+</div>
+                <div class="games-grid">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">👁️</span>
+                            <div>
+                                <div class="game-title">Visual Memory</div>
+                                <div class="game-title-es">Memoria Visual</div>
+                            </div>
+                        </div>
+                        <p class="game-desc">Remember which squares light up. Simple patterns that grow.</p>
+                        <div class="game-links">
+                            <button class="game-link en" onclick="playGame('games-k2-visual-memory-en.html')">🇺🇸 English</button>
+                            <button class="game-link es" onclick="playGame('games-k2-visual-memory-es.html')">🇵🇷 Español</button>
                         </div>
                     </div>
-                    <p class="game-desc">Harder patterns with more squares. Challenge yourself!</p>
-                    <div class="game-links">
-                        <a href="games-35-visual-memory-en.html" class="game-link en">🇺🇸 English</a>
-                        <a href="games-35-visual-memory-es.html" class="game-link es">🇵🇷 Español</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 6-8 -->
-        <div class="grade-band grade-68">
-            <div class="grade-header">
-                <span class="grade-icon">🚀</span>
-                <span class="grade-label">6-8</span>
-                <span class="grade-ages">Ages 11-14 • Edades 11-14</span>
-            </div>
-            <div class="games-grid">
-                <div class="game-card">
-                    <div class="game-header">
-                        <span class="game-icon">⌨️</span>
-                        <div>
-                            <div class="game-title">Typing + Quiz</div>
-                            <div class="game-title-es">Escritura + Quiz</div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">🎨</span>
+                            <div>
+                                <div class="game-title">Color Match</div>
+                                <div class="game-title-es">Combina Colores</div>
+                            </div>
+                        </div>
+                        <p class="game-desc">Does the word match the color? Look before you click!</p>
+                        <div class="game-links">
+                            <button class="game-link en" onclick="playGame('games-k2-color-match-en.html')">🇺🇸 English</button>
+                            <button class="game-link es" onclick="playGame('games-k2-color-match-es.html')">🇵🇷 Español</button>
                         </div>
                     </div>
-                    <p class="game-desc">Type passages about internet safety, then answer questions.</p>
-                    <div class="game-links">
-                        <a href="games-68-typing-quiz-en.html" class="game-link en">🇺🇸 English</a>
-                        <a href="games-68-typing-quiz-es.html" class="game-link es">🇵🇷 Español</a>
-                    </div>
-                </div>
-                <div class="game-card">
-                    <div class="game-header">
-                        <span class="game-icon">🔍</span>
-                        <div>
-                            <div class="game-title">Advanced Word Search</div>
-                            <div class="game-title-es">Sopa Avanzada</div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">🔲</span>
+                            <div>
+                                <div class="game-title">Sequence Memory</div>
+                                <div class="game-title-es">Memoria de Secuencia</div>
+                            </div>
                         </div>
-                    </div>
-                    <p class="game-desc">Find PHISHING, MALWARE, ENCRYPTION. Timed mode.</p>
-                    <div class="game-links">
-                        <a href="games-68-word-search-en.html" class="game-link en">🇺🇸 English</a>
-                        <a href="games-68-word-search-es.html" class="game-link es">🇵🇷 Español</a>
-                    </div>
-                </div>
-                <div class="game-card">
-                    <div class="game-header">
-                        <span class="game-icon">🔢</span>
-                        <div>
-                            <div class="game-title">Number Memory Pro</div>
-                            <div class="game-title-es">Memoria de Números Pro</div>
+                        <p class="game-desc">Watch the pattern, tap it back. Like Simon Says!</p>
+                        <div class="game-links">
+                            <button class="game-link en" onclick="playGame('games-k2-sequence-memory-en.html')">🇺🇸 English</button>
+                            <button class="game-link es" onclick="playGame('games-k2-sequence-memory-es.html')">🇵🇷 Español</button>
                         </div>
-                    </div>
-                    <p class="game-desc">Remember 10+ digits. Train for PINs and passwords.</p>
-                    <div class="game-links">
-                        <a href="games-68-number-memory-en.html" class="game-link en">🇺🇸 English</a>
-                        <a href="games-68-number-memory-es.html" class="game-link es">🇵🇷 Español</a>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- 9-12 -->
-        <div class="grade-band grade-912">
-            <div class="grade-header">
-                <span class="grade-icon">🎓</span>
-                <span class="grade-label">9-12</span>
-                <span class="grade-ages">Ages 14-18 • Edades 14-18</span>
+            
+            <!-- 3-5 -->
+            <div class="grade-band grade-35">
+                <div class="grade-header">
+                    <span class="grade-icon">📚</span>
+                    <span class="grade-label">3-5</span>
+                    <span class="grade-ages">Ages 8-11 • Edades 8-11</span>
+                </div>
+                <div class="games-grid">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">🔢</span>
+                            <div>
+                                <div class="game-title">Number Memory</div>
+                                <div class="game-title-es">Memoria de Números</div>
+                            </div>
+                        </div>
+                        <p class="game-desc">Remember longer number sequences. Builds working memory.</p>
+                        <div class="game-links">
+                            <button class="game-link en" onclick="playGame('games-35-number-memory-en.html')">🇺🇸 English</button>
+                            <button class="game-link es" onclick="playGame('games-35-number-memory-es.html')">🇵🇷 Español</button>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">🔍</span>
+                            <div>
+                                <div class="game-title">Tech Word Search</div>
+                                <div class="game-title-es">Sopa de Letras Tech</div>
+                            </div>
+                        </div>
+                        <p class="game-desc">Find PASSWORD, VIRUS, and more. Learn tech vocabulary!</p>
+                        <div class="game-links">
+                            <button class="game-link en" onclick="playGame('games-35-word-search-en.html')">🇺🇸 English</button>
+                            <button class="game-link es" onclick="playGame('games-35-word-search-es.html')">🇵🇷 Español</button>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">👁️</span>
+                            <div>
+                                <div class="game-title">Visual Memory+</div>
+                                <div class="game-title-es">Memoria Visual+</div>
+                            </div>
+                        </div>
+                        <p class="game-desc">Harder patterns with more squares. Challenge yourself!</p>
+                        <div class="game-links">
+                            <button class="game-link en" onclick="playGame('games-35-visual-memory-en.html')">🇺🇸 English</button>
+                            <button class="game-link es" onclick="playGame('games-35-visual-memory-es.html')">🇵🇷 Español</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="games-grid">
-                <div class="game-card">
-                    <div class="game-header">
-                        <span class="game-icon">📝</span>
-                        <div>
-                            <div class="game-title">Full Assessment</div>
-                            <div class="game-title-es">Evaluación Completa</div>
-                        </div>
-                    </div>
-                    <p class="game-desc">Complete cognitive skills evaluation with detailed results.</p>
-                    <div class="game-links">
-                        <a href="games-912-assessment-en.html" class="game-link en">🇺🇸 English</a>
-                        <a href="games-912-assessment-es.html" class="game-link es">🇵🇷 Español</a>
-                    </div>
+            
+            <!-- 6-8 -->
+            <div class="grade-band grade-68">
+                <div class="grade-header">
+                    <span class="grade-icon">🚀</span>
+                    <span class="grade-label">6-8</span>
+                    <span class="grade-ages">Ages 11-14 • Edades 11-14</span>
                 </div>
-                <div class="game-card">
-                    <div class="game-header">
-                        <span class="game-icon">⌨️</span>
-                        <div>
-                            <div class="game-title">Speed Typing</div>
-                            <div class="game-title-es">Escritura Rápida</div>
+                <div class="games-grid">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">⌨️</span>
+                            <div>
+                                <div class="game-title">Typing + Quiz</div>
+                                <div class="game-title-es">Escritura + Quiz</div>
+                            </div>
+                        </div>
+                        <p class="game-desc">Type passages about internet safety, then answer questions.</p>
+                        <div class="game-links">
+                            <button class="game-link en" onclick="playGame('games-68-typing-quiz-en.html')">🇺🇸 English</button>
+                            <button class="game-link es" onclick="playGame('games-68-typing-quiz-es.html')">🇵🇷 Español</button>
                         </div>
                     </div>
-                    <p class="game-desc">Professional typing test. Track WPM and accuracy.</p>
-                    <div class="game-links">
-                        <a href="games-912-typing-en.html" class="game-link en">🇺🇸 English</a>
-                        <a href="games-912-typing-es.html" class="game-link es">🇵🇷 Español</a>
-                    </div>
-                </div>
-                <div class="game-card">
-                    <div class="game-header">
-                        <span class="game-icon">🎨</span>
-                        <div>
-                            <div class="game-title">Stroop Challenge</div>
-                            <div class="game-title-es">Desafío Stroop</div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">🔍</span>
+                            <div>
+                                <div class="game-title">Advanced Word Search</div>
+                                <div class="game-title-es">Sopa Avanzada</div>
+                            </div>
+                        </div>
+                        <p class="game-desc">Find PHISHING, MALWARE, ENCRYPTION. Timed mode.</p>
+                        <div class="game-links">
+                            <button class="game-link en" onclick="playGame('games-68-word-search-en.html')">🇺🇸 English</button>
+                            <button class="game-link es" onclick="playGame('games-68-word-search-es.html')">🇵🇷 Español</button>
                         </div>
                     </div>
-                    <p class="game-desc">Advanced focus test. Ignore the word, name the color.</p>
-                    <div class="game-links">
-                        <a href="games-912-stroop-challenge-en.html" class="game-link en">🇺🇸 English</a>
-                        <a href="games-912-stroop-challenge-es.html" class="game-link es">🇵🇷 Español</a>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">🔢</span>
+                            <div>
+                                <div class="game-title">Number Memory Pro</div>
+                                <div class="game-title-es">Memoria de Números Pro</div>
+                            </div>
+                        </div>
+                        <p class="game-desc">Remember 10+ digits. Train for PINs and passwords.</p>
+                        <div class="game-links">
+                            <button class="game-link en" onclick="playGame('games-68-number-memory-en.html')">🇺🇸 English</button>
+                            <button class="game-link es" onclick="playGame('games-68-number-memory-es.html')">🇵🇷 Español</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-    </div>
-</body>
-</html>
+            
+            <!-- 9-12 -->
+            <div class="grade-band grade-912">
+                <div class="grade-header">
+                    <span class="grade-icon">🎓</span>
+                    <span class="grade-label">9-12</span>
+                    <span class="grade-ages">Ages 14-18 • Edades 14-18</span>
+                </div>
+                <div class="games-grid">
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">📝</span>
+                            <div>
+                                <div class="game-title">Full Assessment</div>
+                                <div class="game-title-es">Evaluación Completa</div>
+                            </div>
+                        </div>
+                        <p class="game-desc">Complete cognitive skills evaluation with detailed results.</p>
+                        <div class="game-links">
+                            <button class="game-link en" onclick="playGame('games-912-assessment-en.html')">🇺🇸 English</button>
+                            <button class="game-link es" onclick="playGame('games-912-assessment-es.html')">🇵🇷 Español</button>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">⌨
