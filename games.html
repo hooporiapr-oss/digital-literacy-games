@@ -15,7 +15,7 @@ body{font-family:Georgia,serif;background:#0a0a1a;color:#fff;min-height:100vh;pa
 .lang-btn.active{background:#ffd700;color:#1a1a2e}
 .lang-btn:hover:not(.active){background:rgba(255,255,255,0.1)}
 
-/* Language Switching - Hide/Show */
+/* Language Switching */
 .en .lang-es{display:none!important}
 .es .lang-en{display:none!important}
 
@@ -43,25 +43,17 @@ body{font-family:Georgia,serif;background:#0a0a1a;color:#fff;min-height:100vh;pa
 
 .loading{text-align:center;padding:100px 20px}
 .loading h2{color:#ffd700;margin-bottom:20px}
-
 .no-access{text-align:center;padding:100px 20px}
 .no-access h2{color:#e74c3c;margin-bottom:20px}
 .no-access p{margin-bottom:30px;opacity:0.8}
 .btn-setup{background:#ffd700;color:#1a1a2e;padding:15px 40px;border-radius:30px;text-decoration:none;font-weight:bold;display:inline-block;transition:all 0.2s}
 .btn-setup:hover{transform:translateY(-3px);box-shadow:0 10px 20px rgba(255,215,0,0.3)}
 
-@media(max-width:700px){
-  body{padding-top:55px}
-  .header{flex-direction:column;gap:15px}
-  .header h1{font-size:1.5em}
-  .student-info{flex-direction:column;width:100%}
-  .games-grid{grid-template-columns:1fr}
-}
+@media(max-width:700px){body{padding-top:55px}.header{flex-direction:column;gap:15px}.header h1{font-size:1.5em}.student-info{flex-direction:column;width:100%}.games-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body class="en">
 
-<!-- Sticky Language Bar -->
 <div class="lang-bar">
 <div class="lang-toggle">
 <button class="lang-btn active" id="btnEn" onclick="setLang('en')">🇺🇸 English</button>
@@ -71,81 +63,55 @@ body{font-family:Georgia,serif;background:#0a0a1a;color:#fff;min-height:100vh;pa
 
 <header class="header">
 <div style="flex:1"></div>
-<h1>
-<span class="lang-en">🎮 My Games</span>
-<span class="lang-es">🎮 Mis Juegos</span>
-</h1>
+<h1><span class="lang-en">🎮 My Games</span><span class="lang-es">🎮 Mis Juegos</span></h1>
 <div class="student-info">
 <span class="student-name" id="studentName">👤 Student</span>
-<button class="btn-logout" onclick="logout()">
-<span class="lang-en">Logout</span>
-<span class="lang-es">Salir</span>
-</button>
+<button class="btn-logout" onclick="logout()"><span class="lang-en">Logout</span><span class="lang-es">Salir</span></button>
 </div>
 </header>
 
 <main class="main">
 
 <div id="loading" class="loading">
-<h2>
-<span class="lang-en">Loading your games...</span>
-<span class="lang-es">Cargando tus juegos...</span>
-</h2>
+<h2><span class="lang-en">Loading your games...</span><span class="lang-es">Cargando tus juegos...</span></h2>
 <p>⏳</p>
 </div>
 
 <div id="mainContent" style="display:none">
 <div class="welcome">
-<h2>
-<span class="lang-en">Welcome Back! 🎉</span>
-<span class="lang-es">¡Bienvenido de Nuevo! 🎉</span>
-</h2>
-<p>
-<span class="lang-en">All 24 games are unlocked and ready to play! Game badges show difficulty levels - start with basics or challenge yourself with advanced games.</span>
-<span class="lang-es">¡Los 24 juegos están desbloqueados y listos para jugar! Las insignias muestran niveles de dificultad - comienza con lo básico o desafíate con juegos avanzados.</span>
-</p>
+<h2><span class="lang-en">Welcome Back! 🎉</span><span class="lang-es">¡Bienvenido de Nuevo! 🎉</span></h2>
+<p><span class="lang-en">All 24 games are unlocked and ready to play! Game badges show difficulty levels - start with basics or challenge yourself with advanced games.</span><span class="lang-es">¡Los 24 juegos están desbloqueados y listos para jugar! Las insignias muestran niveles de dificultad - comienza con lo básico o desafíate con juegos avanzados.</span></p>
 </div>
-
 <div id="gamesGrid" class="games-grid"></div>
 </div>
 
 <div id="noAccess" class="no-access" style="display:none">
 <h2>⚠️ <span class="lang-en">No Access</span><span class="lang-es">Sin Acceso</span></h2>
-<p>
-<span class="lang-en">You need to join a class to play games.</span>
-<span class="lang-es">Necesitas unirte a una clase para jugar juegos.</span>
-</p>
-<a href="student-setup.html" class="btn-setup">
-<span class="lang-en">Join a Class</span>
-<span class="lang-es">Unirse a una Clase</span>
-</a>
+<p><span class="lang-en">You need to join a class to play games.</span><span class="lang-es">Necesitas unirte a una clase para jugar juegos.</span></p>
+<a href="student-setup.html" class="btn-setup"><span class="lang-en">Join a Class</span><span class="lang-es">Unirse a una Clase</span></a>
 </div>
 
 </main>
 
 <script>
-const API_URL = 'https://digital-literacy-backend.onrender.com/api';
-
-const GAMES = [
-  // K-2 Games (Beginner)
-  {id:'visual-memory-k2',name:'Visual Memory',nameEs:'Memoria Visual',icon:'👀',grade:'K-2',gradeEs:'K-2',desc:'Remember the squares',descEs:'Recuerda los cuadrados',url:'games-k2-visual-memory'},
-  {id:'sequence-memory-k2',name:'Sequence Memory',nameEs:'Memoria de Secuencia',icon:'🔢',grade:'K-2',gradeEs:'K-2',desc:'Follow the pattern',descEs:'Sigue el patrón',url:'games-k2-sequence-memory'},
-  {id:'color-match-k2',name:'Color Match',nameEs:'Emparejar Colores',icon:'🎨',grade:'K-2',gradeEs:'K-2',desc:'Match the colors',descEs:'Empareja colores',url:'games-k2-color-match'},
-  {id:'memory-match-k2',name:'Memory Match',nameEs:'Juego de Memoria',icon:'🃏',grade:'K-2',gradeEs:'K-2',desc:'Find matching pairs',descEs:'Encuentra pares',url:'games-k2-memory-match'},
-  {id:'reaction-time-k2',name:'Reaction Time',nameEs:'Tiempo de Reacción',icon:'⚡',grade:'K-2',gradeEs:'K-2',desc:'Click when ready',descEs:'Haz clic cuando listo',url:'games-k2-reaction-time'},
-  {id:'reflex-training-k2',name:'Reflex Training',nameEs:'Entrenamiento Reflejos',icon:'🎯',grade:'K-2',gradeEs:'K-2',desc:'Click the targets',descEs:'Haz clic objetivos',url:'games-k2-reflex-training'},
-  
-  // 3-5 Games (Intermediate)
-  {id:'number-memory-35',name:'Number Memory',nameEs:'Memoria de Números',icon:'🔢',grade:'3-5',gradeEs:'3-5',desc:'Remember numbers',descEs:'Recuerda números',url:'games-35-number-memory'},
-  {id:'visual-memory-35',name:'Visual Memory',nameEs:'Memoria Visual',icon:'👁️',grade:'3-5',gradeEs:'3-5',desc:'Advanced memory test',descEs:'Memoria avanzada',url:'games-35-visual-memory'},
-  {id:'word-search-35',name:'Word Search',nameEs:'Sopa de Letras',icon:'🔍',grade:'3-5',gradeEs:'3-5',desc:'Find hidden words',descEs:'Encuentra palabras',url:'games-35-word-search'},
-  {id:'sequence-memory-35',name:'Sequence Memory',nameEs:'Memoria Secuencia',icon:'🔲',grade:'3-5',gradeEs:'3-5',desc:'Advanced patterns',descEs:'Patrones avanzados',url:'games-35-sequence-memory'},
-  {id:'memory-match-35',name:'Memory Match',nameEs:'Juego de Memoria',icon:'🃏',grade:'3-5',gradeEs:'3-5',desc:'More challenging pairs',descEs:'Pares desafiantes',url:'games-35-memory-match'},
-  {id:'reaction-time-35',name:'Reaction Time',nameEs:'Tiempo de Reacción',icon:'⚡',grade:'3-5',gradeEs:'3-5',desc:'Faster reactions',descEs:'Reacciones rápidas',url:'games-35-reaction-time'},
-  
-  // 6-8 Games (Advanced)
-  {id:'typing-quiz-68',name:'Typing Quiz',nameEs:'Prueba de Tecleo',icon:'⌨️',grade:'6-8',gradeEs:'6-8',desc:'Test typing skills',descEs:'Prueba tu tecleo',url:'games-68-typing-quiz'},
-  {id:'word-search-68',name:'Word Search Pro',nameEs:'Sopa Letras Pro',icon:'🔍',grade:'6-8',gradeEs:'6-8',desc:'Advanced word search',descEs:'Sopa avanzada',url:'games-68-word-search'},
-  {id:'number-memory-68',name:'Number Memory Pro',nameEs:'Memoria Números Pro',icon:'🧮',grade:'6-8',gradeEs:'6-8',desc:'Advanced numbers',descEs:'Números avanzados',url:'games-68-number-memory'},
-  {id:'visual-memory-68',name:'Visual Memory Pro',nameEs:'Memoria Visual Pro',icon:'👁️',grade:'6-8',gradeEs:'6-8',desc:'Expert memory test',descEs:'Memoria experta',url:'games-68-visual-memory'},
-  {id:'sequence-memory-68',name
+const API_URL='https://digital-literacy-backend.onrender.com/api';
+const GAMES=[
+{id:'visual-k2',name:'Visual Memory',nameEs:'Memoria Visual',icon:'👀',grade:'K-2',gradeEs:'K-2',desc:'Remember squares',descEs:'Recuerda cuadrados',url:'games-k2-visual-memory'},
+{id:'sequence-k2',name:'Sequence Memory',nameEs:'Memoria Secuencia',icon:'🔢',grade:'K-2',gradeEs:'K-2',desc:'Follow pattern',descEs:'Sigue patrón',url:'games-k2-sequence-memory'},
+{id:'color-k2',name:'Color Match',nameEs:'Emparejar Colores',icon:'🎨',grade:'K-2',gradeEs:'K-2',desc:'Match colors',descEs:'Empareja colores',url:'games-k2-color-match'},
+{id:'memory-k2',name:'Memory Match',nameEs:'Juego Memoria',icon:'🃏',grade:'K-2',gradeEs:'K-2',desc:'Find pairs',descEs:'Encuentra pares',url:'games-k2-memory-match'},
+{id:'reaction-k2',name:'Reaction Time',nameEs:'Tiempo Reacción',icon:'⚡',grade:'K-2',gradeEs:'K-2',desc:'Click when ready',descEs:'Clic cuando listo',url:'games-k2-reaction-time'},
+{id:'reflex-k2',name:'Reflex Training',nameEs:'Entrenamiento Reflejos',icon:'🎯',grade:'K-2',gradeEs:'K-2',desc:'Click targets',descEs:'Clic objetivos',url:'games-k2-reflex-training'},
+{id:'number-35',name:'Number Memory',nameEs:'Memoria Números',icon:'🔢',grade:'3-5',gradeEs:'3-5',desc:'Remember numbers',descEs:'Recuerda números',url:'games-35-number-memory'},
+{id:'visual-35',name:'Visual Memory',nameEs:'Memoria Visual',icon:'👁️',grade:'3-5',gradeEs:'3-5',desc:'Advanced memory',descEs:'Memoria avanzada',url:'games-35-visual-memory'},
+{id:'word-35',name:'Word Search',nameEs:'Sopa de Letras',icon:'🔍',grade:'3-5',gradeEs:'3-5',desc:'Find words',descEs:'Encuentra palabras',url:'games-35-word-search'},
+{id:'sequence-35',name:'Sequence Memory',nameEs:'Memoria Secuencia',icon:'🔲',grade:'3-5',gradeEs:'3-5',desc:'Advanced patterns',descEs:'Patrones avanzados',url:'games-35-sequence-memory'},
+{id:'memory-35',name:'Memory Match',nameEs:'Juego Memoria',icon:'🃏',grade:'3-5',gradeEs:'3-5',desc:'Challenging pairs',descEs:'Pares desafiantes',url:'games-35-memory-match'},
+{id:'reaction-35',name:'Reaction Time',nameEs:'Tiempo Reacción',icon:'⚡',grade:'3-5',gradeEs:'3-5',desc:'Faster reactions',descEs:'Reacciones rápidas',url:'games-35-reaction-time'},
+{id:'typing-68',name:'Typing Quiz',nameEs:'Prueba Tecleo',icon:'⌨️',grade:'6-8',gradeEs:'6-8',desc:'Test typing',descEs:'Prueba tecleo',url:'games-68-typing-quiz'},
+{id:'word-68',name:'Word Search Pro',nameEs:'Sopa Letras Pro',icon:'🔍',grade:'6-8',gradeEs:'6-8',desc:'Advanced search',descEs:'Sopa avanzada',url:'games-68-word-search'},
+{id:'number-68',name:'Number Memory Pro',nameEs:'Memoria Números Pro',icon:'🧮',grade:'6-8',gradeEs:'6-8',desc:'Advanced numbers',descEs:'Números avanzados',url:'games-68-number-memory'},
+{id:'visual-68',name:'Visual Memory Pro',nameEs:'Memoria Visual Pro',icon:'👁️',grade:'6-8',gradeEs:'6-8',desc:'Expert memory',descEs:'Memoria experta',url:'games-68-visual-memory'},
+{id:'sequence-68',name:'Sequence Pro',nameEs:'Secuencia Pro',icon:'🔲',grade:'6-8',gradeEs:'6-8',desc:'Complex patterns',descEs:'Patrones complejos',url:'games-68-sequence-memory'},
+{id:'reflex-68',name:'Reflex Pro',nameEs:'Reflejos Pro',icon:'🎯',grade:'6-8',gradeEs:'6-8',desc:'Advanced reflexes',descEs:'Reflejos avanzados',url:'games-68-reflex-training'},
+{id:'typing-912',name:'Speed Typing',nameEs:'Tecleo Rápido',icon:'⌨️',grade:'9-12',gradeEs:'9-12',desc:'Fast
