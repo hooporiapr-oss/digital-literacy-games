@@ -500,6 +500,7 @@
                             <th data-i18n="code">Code</th>
                             <th data-i18n="classGroup">Class/Group</th>
                             <th data-i18n="usage">Usage</th>
+                            <th data-i18n="difficulty">Difficulty</th>
                             <th data-i18n="created">Created</th>
                             <th data-i18n="actions">Actions</th>
                         </tr>
@@ -689,6 +690,12 @@
             generateError: 'Failed to generate code. Please try again.',
             notEnoughSlots: 'Not enough student slots available.',
             default: 'General',
+            // Difficulty translations
+            difficulty: 'Difficulty',
+            easy: 'Easy',
+            medium: 'Medium',
+            hard: 'Hard',
+            difficultyUpdated: 'Difficulty updated!',
             // Activity translations
             liveActivity: 'Live Student Activity',
             autoRefresh: 'Auto-refresh',
@@ -765,6 +772,12 @@
             generateError: 'Error al generar código. Por favor intenta de nuevo.',
             notEnoughSlots: 'No hay suficientes cupos disponibles.',
             default: 'General',
+            // Difficulty translations
+            difficulty: 'Dificultad',
+            easy: 'Fácil',
+            medium: 'Medio',
+            hard: 'Difícil',
+            difficultyUpdated: '¡Dificultad actualizada!',
             // Activity translations
             liveActivity: 'Actividad de Estudiantes en Vivo',
             autoRefresh: 'Auto-actualizar',
@@ -986,6 +999,13 @@
                 <td><span class="code-display">${code.code}</span></td>
                 <td>${code.className || t('default')}</td>
                 <td>${code.studentsUsed || 0} / ${code.studentSlots}</td>
+                <td>
+                    <select onchange="updateDifficulty('${code.code}', this.value)" style="padding:8px; border-radius:6px; background:#1a1a2e; color:#fff; border:1px solid #444;">
+                        <option value="easy" ${code.difficulty === 'easy' ? 'selected' : ''}>${t('easy')}</option>
+                        <option value="medium" ${code.difficulty === 'medium' || !code.difficulty ? 'selected' : ''}>${t('medium')}</option>
+                        <option value="hard" ${code.difficulty === 'hard' ? 'selected' : ''}>${t('hard')}</option>
+                    </select>
+                </td>
                 <td>${new Date(code.createdAt).toLocaleDateString()}</td>
                 <td><button class="btn-copy" onclick="copyToClipboard('${code.code}')">${t('copy')}</button></td>
             </tr>
@@ -1061,6 +1081,36 @@
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 2000);
         });
+    }
+
+    // Update class difficulty
+    async function updateDifficulty(code, difficulty) {
+        try {
+            const r = await fetch(`${API}/api/class-codes/${code}/difficulty`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ difficulty })
+            });
+            
+            if (r.ok) {
+                // Show success toast
+                const toast = document.getElementById('copyToast');
+                toast.querySelector('span').textContent = t('difficultyUpdated');
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    toast.querySelector('span').textContent = t('copied');
+                }, 2000);
+                
+                // Update local data
+                if (licenseData.classCodes) {
+                    const classCode = licenseData.classCodes.find(c => c.code === code);
+                    if (classCode) classCode.difficulty = difficulty;
+                }
+            }
+        } catch (e) {
+            console.error('Failed to update difficulty:', e);
+        }
     }
 
     // ========================================
