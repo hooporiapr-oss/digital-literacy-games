@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Registration - Akashic Academy</title>
+    <title>Student Portal - Akashic Academy</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
@@ -11,114 +11,57 @@
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
             color: #fff; 
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* Language Toggle */
-        .lang-toggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 100;
-        }
-        .lang-toggle button {
-            padding: 8px 16px;
-            font-size: 14px;
-            background: rgba(255,255,255,0.1);
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .lang-toggle button:hover { background: rgba(255,255,255,0.2); }
-        
-        /* Container */
-        .container {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             padding: 20px;
         }
         
-        /* Cards */
+        .container { max-width: 500px; margin: 0 auto; }
+        .container.wide { max-width: 900px; }
+        
         .card {
             background: rgba(42, 42, 62, 0.95);
             border-radius: 20px;
             padding: 40px;
-            width: 100%;
-            max-width: 500px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-        }
-        
-        .card-wide {
-            max-width: 900px;
-        }
-        
-        /* Header */
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .header .logo {
-            font-size: 4rem;
-            margin-bottom: 15px;
-            animation: float 3s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        .header h1 {
-            color: #ffd700;
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-        .header p {
-            color: #aaa;
-            font-size: 1rem;
-        }
-        
-        /* Forms */
-        .form-group {
             margin-bottom: 20px;
         }
+        
+        .logo { font-size: 4rem; text-align: center; margin-bottom: 15px; }
+        h1 { color: #ffd700; text-align: center; font-size: 1.8rem; margin-bottom: 10px; }
+        .subtitle { color: #aaa; text-align: center; margin-bottom: 30px; }
+        
+        .form-group { margin-bottom: 20px; }
         .form-group label {
             display: block;
             color: #aaa;
-            font-size: 14px;
+            font-size: 13px;
             margin-bottom: 8px;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
+        
         input, select {
             width: 100%;
-            padding: 15px 18px;
+            padding: 15px;
             font-size: 16px;
-            border-radius: 10px;
             border: 2px solid #444;
+            border-radius: 10px;
             background: #1a1a2e;
             color: #fff;
             outline: none;
-            transition: border-color 0.3s;
         }
         input:focus, select:focus { border-color: #ffd700; }
         input::placeholder { color: #666; }
         
         .code-input {
-            text-transform: uppercase;
-            text-align: center;
             font-size: 1.5rem;
-            letter-spacing: 4px;
-            font-family: 'Courier New', monospace;
+            text-align: center;
+            letter-spacing: 5px;
+            text-transform: uppercase;
         }
         
         button {
             width: 100%;
-            padding: 16px;
-            font-size: 18px;
+            padding: 15px;
+            font-size: 16px;
             font-weight: bold;
             border: none;
             border-radius: 10px;
@@ -126,73 +69,33 @@
             transition: all 0.3s;
             background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
             color: #000;
+            margin-top: 10px;
         }
-        button:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 10px 30px rgba(255,215,0,0.3); 
-        }
-        button:disabled { 
-            opacity: 0.5; 
-            cursor: not-allowed; 
-            transform: none;
-            box-shadow: none;
-        }
+        button:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,215,0,0.3); }
+        button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
         
         .btn-secondary {
             background: #444;
             color: #fff;
-            margin-top: 15px;
         }
-        .btn-secondary:hover { 
-            background: #555; 
-            box-shadow: none;
-        }
+        .btn-secondary:hover { background: #555; box-shadow: none; }
         
-        .btn-game {
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        .btn-play {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             color: #fff;
-            padding: 20px;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            text-align: left;
         }
-        .btn-game:hover {
-            box-shadow: 0 10px 30px rgba(99,102,241,0.3);
-        }
-        .btn-game .icon { font-size: 2rem; }
-        .btn-game .info h3 { margin-bottom: 5px; }
-        .btn-game .info p { font-size: 13px; opacity: 0.8; font-weight: normal; }
         
-        /* Messages */
         .message {
             padding: 15px;
             border-radius: 10px;
             margin-bottom: 20px;
-            text-align: center;
             display: none;
         }
-        .message.error { 
-            background: rgba(239,68,68,0.2); 
-            border: 1px solid #ef4444; 
-            color: #fca5a5;
-            display: block;
-        }
-        .message.success { 
-            background: rgba(16,185,129,0.2); 
-            border: 1px solid #10b981; 
-            color: #6ee7b7;
-            display: block;
-        }
-        .message.info {
-            background: rgba(99,102,241,0.2);
-            border: 1px solid #6366f1;
-            color: #a5b4fc;
-            display: block;
-        }
+        .message.error { background: rgba(239,68,68,0.2); border: 1px solid #ef4444; color: #fca5a5; display: block; }
+        .message.success { background: rgba(16,185,129,0.2); border: 1px solid #10b981; color: #6ee7b7; display: block; }
         
-        /* Steps indicator */
+        .hidden { display: none !important; }
+        
         .steps {
             display: flex;
             justify-content: center;
@@ -209,16 +112,9 @@
             justify-content: center;
             font-weight: bold;
             color: #666;
-            transition: all 0.3s;
         }
-        .step.active {
-            background: #ffd700;
-            color: #000;
-        }
-        .step.done {
-            background: #10b981;
-            color: #fff;
-        }
+        .step.active { background: #ffd700; color: #000; }
+        .step.done { background: #10b981; color: #fff; }
         .step-line {
             width: 50px;
             height: 2px;
@@ -227,117 +123,146 @@
         }
         .step-line.done { background: #10b981; }
         
-        /* Code verification display */
-        .code-info {
+        .class-info {
             background: #1a1a2e;
-            border-radius: 10px;
             padding: 20px;
+            border-radius: 10px;
             margin-bottom: 20px;
-            text-align: center;
         }
-        .code-info .class-name {
-            color: #ffd700;
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .code-info .school-name {
-            color: #aaa;
-            font-size: 0.95rem;
-        }
-        .code-info .slots {
-            margin-top: 10px;
-            color: #10b981;
-            font-size: 0.9rem;
-        }
+        .class-info h3 { color: #ffd700; margin-bottom: 10px; }
+        .class-info p { color: #aaa; font-size: 14px; }
         
-        /* Welcome screen */
-        .welcome-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .welcome-header .avatar {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #ffd700, #ffaa00);
-            border-radius: 50%;
+        .divider {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            margin: 0 auto 20px;
+            margin: 25px 0;
+            color: #666;
         }
-        .welcome-header h1 {
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #444;
+        }
+        .divider span { padding: 0 15px; font-size: 14px; }
+        
+        .lang-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        .lang-toggle button {
+            padding: 8px 16px;
+            font-size: 14px;
+            background: rgba(255,255,255,0.1);
             color: #fff;
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-        }
-        .welcome-header h1 span { color: #ffd700; }
-        .welcome-header p { color: #aaa; }
-        
-        /* Games grid */
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 25px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            width: auto;
         }
         
-        /* Grade level tabs */
-        .grade-tabs {
+        /* Games Portal */
+        .header {
+            text-align: center;
+            padding: 20px 0 30px;
+        }
+        .header h1 { font-size: 2rem; }
+        
+        .user-bar {
+            background: rgba(255,215,0,0.1);
+            border: 1px solid rgba(255,215,0,0.3);
+            border-radius: 10px;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .user-bar .welcome { color: #ffd700; font-weight: bold; }
+        .user-bar .grade { color: #aaa; font-size: 14px; }
+        .user-bar button { width: auto; padding: 10px 20px; margin: 0; }
+        
+        .filter-bar {
             display: flex;
             gap: 10px;
-            margin-bottom: 20px;
             flex-wrap: wrap;
             justify-content: center;
+            margin-bottom: 25px;
         }
-        .grade-tab {
+        .filter-btn {
             padding: 10px 20px;
             background: #333;
             border: none;
             border-radius: 20px;
-            color: #aaa;
+            color: #fff;
             cursor: pointer;
             font-size: 14px;
-            transition: all 0.3s;
             width: auto;
+            margin: 0;
         }
-        .grade-tab:hover { background: #444; color: #fff; }
-        .grade-tab.active { 
-            background: #ffd700; 
-            color: #000;
+        .filter-btn:hover { background: #444; transform: none; box-shadow: none; }
+        .filter-btn.active { background: #ffd700; color: #000; }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
         }
         
-        /* Hidden utility */
-        .hidden { display: none !important; }
-        
-        /* Footer link */
-        .footer-link {
+        .game-card {
+            background: rgba(42, 42, 62, 0.9);
+            border-radius: 15px;
+            padding: 25px;
             text-align: center;
-            margin-top: 25px;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        .game-card:hover { 
+            border-color: #ffd700; 
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        .game-card .icon { font-size: 3rem; margin-bottom: 15px; }
+        .game-card h3 { color: #fff; margin-bottom: 8px; font-size: 1.1rem; }
+        .game-card p { color: #888; font-size: 13px; margin-bottom: 15px; }
+        .game-card .grade-badge {
+            display: inline-block;
+            background: rgba(255,215,0,0.2);
+            color: #ffd700;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+        .game-card button { 
+            padding: 12px 25px;
+            font-size: 14px;
+        }
+        
+        .forgot-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .forgot-link a {
+            color: #6366f1;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .forgot-link a:hover { text-decoration: underline; }
+        
+        .login-toggle {
+            text-align: center;
+            margin-top: 20px;
             padding-top: 20px;
             border-top: 1px solid #333;
         }
-        .footer-link a {
-            color: #6366f1;
+        .login-toggle a {
+            color: #ffd700;
             text-decoration: none;
+            font-weight: bold;
         }
-        .footer-link a:hover { text-decoration: underline; }
-        
-        /* Loading spinner */
-        .spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s linear infinite;
-            margin-right: 10px;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        .login-toggle a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -345,14 +270,12 @@
         <button onclick="toggleLang()" id="langBtn">Español</button>
     </div>
 
-    <div class="container">
-        <!-- Step 1: Enter Code -->
-        <div id="step1" class="card">
-            <div class="header">
-                <div class="logo">🎮</div>
-                <h1 data-i18n="studentReg">Student Registration</h1>
-                <p data-i18n="enterCode">Enter your class access code to get started</p>
-            </div>
+    <!-- Step 1: Enter Class Code -->
+    <div id="step1Screen" class="container">
+        <div class="card">
+            <div class="logo">🎓</div>
+            <h1 data-i18n="studentPortal">Student Portal</h1>
+            <p class="subtitle" data-i18n="welcomeMessage">Enter your class code to get started</p>
             
             <div class="steps">
                 <div class="step active">1</div>
@@ -365,24 +288,24 @@
             <div id="step1Error" class="message"></div>
             
             <div class="form-group">
-                <label data-i18n="accessCode">Access Code</label>
-                <input type="text" id="accessCode" class="code-input" placeholder="ABC123" maxlength="10">
+                <label data-i18n="classCode">Class Code</label>
+                <input type="text" id="classCode" class="code-input" placeholder="ABC123" maxlength="10">
             </div>
             
-            <button onclick="verifyCode()" id="verifyBtn" data-i18n="continue">Continue</button>
+            <button onclick="validateCode()" id="validateBtn" data-i18n="continue">Continue</button>
             
-            <div class="footer-link">
-                <p style="color:#666;" data-i18n="alreadyRegistered">Already registered? <a href="#" onclick="showLogin()" data-i18n="loginHere">Login here</a></p>
-            </div>
+            <div class="divider"><span data-i18n="or">or</span></div>
+            
+            <button class="btn-secondary" onclick="showLogin()" data-i18n="returningStudent">Returning Student? Login</button>
         </div>
+    </div>
 
-        <!-- Step 2: Create Account -->
-        <div id="step2" class="card hidden">
-            <div class="header">
-                <div class="logo">📝</div>
-                <h1 data-i18n="createAccount">Create Your Account</h1>
-                <p data-i18n="fillDetails">Fill in your details to complete registration</p>
-            </div>
+    <!-- Step 2: Create Account -->
+    <div id="step2Screen" class="container hidden">
+        <div class="card">
+            <div class="logo">📝</div>
+            <h1 data-i18n="createAccount">Create Your Account</h1>
+            <p class="subtitle" data-i18n="fillDetails">Fill in your details to register</p>
             
             <div class="steps">
                 <div class="step done">✓</div>
@@ -392,226 +315,251 @@
                 <div class="step">3</div>
             </div>
             
-            <div class="code-info">
-                <div class="class-name" id="className">-</div>
-                <div class="school-name" id="schoolName">-</div>
-                <div class="slots" id="slotsInfo">-</div>
+            <div class="class-info" id="classInfo">
+                <h3 id="className">-</h3>
+                <p><span data-i18n="slotsAvailable">Slots available:</span> <span id="slotsAvailable">-</span></p>
             </div>
             
             <div id="step2Error" class="message"></div>
             
-            <form onsubmit="return registerStudent(event)">
-                <div class="form-group">
-                    <label data-i18n="firstName">First Name</label>
-                    <input type="text" id="firstName" required placeholder="Juan" data-i18n-placeholder="firstNamePlaceholder">
-                </div>
-                
-                <div class="form-group">
-                    <label data-i18n="lastName">Last Name</label>
-                    <input type="text" id="lastName" required placeholder="García" data-i18n-placeholder="lastNamePlaceholder">
-                </div>
-                
-                <div class="form-group">
-                    <label data-i18n="username">Username</label>
-                    <input type="text" id="username" required placeholder="juang2025" pattern="[a-zA-Z0-9_]+" minlength="3" maxlength="20">
-                    <small style="color:#666; font-size:12px;" data-i18n="usernameHint">Letters, numbers, and underscores only</small>
-                </div>
-                
-                <div class="form-group">
-                    <label data-i18n="password">Password</label>
-                    <input type="password" id="password" required minlength="4" placeholder="••••••••">
-                    <small style="color:#666; font-size:12px;" data-i18n="passwordHint">At least 4 characters</small>
-                </div>
-                
-                <div class="form-group">
-                    <label data-i18n="gradeLevel">Grade Level</label>
-                    <select id="gradeLevel" required>
-                        <option value="" data-i18n="selectGrade">-- Select Grade --</option>
-                        <option value="K">Kindergarten / Kinder</option>
-                        <option value="1">1st Grade / 1er Grado</option>
-                        <option value="2">2nd Grade / 2do Grado</option>
-                        <option value="3">3rd Grade / 3er Grado</option>
-                        <option value="4">4th Grade / 4to Grado</option>
-                        <option value="5">5th Grade / 5to Grado</option>
-                        <option value="6">6th Grade / 6to Grado</option>
-                        <option value="7">7th Grade / 7mo Grado</option>
-                        <option value="8">8th Grade / 8vo Grado</option>
-                        <option value="9">9th Grade / 9no Grado</option>
-                        <option value="10">10th Grade / 10mo Grado</option>
-                        <option value="11">11th Grade / 11mo Grado</option>
-                        <option value="12">12th Grade / 12mo Grado</option>
-                    </select>
-                </div>
-                
-                <button type="submit" id="registerBtn" data-i18n="register">Create Account</button>
-            </form>
+            <div class="form-group">
+                <label data-i18n="firstName">First Name</label>
+                <input type="text" id="firstName" placeholder="Juan">
+            </div>
             
+            <div class="form-group">
+                <label data-i18n="lastName">Last Name</label>
+                <input type="text" id="lastName" placeholder="García">
+            </div>
+            
+            <div class="form-group">
+                <label data-i18n="username">Username</label>
+                <input type="text" id="username" placeholder="juang2025">
+            </div>
+            
+            <div class="form-group">
+                <label data-i18n="password">Password</label>
+                <input type="password" id="password" placeholder="••••••••">
+            </div>
+            
+            <div class="form-group">
+                <label data-i18n="gradeLevel">Grade Level</label>
+                <select id="gradeLevel">
+                    <option value="K">Kindergarten</option>
+                    <option value="1">Grade 1</option>
+                    <option value="2">Grade 2</option>
+                    <option value="3">Grade 3</option>
+                    <option value="4">Grade 4</option>
+                    <option value="5">Grade 5</option>
+                    <option value="6">Grade 6</option>
+                    <option value="7">Grade 7</option>
+                    <option value="8">Grade 8</option>
+                    <option value="9">Grade 9</option>
+                    <option value="10">Grade 10</option>
+                    <option value="11">Grade 11</option>
+                    <option value="12">Grade 12</option>
+                </select>
+            </div>
+            
+            <button onclick="registerStudent()" id="registerBtn" data-i18n="createAccount">Create Account</button>
             <button class="btn-secondary" onclick="goBack(1)" data-i18n="back">← Back</button>
         </div>
+    </div>
 
-        <!-- Step 3: Success / Games Portal -->
-        <div id="step3" class="card card-wide hidden">
-            <div class="welcome-header">
-                <div class="avatar">🎓</div>
-                <h1><span data-i18n="welcome2">Welcome,</span> <span id="welcomeName">Student</span>!</h1>
-                <p data-i18n="readyToPlay">You're all set! Choose a game to start training your brain.</p>
-            </div>
-            
-            <div class="grade-tabs">
-                <button class="grade-tab active" onclick="filterGames('all')" data-i18n="allGames">All Games</button>
-                <button class="grade-tab" onclick="filterGames('K-2')">K-2</button>
-                <button class="grade-tab" onclick="filterGames('3-5')">3-5</button>
-                <button class="grade-tab" onclick="filterGames('6-8')">6-8</button>
-                <button class="grade-tab" onclick="filterGames('9-12')">9-12</button>
-            </div>
-            
-            <div class="games-grid" id="gamesGrid">
-                <!-- Games populated by JS -->
-            </div>
-            
-            <button class="btn-secondary" onclick="doLogout()" style="margin-top:30px;" data-i18n="logout">Logout</button>
-        </div>
-
-        <!-- Login Screen -->
-        <div id="loginScreen" class="card hidden">
-            <div class="header">
-                <div class="logo">🔐</div>
-                <h1 data-i18n="studentLogin">Student Login</h1>
-                <p data-i18n="welcomeBack">Welcome back! Enter your credentials</p>
-            </div>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="container hidden">
+        <div class="card">
+            <div class="logo">🔐</div>
+            <h1 data-i18n="welcomeBack">Welcome Back!</h1>
+            <p class="subtitle" data-i18n="loginMessage">Login to access your games</p>
             
             <div id="loginError" class="message"></div>
             
-            <form onsubmit="return doLogin(event)">
-                <div class="form-group">
-                    <label data-i18n="username">Username</label>
-                    <input type="text" id="loginUsername" required>
-                </div>
-                
-                <div class="form-group">
-                    <label data-i18n="password">Password</label>
-                    <input type="password" id="loginPassword" required>
-                </div>
-                
-                <button type="submit" id="loginBtn" data-i18n="login">Login</button>
-            </form>
+            <div class="form-group">
+                <label data-i18n="username">Username</label>
+                <input type="text" id="loginUsername" placeholder="juang2025">
+            </div>
             
-            <button class="btn-secondary" onclick="showRegister()" data-i18n="needAccount">Need an account? Register here</button>
+            <div class="form-group">
+                <label data-i18n="password">Password</label>
+                <input type="password" id="loginPassword" placeholder="••••••••">
+            </div>
+            
+            <button onclick="loginStudent()" id="loginBtn" data-i18n="login">Login</button>
+            
+            <div class="forgot-link">
+                <a href="password-reset.html" data-i18n="forgotPassword">Forgot Password?</a>
+            </div>
+            
+            <div class="login-toggle">
+                <span data-i18n="newStudent">New student?</span> 
+                <a href="#" onclick="showStep1(); return false;" data-i18n="registerHere">Register here</a>
+            </div>
         </div>
+    </div>
+
+    <!-- Step 3: Games Portal -->
+    <div id="gamesScreen" class="container wide hidden">
+        <div class="header">
+            <h1>🎮 <span data-i18n="cognitiveGames">Cognitive Training Games</span></h1>
+        </div>
+        
+        <div class="user-bar">
+            <div>
+                <div class="welcome" data-i18n="welcomeStudent">Welcome, <span id="studentName">Student</span>!</div>
+                <div class="grade"><span data-i18n="grade">Grade</span>: <span id="studentGrade">-</span></div>
+            </div>
+            <button class="btn-secondary" onclick="logout()" data-i18n="logout">Logout</button>
+        </div>
+        
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterGames('all')" data-i18n="allGames">All Games</button>
+            <button class="filter-btn" onclick="filterGames('K-2')">K-2</button>
+            <button class="filter-btn" onclick="filterGames('3-5')">3-5</button>
+            <button class="filter-btn" onclick="filterGames('6-8')">6-8</button>
+            <button class="filter-btn" onclick="filterGames('9-12')">9-12</button>
+        </div>
+        
+        <div class="games-grid" id="gamesGrid"></div>
     </div>
 
     <script>
     const API = 'https://akashic-academy-backend.onrender.com';
     let currentLang = 'en';
-    let verifiedCode = null;
+    let classCodeData = null;
     let studentData = null;
 
-    // Games data - 12 games (English/Spanish versions determined by language toggle)
-    const GAMES_BASE_URL = 'https://akashic-academy-backend.onrender.com/games';
-    
+    // Games data
     const games = [
         // K-2 Games
-        { id: 'k2-sequence-memory', icon: '🔲', name: 'Sequence Memory', nameEs: 'Memoria de Secuencias', desc: 'Recall visual patterns', descEs: 'Recuerda patrones visuales', grade: 'K-2' },
-        { id: 'k2-color-match', icon: '🎨', name: 'Color Match', nameEs: 'Combinar Colores', desc: 'Match the colors', descEs: 'Combina los colores', grade: 'K-2' },
-        { id: 'k2-visual-memory', icon: '👁️', name: 'Visual Memory', nameEs: 'Memoria Visual', desc: 'Remember what you see', descEs: 'Recuerda lo que ves', grade: 'K-2' },
-        
+        { id: 'k2-sequence-memory', icon: '🔢', grade: 'K-2', 
+          name: { en: 'Sequence Memory', es: 'Memoria de Secuencias' },
+          desc: { en: 'Remember and repeat patterns', es: 'Recuerda y repite patrones' }
+        },
+        { id: 'k2-color-match', icon: '🎨', grade: 'K-2',
+          name: { en: 'Color Match', es: 'Combinar Colores' },
+          desc: { en: 'Match colors quickly', es: 'Combina colores rápidamente' }
+        },
+        { id: 'k2-visual-memory', icon: '👁️', grade: 'K-2',
+          name: { en: 'Visual Memory', es: 'Memoria Visual' },
+          desc: { en: 'Remember what you see', es: 'Recuerda lo que ves' }
+        },
         // 3-5 Games
-        { id: '35-number-memory', icon: '🔢', name: 'Number Memory', nameEs: 'Memoria de Números', desc: 'Remember number sequences', descEs: 'Recuerda secuencias de números', grade: '3-5' },
-        { id: '35-visual-memory', icon: '👁️', name: 'Visual Memory', nameEs: 'Memoria Visual', desc: 'Remember visual patterns', descEs: 'Recuerda patrones visuales', grade: '3-5' },
-        { id: '35-word-search', icon: '🔤', name: 'Word Search', nameEs: 'Sopa de Letras', desc: 'Find hidden words', descEs: 'Encuentra palabras ocultas', grade: '3-5' },
-        
+        { id: '35-number-memory', icon: '🔢', grade: '3-5',
+          name: { en: 'Number Memory', es: 'Memoria de Números' },
+          desc: { en: 'Remember number sequences', es: 'Recuerda secuencias numéricas' }
+        },
+        { id: '35-visual-memory', icon: '👁️', grade: '3-5',
+          name: { en: 'Visual Memory', es: 'Memoria Visual' },
+          desc: { en: 'Remember visual patterns', es: 'Recuerda patrones visuales' }
+        },
+        { id: '35-word-search', icon: '🔤', grade: '3-5',
+          name: { en: 'Word Search', es: 'Sopa de Letras' },
+          desc: { en: 'Find hidden words', es: 'Encuentra palabras ocultas' }
+        },
         // 6-8 Games
-        { id: '68-number-memory', icon: '🔢', name: 'Number Memory', nameEs: 'Memoria de Números', desc: 'Advanced number sequences', descEs: 'Secuencias de números avanzadas', grade: '6-8' },
-        { id: '68-typing-quiz', icon: '⌨️', name: 'Typing Quiz', nameEs: 'Quiz de Mecanografía', desc: 'Test your typing skills', descEs: 'Prueba tus habilidades de escritura', grade: '6-8' },
-        { id: '68-word-search', icon: '🔤', name: 'Word Search', nameEs: 'Sopa de Letras', desc: 'Find challenging words', descEs: 'Encuentra palabras desafiantes', grade: '6-8' },
-        
+        { id: '68-number-memory', icon: '🔢', grade: '6-8',
+          name: { en: 'Number Memory', es: 'Memoria de Números' },
+          desc: { en: 'Advanced number sequences', es: 'Secuencias numéricas avanzadas' }
+        },
+        { id: '68-typing-quiz', icon: '⌨️', grade: '6-8',
+          name: { en: 'Typing Quiz', es: 'Quiz de Mecanografía' },
+          desc: { en: 'Test your typing speed', es: 'Prueba tu velocidad de escritura' }
+        },
+        { id: '68-word-search', icon: '🔤', grade: '6-8',
+          name: { en: 'Word Search', es: 'Sopa de Letras' },
+          desc: { en: 'Find challenging words', es: 'Encuentra palabras desafiantes' }
+        },
         // 9-12 Games
-        { id: '912-assessment', icon: '📊', name: 'Cognitive Assessment', nameEs: 'Evaluación Cognitiva', desc: 'Test your cognitive abilities', descEs: 'Evalúa tus habilidades cognitivas', grade: '9-12' },
-        { id: '912-stroop-challenge', icon: '🧠', name: 'Stroop Challenge', nameEs: 'Desafío Stroop', desc: 'Test your mental flexibility', descEs: 'Prueba tu flexibilidad mental', grade: '9-12' },
-        { id: '912-typing', icon: '⌨️', name: 'Typing Test', nameEs: 'Prueba de Mecanografía', desc: 'Advanced typing challenge', descEs: 'Desafío de mecanografía avanzada', grade: '9-12' }
+        { id: '912-assessment', icon: '📊', grade: '9-12',
+          name: { en: 'Cognitive Assessment', es: 'Evaluación Cognitiva' },
+          desc: { en: 'Complete cognitive test', es: 'Prueba cognitiva completa' }
+        },
+        { id: '912-stroop-challenge', icon: '🧠', grade: '9-12',
+          name: { en: 'Stroop Challenge', es: 'Desafío Stroop' },
+          desc: { en: 'Test mental flexibility', es: 'Prueba flexibilidad mental' }
+        },
+        { id: '912-typing', icon: '⌨️', grade: '9-12',
+          name: { en: 'Typing Test', es: 'Prueba de Mecanografía' },
+          desc: { en: 'Professional typing test', es: 'Prueba de mecanografía profesional' }
+        }
     ];
 
     // Translations
     const translations = {
         en: {
-            studentReg: 'Student Registration',
-            enterCode: 'Enter your class access code to get started',
-            accessCode: 'Access Code',
+            studentPortal: 'Student Portal',
+            welcomeMessage: 'Enter your class code to get started',
+            classCode: 'Class Code',
             continue: 'Continue',
-            alreadyRegistered: 'Already registered?',
-            loginHere: 'Login here',
+            or: 'or',
+            returningStudent: 'Returning Student? Login',
             createAccount: 'Create Your Account',
-            fillDetails: 'Fill in your details to complete registration',
+            fillDetails: 'Fill in your details to register',
+            slotsAvailable: 'Slots available',
             firstName: 'First Name',
             lastName: 'Last Name',
             username: 'Username',
             password: 'Password',
             gradeLevel: 'Grade Level',
-            selectGrade: '-- Select Grade --',
-            register: 'Create Account',
             back: '← Back',
-            welcome2: 'Welcome,',
-            readyToPlay: "You're all set! Choose a game to start training your brain.",
-            allGames: 'All Games',
-            logout: 'Logout',
-            studentLogin: 'Student Login',
-            welcomeBack: 'Welcome back! Enter your credentials',
+            welcomeBack: 'Welcome Back!',
+            loginMessage: 'Login to access your games',
             login: 'Login',
-            needAccount: 'Need an account? Register here',
-            invalidCode: 'Invalid access code. Please check and try again.',
-            codeFull: 'This class code is full. Contact your teacher.',
-            codeExpired: 'This access code has expired.',
+            forgotPassword: 'Forgot Password?',
+            newStudent: 'New student?',
+            registerHere: 'Register here',
+            cognitiveGames: 'Cognitive Training Games',
+            welcomeStudent: 'Welcome,',
+            grade: 'Grade',
+            logout: 'Logout',
+            allGames: 'All Games',
+            play: 'Play',
+            invalidCode: 'Invalid class code. Please check and try again.',
+            codeFull: 'This class is full. Contact your teacher.',
             connectionError: 'Connection error. Please try again.',
-            usernameHint: 'Letters, numbers, and underscores only',
-            passwordHint: 'At least 4 characters',
-            firstNamePlaceholder: 'Juan',
-            lastNamePlaceholder: 'García',
-            slotsAvailable: 'spots available',
-            registrationSuccess: 'Account created successfully!',
+            fillAllFields: 'Please fill in all fields.',
             usernameTaken: 'Username already taken. Try another.',
-            registrationError: 'Registration failed. Please try again.',
-            loginError: 'Invalid username or password.',
-            play: 'Play'
+            registrationFailed: 'Registration failed. Please try again.',
+            invalidLogin: 'Invalid username or password.',
+            loginFailed: 'Login failed. Please try again.'
         },
         es: {
-            studentReg: 'Registro de Estudiante',
-            enterCode: 'Ingresa tu código de acceso para comenzar',
-            accessCode: 'Código de Acceso',
+            studentPortal: 'Portal del Estudiante',
+            welcomeMessage: 'Ingresa tu código de clase para comenzar',
+            classCode: 'Código de Clase',
             continue: 'Continuar',
-            alreadyRegistered: '¿Ya estás registrado?',
-            loginHere: 'Inicia sesión aquí',
-            createAccount: 'Crea Tu Cuenta',
-            fillDetails: 'Completa tus datos para finalizar el registro',
+            or: 'o',
+            returningStudent: '¿Ya tienes cuenta? Inicia sesión',
+            createAccount: 'Crea tu Cuenta',
+            fillDetails: 'Completa tus datos para registrarte',
+            slotsAvailable: 'Cupos disponibles',
             firstName: 'Nombre',
             lastName: 'Apellido',
             username: 'Usuario',
             password: 'Contraseña',
             gradeLevel: 'Grado',
-            selectGrade: '-- Selecciona Grado --',
-            register: 'Crear Cuenta',
             back: '← Volver',
-            welcome2: 'Bienvenido,',
-            readyToPlay: '¡Todo listo! Escoge un juego para entrenar tu cerebro.',
-            allGames: 'Todos',
-            logout: 'Cerrar Sesión',
-            studentLogin: 'Inicio de Sesión',
-            welcomeBack: '¡Bienvenido de nuevo! Ingresa tus credenciales',
+            welcomeBack: '¡Bienvenido de Nuevo!',
+            loginMessage: 'Inicia sesión para acceder a tus juegos',
             login: 'Iniciar Sesión',
-            needAccount: '¿Necesitas cuenta? Regístrate aquí',
+            forgotPassword: '¿Olvidaste tu contraseña?',
+            newStudent: '¿Eres nuevo?',
+            registerHere: 'Regístrate aquí',
+            cognitiveGames: 'Juegos de Entrenamiento Cognitivo',
+            welcomeStudent: 'Bienvenido,',
+            grade: 'Grado',
+            logout: 'Cerrar Sesión',
+            allGames: 'Todos los Juegos',
+            play: 'Jugar',
             invalidCode: 'Código inválido. Por favor verifica e intenta de nuevo.',
-            codeFull: 'Este código está lleno. Contacta a tu maestro.',
-            codeExpired: 'Este código de acceso ha expirado.',
+            codeFull: 'Esta clase está llena. Contacta a tu maestro.',
             connectionError: 'Error de conexión. Por favor intenta de nuevo.',
-            usernameHint: 'Solo letras, números y guiones bajos',
-            passwordHint: 'Mínimo 4 caracteres',
-            firstNamePlaceholder: 'Juan',
-            lastNamePlaceholder: 'García',
-            slotsAvailable: 'cupos disponibles',
-            registrationSuccess: '¡Cuenta creada exitosamente!',
-            usernameTaken: 'Usuario no disponible. Intenta otro.',
-            registrationError: 'Error en el registro. Por favor intenta de nuevo.',
-            loginError: 'Usuario o contraseña inválidos.',
-            play: 'Jugar'
+            fillAllFields: 'Por favor completa todos los campos.',
+            usernameTaken: 'El usuario ya existe. Intenta otro.',
+            registrationFailed: 'Error al registrar. Por favor intenta de nuevo.',
+            invalidLogin: 'Usuario o contraseña inválidos.',
+            loginFailed: 'Error al iniciar sesión. Por favor intenta de nuevo.'
         }
     };
 
@@ -623,51 +571,38 @@
         document.querySelectorAll('[data-i18n]').forEach(el => {
             el.textContent = t(el.dataset.i18n);
         });
-        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-            el.placeholder = t(el.dataset.i18nPlaceholder);
-        });
         document.getElementById('langBtn').textContent = currentLang === 'en' ? 'Español' : 'English';
-        
-        // Re-render games if on step 3
-        if (!document.getElementById('step3').classList.contains('hidden')) {
-            renderGames();
-        }
     }
 
     function toggleLang() {
         currentLang = currentLang === 'en' ? 'es' : 'en';
         localStorage.setItem('lang', currentLang);
         updateUI();
+        if (studentData) renderGames();
     }
 
-    // Navigation
-    function showStep(step) {
-        document.getElementById('step1').classList.add('hidden');
-        document.getElementById('step2').classList.add('hidden');
-        document.getElementById('step3').classList.add('hidden');
+    function showStep1() {
+        document.getElementById('step1Screen').classList.remove('hidden');
+        document.getElementById('step2Screen').classList.add('hidden');
         document.getElementById('loginScreen').classList.add('hidden');
-        document.getElementById('step' + step).classList.remove('hidden');
+        document.getElementById('gamesScreen').classList.add('hidden');
     }
 
     function showLogin() {
-        document.getElementById('step1').classList.add('hidden');
+        document.getElementById('step1Screen').classList.add('hidden');
+        document.getElementById('step2Screen').classList.add('hidden');
         document.getElementById('loginScreen').classList.remove('hidden');
-    }
-
-    function showRegister() {
-        document.getElementById('loginScreen').classList.add('hidden');
-        document.getElementById('step1').classList.remove('hidden');
+        document.getElementById('gamesScreen').classList.add('hidden');
     }
 
     function goBack(step) {
-        showStep(step);
+        if (step === 1) showStep1();
     }
 
-    // Step 1: Verify Code
-    async function verifyCode() {
-        const code = document.getElementById('accessCode').value.trim().toUpperCase();
+    async function validateCode() {
+        const code = document.getElementById('classCode').value.trim().toUpperCase();
         const errorDiv = document.getElementById('step1Error');
-        const btn = document.getElementById('verifyBtn');
+        const btn = document.getElementById('validateBtn');
         
         if (!code) {
             errorDiv.className = 'message error';
@@ -676,7 +611,6 @@
         }
         
         btn.disabled = true;
-        btn.innerHTML = '<span class="spinner"></span>' + t('continue');
         errorDiv.style.display = 'none';
         
         try {
@@ -684,28 +618,20 @@
             const data = await r.json();
             
             if (r.ok && data.valid) {
-                verifiedCode = {
-                    code: code,
-                    className: data.className || 'General',
-                    customerName: data.customerName,
-                    slotsRemaining: data.slotsRemaining
-                };
+                classCodeData = data;
+                document.getElementById('className').textContent = data.className || 'Class';
+                document.getElementById('slotsAvailable').textContent = data.slotsRemaining;
                 
-                // Update step 2 info
-                document.getElementById('className').textContent = verifiedCode.className;
-                document.getElementById('schoolName').textContent = verifiedCode.customerName;
-                document.getElementById('slotsInfo').textContent = `${verifiedCode.slotsRemaining} ${t('slotsAvailable')}`;
-                
-                showStep(2);
+                if (data.slotsRemaining <= 0) {
+                    errorDiv.className = 'message error';
+                    errorDiv.textContent = t('codeFull');
+                } else {
+                    document.getElementById('step1Screen').classList.add('hidden');
+                    document.getElementById('step2Screen').classList.remove('hidden');
+                }
             } else {
                 errorDiv.className = 'message error';
-                if (data.message?.includes('full')) {
-                    errorDiv.textContent = t('codeFull');
-                } else if (data.message?.includes('expired')) {
-                    errorDiv.textContent = t('codeExpired');
-                } else {
-                    errorDiv.textContent = t('invalidCode');
-                }
+                errorDiv.textContent = t('invalidCode');
             }
         } catch (e) {
             errorDiv.className = 'message error';
@@ -713,60 +639,52 @@
         }
         
         btn.disabled = false;
-        btn.textContent = t('continue');
     }
 
-    // Step 2: Register Student
-    async function registerStudent(e) {
-        e.preventDefault();
-        
+    async function registerStudent() {
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName = document.getElementById('lastName').value.trim();
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value;
+        const gradeLevel = document.getElementById('gradeLevel').value;
         const errorDiv = document.getElementById('step2Error');
         const btn = document.getElementById('registerBtn');
         
-        const data = {
-            classCode: verifiedCode.code,
-            firstName: document.getElementById('firstName').value.trim(),
-            lastName: document.getElementById('lastName').value.trim(),
-            username: document.getElementById('username').value.trim().toLowerCase(),
-            password: document.getElementById('password').value,
-            gradeLevel: document.getElementById('gradeLevel').value
-        };
+        if (!firstName || !lastName || !username || !password) {
+            errorDiv.className = 'message error';
+            errorDiv.textContent = t('fillAllFields');
+            return;
+        }
         
         btn.disabled = true;
-        btn.innerHTML = '<span class="spinner"></span>' + t('register');
         errorDiv.style.display = 'none';
         
         try {
             const r = await fetch(`${API}/api/students/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
+                body: JSON.stringify({
+                    classCode: classCodeData.code,
+                    firstName,
+                    lastName,
+                    username,
+                    password,
+                    gradeLevel
+                })
             });
             
-            const result = await r.json();
+            const data = await r.json();
             
             if (r.ok) {
-                // Save student session
-                studentData = {
-                    id: result.student.id,
-                    firstName: result.student.firstName,
-                    lastName: result.student.lastName,
-                    username: result.student.username,
-                    gradeLevel: result.student.gradeLevel,
-                    token: result.token
-                };
+                studentData = data.student;
                 localStorage.setItem('studentData', JSON.stringify(studentData));
-                
-                // Show success and games
-                document.getElementById('welcomeName').textContent = studentData.firstName;
-                renderGames();
-                showStep(3);
+                showGamesPortal();
             } else {
                 errorDiv.className = 'message error';
-                if (result.error?.includes('username') || result.error?.includes('exists')) {
+                if (data.error?.includes('Username')) {
                     errorDiv.textContent = t('usernameTaken');
                 } else {
-                    errorDiv.textContent = result.error || t('registrationError');
+                    errorDiv.textContent = data.error || t('registrationFailed');
                 }
             }
         } catch (e) {
@@ -775,22 +693,21 @@
         }
         
         btn.disabled = false;
-        btn.textContent = t('register');
-        return false;
     }
 
-    // Login
-    async function doLogin(e) {
-        e.preventDefault();
-        
+    async function loginStudent() {
+        const username = document.getElementById('loginUsername').value.trim();
+        const password = document.getElementById('loginPassword').value;
         const errorDiv = document.getElementById('loginError');
         const btn = document.getElementById('loginBtn');
         
-        const username = document.getElementById('loginUsername').value.trim().toLowerCase();
-        const password = document.getElementById('loginPassword').value;
+        if (!username || !password) {
+            errorDiv.className = 'message error';
+            errorDiv.textContent = t('fillAllFields');
+            return;
+        }
         
         btn.disabled = true;
-        btn.innerHTML = '<span class="spinner"></span>' + t('login');
         errorDiv.style.display = 'none';
         
         try {
@@ -800,25 +717,15 @@
                 body: JSON.stringify({ username, password })
             });
             
-            const result = await r.json();
+            const data = await r.json();
             
             if (r.ok) {
-                studentData = {
-                    id: result.student.id,
-                    firstName: result.student.firstName,
-                    lastName: result.student.lastName,
-                    username: result.student.username,
-                    gradeLevel: result.student.gradeLevel,
-                    token: result.token
-                };
+                studentData = data.student;
                 localStorage.setItem('studentData', JSON.stringify(studentData));
-                
-                document.getElementById('welcomeName').textContent = studentData.firstName;
-                renderGames();
-                showStep(3);
+                showGamesPortal();
             } else {
                 errorDiv.className = 'message error';
-                errorDiv.textContent = t('loginError');
+                errorDiv.textContent = t('invalidLogin');
             }
         } catch (e) {
             errorDiv.className = 'message error';
@@ -826,71 +733,75 @@
         }
         
         btn.disabled = false;
-        btn.textContent = t('login');
-        return false;
     }
 
-    function doLogout() {
-        localStorage.removeItem('studentData');
-        studentData = null;
-        location.reload();
+    function showGamesPortal() {
+        document.getElementById('step1Screen').classList.add('hidden');
+        document.getElementById('step2Screen').classList.add('hidden');
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('gamesScreen').classList.remove('hidden');
+        
+        document.getElementById('studentName').textContent = studentData.firstName;
+        document.getElementById('studentGrade').textContent = studentData.gradeLevel;
+        
+        renderGames();
     }
 
-    // Games
     function renderGames(filter = 'all') {
         const grid = document.getElementById('gamesGrid');
+        const lang = currentLang;
         
-        let filteredGames = games;
-        if (filter !== 'all') {
-            filteredGames = games.filter(g => g.grade === filter);
-        }
+        const filtered = filter === 'all' ? games : games.filter(g => g.grade === filter);
         
-        grid.innerHTML = filteredGames.map(game => `
-            <button class="btn-game" onclick="playGame('${game.id}')">
+        grid.innerHTML = filtered.map(game => `
+            <div class="game-card">
                 <div class="icon">${game.icon}</div>
-                <div class="info">
-                    <h3>${currentLang === 'es' ? game.nameEs : game.name}</h3>
-                    <p>${currentLang === 'es' ? game.descEs : game.desc}</p>
-                    <small style="opacity:0.6;">${game.grade}</small>
-                </div>
-            </button>
+                <div class="grade-badge">${game.grade}</div>
+                <h3>${game.name[lang]}</h3>
+                <p>${game.desc[lang]}</p>
+                <button class="btn-play" onclick="playGame('${game.id}')">${t('play')}</button>
+            </div>
         `).join('');
     }
 
-    function filterGames(filter) {
-        // Update active tab
-        document.querySelectorAll('.grade-tab').forEach(tab => tab.classList.remove('active'));
+    function filterGames(grade) {
+        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
         event.target.classList.add('active');
-        renderGames(filter);
+        renderGames(grade);
     }
 
     function playGame(gameId) {
-        // Build URL based on game ID and current language
         const lang = currentLang === 'es' ? 'es' : 'en';
-        const url = `${GAMES_BASE_URL}/${gameId}-${lang}.html`;
+        const url = `${API}/games/${gameId}-${lang}.html`;
         window.open(url, '_blank');
     }
 
+    function logout() {
+        localStorage.removeItem('studentData');
+        studentData = null;
+        showStep1();
+    }
+
     // Enter key handlers
-    document.getElementById('accessCode').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') verifyCode();
+    document.getElementById('classCode').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') validateCode();
+    });
+    document.getElementById('loginPassword').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') loginStudent();
     });
 
     // Initialize
     window.onload = function() {
-        // Load saved language
         const savedLang = localStorage.getItem('lang');
         if (savedLang) currentLang = savedLang;
         updateUI();
         
-        // Check for existing session
+        // Check for saved session
         const saved = localStorage.getItem('studentData');
         if (saved) {
             try {
                 studentData = JSON.parse(saved);
-                document.getElementById('welcomeName').textContent = studentData.firstName;
-                renderGames();
-                showStep(3);
+                showGamesPortal();
             } catch (e) {
                 localStorage.removeItem('studentData');
             }
