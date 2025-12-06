@@ -506,14 +506,29 @@
     let verifiedCode = null;
     let studentData = null;
 
-    // Games data
+    // Games data - 12 games (English/Spanish versions determined by language toggle)
+    const GAMES_BASE_URL = 'https://akashic-academy-backend.onrender.com/games';
+    
     const games = [
-        { id: 'number-memory', icon: '🔢', name: 'Number Memory', nameEs: 'Memoria de Números', desc: 'Remember number sequences', descEs: 'Recuerda secuencias de números', grades: ['K-2', '3-5', '6-8', '9-12'] },
-        { id: 'sequence-memory', icon: '🔲', name: 'Sequence Memory', nameEs: 'Memoria de Secuencias', desc: 'Recall visual patterns', descEs: 'Recuerda patrones visuales', grades: ['K-2', '3-5', '6-8', '9-12'] },
-        { id: 'memory-match', icon: '🃏', name: 'Memory Match', nameEs: 'Memoria de Parejas', desc: 'Match pairs of cards', descEs: 'Encuentra pares de cartas', grades: ['K-2', '3-5'] },
-        { id: 'reaction-time', icon: '⚡', name: 'Reaction Time', nameEs: 'Tiempo de Reacción', desc: 'Test your reflexes', descEs: 'Prueba tus reflejos', grades: ['3-5', '6-8', '9-12'] },
-        { id: 'reflex-training', icon: '🎯', name: 'Reflex Training', nameEs: 'Entrenamiento de Reflejos', desc: 'Improve reaction speed', descEs: 'Mejora tu velocidad de reacción', grades: ['6-8', '9-12'] },
-        { id: 'word-search', icon: '🔤', name: 'Word Search', nameEs: 'Sopa de Letras', desc: 'Find hidden words', descEs: 'Encuentra palabras ocultas', grades: ['3-5', '6-8', '9-12'] }
+        // K-2 Games
+        { id: 'k2-sequence-memory', icon: '🔲', name: 'Sequence Memory', nameEs: 'Memoria de Secuencias', desc: 'Recall visual patterns', descEs: 'Recuerda patrones visuales', grade: 'K-2' },
+        { id: 'k2-color-match', icon: '🎨', name: 'Color Match', nameEs: 'Combinar Colores', desc: 'Match the colors', descEs: 'Combina los colores', grade: 'K-2' },
+        { id: 'k2-visual-memory', icon: '👁️', name: 'Visual Memory', nameEs: 'Memoria Visual', desc: 'Remember what you see', descEs: 'Recuerda lo que ves', grade: 'K-2' },
+        
+        // 3-5 Games
+        { id: '35-number-memory', icon: '🔢', name: 'Number Memory', nameEs: 'Memoria de Números', desc: 'Remember number sequences', descEs: 'Recuerda secuencias de números', grade: '3-5' },
+        { id: '35-visual-memory', icon: '👁️', name: 'Visual Memory', nameEs: 'Memoria Visual', desc: 'Remember visual patterns', descEs: 'Recuerda patrones visuales', grade: '3-5' },
+        { id: '35-word-search', icon: '🔤', name: 'Word Search', nameEs: 'Sopa de Letras', desc: 'Find hidden words', descEs: 'Encuentra palabras ocultas', grade: '3-5' },
+        
+        // 6-8 Games
+        { id: '68-number-memory', icon: '🔢', name: 'Number Memory', nameEs: 'Memoria de Números', desc: 'Advanced number sequences', descEs: 'Secuencias de números avanzadas', grade: '6-8' },
+        { id: '68-typing-quiz', icon: '⌨️', name: 'Typing Quiz', nameEs: 'Quiz de Mecanografía', desc: 'Test your typing skills', descEs: 'Prueba tus habilidades de escritura', grade: '6-8' },
+        { id: '68-word-search', icon: '🔤', name: 'Word Search', nameEs: 'Sopa de Letras', desc: 'Find challenging words', descEs: 'Encuentra palabras desafiantes', grade: '6-8' },
+        
+        // 9-12 Games
+        { id: '912-assessment', icon: '📊', name: 'Cognitive Assessment', nameEs: 'Evaluación Cognitiva', desc: 'Test your cognitive abilities', descEs: 'Evalúa tus habilidades cognitivas', grade: '9-12' },
+        { id: '912-stroop-challenge', icon: '🧠', name: 'Stroop Challenge', nameEs: 'Desafío Stroop', desc: 'Test your mental flexibility', descEs: 'Prueba tu flexibilidad mental', grade: '9-12' },
+        { id: '912-typing', icon: '⌨️', name: 'Typing Test', nameEs: 'Prueba de Mecanografía', desc: 'Advanced typing challenge', descEs: 'Desafío de mecanografía avanzada', grade: '9-12' }
     ];
 
     // Translations
@@ -824,11 +839,10 @@
     // Games
     function renderGames(filter = 'all') {
         const grid = document.getElementById('gamesGrid');
-        const studentGrade = studentData?.gradeLevel || '6';
         
         let filteredGames = games;
         if (filter !== 'all') {
-            filteredGames = games.filter(g => g.grades.includes(filter));
+            filteredGames = games.filter(g => g.grade === filter);
         }
         
         grid.innerHTML = filteredGames.map(game => `
@@ -837,6 +851,7 @@
                 <div class="info">
                     <h3>${currentLang === 'es' ? game.nameEs : game.name}</h3>
                     <p>${currentLang === 'es' ? game.descEs : game.desc}</p>
+                    <small style="opacity:0.6;">${game.grade}</small>
                 </div>
             </button>
         `).join('');
@@ -850,22 +865,10 @@
     }
 
     function playGame(gameId) {
-        // Replace with your actual game URLs
-        const gameUrls = {
-            'number-memory': 'https://akashicworks.onrender.com/games/number-memory.html',
-            'sequence-memory': 'https://akashicworks.onrender.com/games/sequence-memory.html',
-            'memory-match': 'https://akashicworks.onrender.com/games/memory-match.html',
-            'reaction-time': 'https://akashicworks.onrender.com/games/reaction-time.html',
-            'reflex-training': 'https://akashicworks.onrender.com/games/reflex-training.html',
-            'word-search': 'https://akashicworks.onrender.com/games/word-search.html'
-        };
-        
-        const url = gameUrls[gameId];
-        if (url) {
-            // Add auth token as query param if needed
-            const authUrl = studentData?.token ? `${url}?token=${studentData.token}` : url;
-            window.open(authUrl, '_blank');
-        }
+        // Build URL based on game ID and current language
+        const lang = currentLang === 'es' ? 'es' : 'en';
+        const url = `${GAMES_BASE_URL}/${gameId}-${lang}.html`;
+        window.open(url, '_blank');
     }
 
     // Enter key handlers
