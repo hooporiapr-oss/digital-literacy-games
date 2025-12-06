@@ -1,320 +1,770 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Teacher Dashboard | Akashic Academy</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Georgia,serif;background:linear-gradient(135deg,#1a1a2e,#16213e);min-height:100vh;color:#fff}
-.header{background:rgba(0,0,0,0.3);padding:15px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
-.logo{font-size:1.4em;font-weight:bold}
-.logo span{color:#ffd700}
-.btn{padding:10px 20px;border:none;border-radius:20px;cursor:pointer;font-weight:bold;font-size:0.9em;transition:all 0.2s;text-decoration:none;display:inline-block}
-.btn:hover{transform:translateY(-2px)}
-.btn-secondary{background:rgba(255,255,255,0.1);color:#fff;border:2px solid rgba(255,255,255,0.3)}
-.btn-gold{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a1a2e}
-.btn-green{background:linear-gradient(135deg,#2ecc71,#27ae60);color:#fff}
-.container{max-width:900px;margin:0 auto;padding:20px}
-
-/* License Activation */
-.activate-box{background:linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,140,0,0.05));border:3px solid rgba(255,215,0,0.4);border-radius:20px;padding:40px;text-align:center;margin-bottom:30px}
-.activate-box h2{color:#ffd700;margin-bottom:10px}
-.activate-box p{opacity:0.8;margin-bottom:25px}
-.license-input{width:100%;max-width:400px;padding:15px;font-size:1.2em;text-align:center;border:3px solid rgba(255,255,255,0.3);border-radius:12px;background:rgba(0,0,0,0.3);color:#fff;letter-spacing:3px;text-transform:uppercase;font-family:monospace}
-.license-input:focus{outline:none;border-color:#ffd700}
-.license-input::placeholder{letter-spacing:normal;text-transform:none;font-family:Georgia,serif}
-
-/* Class Info */
-.class-box{background:rgba(46,204,113,0.1);border:3px solid rgba(46,204,113,0.4);border-radius:20px;padding:30px;text-align:center;margin-bottom:25px}
-.class-box .code{font-size:3em;color:#ffd700;font-weight:bold;letter-spacing:8px;font-family:monospace}
-.class-box .label{font-size:0.9em;opacity:0.7;margin-bottom:10px}
-.class-box .info{display:flex;justify-content:center;gap:30px;margin-top:20px;flex-wrap:wrap}
-.class-box .info-item{text-align:center}
-.class-box .info-item b{display:block;color:#2ecc71;font-size:1.5em}
-
-/* Stats */
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:15px;margin-bottom:25px}
-.stat{background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.15);border-radius:16px;padding:20px;text-align:center}
-.stat .value{font-size:2em;font-weight:bold;color:#ffd700}
-.stat .label{font-size:0.8em;opacity:0.7}
-
-/* Sections */
-.section{background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:16px;padding:20px;margin-bottom:20px}
-.section h3{color:#ffd700;margin-bottom:15px}
-
-/* Feed */
-.feed{max-height:300px;overflow-y:auto}
-.feed-item{display:flex;justify-content:space-between;align-items:center;padding:12px;background:rgba(255,255,255,0.05);border-radius:10px;margin-bottom:8px;border-left:4px solid #2ecc71}
-.feed-item .name{font-weight:bold}
-.feed-item .game{font-size:0.85em;opacity:0.7}
-.feed-item .score{font-size:1.3em;color:#ffd700;font-weight:bold}
-
-/* Table */
-table{width:100%;border-collapse:collapse}
-th,td{padding:12px 10px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.1)}
-th{color:#ffd700;font-size:0.8em;text-transform:uppercase}
-.badge{padding:4px 10px;border-radius:10px;font-size:0.75em;font-weight:bold}
-.badge-green{background:rgba(46,204,113,0.2);color:#2ecc71}
-.badge-yellow{background:rgba(241,196,15,0.2);color:#f1c40f}
-.badge-red{background:rgba(231,76,60,0.2);color:#e74c3c}
-
-/* License Warning */
-.license-warning{background:rgba(241,196,15,0.2);border:2px solid rgba(241,196,15,0.4);padding:15px;border-radius:10px;margin-bottom:20px;display:flex;align-items:center;gap:10px}
-
-.empty{text-align:center;padding:40px;opacity:0.6}
-
-.hidden{display:none!important}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard - Akashic Academy</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
+            color: #fff; 
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 30px 0;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+        .header p { color: #aaa; }
+        
+        /* Cards */
+        .card {
+            background: rgba(42, 42, 62, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .card h2 {
+            color: #ffd700;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Forms */
+        input, select, button {
+            padding: 12px 16px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+        }
+        input {
+            background: #1a1a2e;
+            color: #fff;
+            border: 2px solid #444;
+            width: 100%;
+            max-width: 400px;
+        }
+        input:focus { border-color: #ffd700; }
+        input::placeholder { color: #666; }
+        
+        button {
+            background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        button:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(255,215,0,0.3); }
+        button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        
+        .btn-secondary {
+            background: #444;
+            color: #fff;
+        }
+        .btn-secondary:hover { background: #555; }
+        
+        .btn-copy {
+            background: #10b981;
+            color: #fff;
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+        
+        /* License Info Grid */
+        .license-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .info-item {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .info-item label {
+            display: block;
+            color: #888;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .info-item .value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        .info-item .value.green { color: #10b981; }
+        .info-item .value.red { color: #ef4444; }
+        
+        /* Progress Bar */
+        .progress-container {
+            background: #1a1a2e;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        .progress-bar {
+            height: 20px;
+            background: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #ffd700);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        /* Class Codes Table */
+        .codes-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .codes-table th, .codes-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #444;
+        }
+        .codes-table th {
+            color: #ffd700;
+            font-size: 12px;
+            text-transform: uppercase;
+            background: #1a1a2e;
+        }
+        .codes-table tr:hover { background: rgba(255,215,0,0.05); }
+        
+        .code-display {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            color: #ffd700;
+            background: #1a1a2e;
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+        
+        /* Badges */
+        .badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .badge.active { background: #10b981; color: #fff; }
+        .badge.used { background: #6366f1; color: #fff; }
+        .badge.expired { background: #ef4444; color: #fff; }
+        
+        /* Generate Code Form */
+        .generate-form {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .form-group label {
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        /* Messages */
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: none;
+        }
+        .message.success { background: rgba(16,185,129,0.2); border: 1px solid #10b981; display: block; }
+        .message.error { background: rgba(239,68,68,0.2); border: 1px solid #ef4444; display: block; }
+        
+        /* Login Screen */
+        .login-card {
+            max-width: 450px;
+            margin: 100px auto;
+            text-align: center;
+        }
+        .login-card .logo {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        .login-card input {
+            width: 100%;
+            margin: 10px 0;
+        }
+        .login-card button {
+            width: 100%;
+            margin-top: 15px;
+            padding: 15px;
+        }
+        
+        /* Language Toggle */
+        .lang-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .lang-toggle button {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+        
+        /* Utilities */
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .mt-20 { margin-top: 20px; }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        .empty-state .icon { font-size: 3rem; margin-bottom: 15px; }
+        
+        /* Copy notification */
+        .copy-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #10b981;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+        }
+        .copy-toast.show { opacity: 1; }
+    </style>
 </head>
 <body>
+    <div class="lang-toggle">
+        <button onclick="toggleLang()" id="langBtn">Español</button>
+    </div>
 
-<header class="header">
-<div class="logo">📊 <span>Teacher Dashboard</span></div>
-<a href="index.html" class="btn btn-secondary">🎮 Games</a>
-</header>
-
-<div class="container">
-
-<!-- Activation Screen -->
-<div id="activateScreen">
-<div class="activate-box">
-<h2>🔑 Activate Your License</h2>
-<p>Enter the license key provided by your school administrator</p>
-<input type="text" class="license-input" id="licenseKey" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="19">
-<br><br>
-<button class="btn btn-gold" onclick="activateLicense()" style="padding:15px 40px;font-size:1.1em">Activate License</button>
-</div>
-
-<div style="text-align:center;opacity:0.6">
-<p>Don't have a license? Contact your school administrator.</p>
-<p style="margin-top:10px"><a href="https://akashic.academy" style="color:#ffd700">Learn more at akashic.academy</a></p>
-</div>
-</div>
-
-<!-- Dashboard Screen -->
-<div id="dashboardScreen" class="hidden">
-
-<!-- License Info -->
-<div id="licenseWarning" class="license-warning hidden">
-<span>⚠️</span>
-<span id="licenseWarningText">License info</span>
-</div>
-
-<!-- Class Code -->
-<div class="class-box">
-<div class="label">📢 Share this code with your students</div>
-<div class="code" id="classCode">------</div>
-<div class="info">
-<div class="info-item"><b id="studentLimit">0</b>Student Limit</div>
-<div class="info-item"><b id="studentsUsed">0</b>Enrolled</div>
-<div class="info-item"><b id="expiresIn">-</b>Days Left</div>
-</div>
-</div>
-
-<!-- Stats -->
-<div class="stats">
-<div class="stat"><div class="value" id="statStudents">0</div><div class="label">Students</div></div>
-<div class="stat"><div class="value" id="statGames">0</div><div class="label">Games</div></div>
-<div class="stat"><div class="value" id="statAvg">0%</div><div class="label">Avg Score</div></div>
-<div class="stat"><div class="value" id="statToday">0</div><div class="label">Today</div></div>
-</div>
-
-<!-- Live Feed -->
-<div class="section">
-<h3>⚡ Live Scores</h3>
-<div class="feed" id="liveFeed">
-<div class="empty">Waiting for scores...</div>
-</div>
-</div>
-
-<!-- Students -->
-<div class="section">
-<h3>👨‍🎓 Student Progress</h3>
-<table>
-<thead><tr><th>Student</th><th>Games</th><th>Avg</th><th>Status</th></tr></thead>
-<tbody id="studentTable"><tr><td colspan="4" class="empty">No students yet</td></tr></tbody>
-</table>
-</div>
-
-<!-- Actions -->
-<div style="text-align:center;margin-top:20px">
-<button class="btn btn-secondary" onclick="logout()">🔄 Switch License</button>
-<button class="btn btn-secondary" onclick="copyCode()" style="margin-left:10px">📋 Copy Code</button>
-</div>
-
-</div>
-
-</div>
-
-<script>
-const API_URL = 'https://digital-literacy-backend.onrender.com/api';
-
-let classCode = localStorage.getItem('teacher_class_code');
-let licenseKey = localStorage.getItem('teacher_license_key');
-
-// Format license input
-document.getElementById('licenseKey').addEventListener('input', function(e) {
-    let val = e.target.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
-    let formatted = val.match(/.{1,4}/g)?.join('-') || val;
-    e.target.value = formatted.substring(0, 19);
-});
-
-async function activateLicense() {
-    const key = document.getElementById('licenseKey').value.trim();
-    
-    if (key.length < 19) {
-        alert('Please enter a valid license key');
-        return;
-    }
-    
-    try {
-        const res = await fetch(`${API_URL}/licenses/activate`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ licenseKey: key })
-        });
-        
-        const data = await res.json();
-        
-        if (data.success) {
-            localStorage.setItem('teacher_license_key', key);
-            localStorage.setItem('teacher_class_code', data.classCode);
-            classCode = data.classCode;
-            licenseKey = key;
+    <!-- Login Screen -->
+    <div id="loginScreen" class="container">
+        <div class="card login-card">
+            <div class="logo">🎓</div>
+            <h1 style="color:#ffd700; margin-bottom:10px;" data-i18n="welcome">Welcome</h1>
+            <p style="color:#aaa; margin-bottom:30px;" data-i18n="loginSubtitle">Enter your license key to access your dashboard</p>
             
-            showDashboard();
-            loadDashboard();
-        } else {
-            alert('Error: ' + data.error);
-        }
-    } catch(e) {
-        alert('Connection error. Please try again.');
-    }
-}
-
-function showActivate() {
-    document.getElementById('activateScreen').classList.remove('hidden');
-    document.getElementById('dashboardScreen').classList.add('hidden');
-}
-
-function showDashboard() {
-    document.getElementById('activateScreen').classList.add('hidden');
-    document.getElementById('dashboardScreen').classList.remove('hidden');
-    document.getElementById('classCode').textContent = classCode;
-}
-
-async function loadDashboard() {
-    if (!classCode) return;
-    
-    try {
-        const res = await fetch(`${API_URL}/classes/${classCode}/dashboard`);
-        const data = await res.json();
-        
-        // License info
-        if (data.license) {
-            document.getElementById('studentLimit').textContent = data.license.studentLimit;
-            document.getElementById('studentsUsed').textContent = data.license.studentsUsed;
+            <input type="text" id="licenseKeyInput" placeholder="XXXX-XXXX-XXXX" data-i18n-placeholder="enterLicense" 
+                   style="text-transform:uppercase; text-align:center; font-size:1.2rem; letter-spacing:2px;">
             
-            const expires = new Date(data.license.expiresAt);
-            const daysLeft = Math.ceil((expires - new Date()) / (1000 * 60 * 60 * 24));
-            document.getElementById('expiresIn').textContent = daysLeft;
+            <button onclick="doLogin()" id="loginBtn" data-i18n="login">Access Dashboard</button>
             
-            // Show warning if low
-            if (daysLeft <= 30) {
-                document.getElementById('licenseWarning').classList.remove('hidden');
-                document.getElementById('licenseWarningText').textContent = 
-                    `License expires in ${daysLeft} days. Contact your administrator to renew.`;
-            }
+            <div id="loginError" class="message error" style="display:none;"></div>
             
-            if (data.license.studentsRemaining <= 5) {
-                document.getElementById('licenseWarning').classList.remove('hidden');
-                document.getElementById('licenseWarningText').textContent = 
-                    `Only ${data.license.studentsRemaining} student seats remaining.`;
-            }
-        }
-        
-        // Stats
-        document.getElementById('statStudents').textContent = data.stats.totalStudents;
-        document.getElementById('statGames').textContent = data.stats.totalGames;
-        document.getElementById('statAvg').textContent = data.stats.avgScore + '%';
-        document.getElementById('statToday').textContent = data.stats.todayGames;
-        
-        // Live feed
-        const feed = document.getElementById('liveFeed');
-        if (data.recentScores && data.recentScores.length > 0) {
-            feed.innerHTML = data.recentScores.slice(0, 15).map(s => `
-                <div class="feed-item">
-                    <div><div class="name">${s.studentName}</div><div class="game">${formatGame(s.gameId)}</div></div>
-                    <span class="score">${s.percentage}%</span>
+            <p style="margin-top:30px; color:#666; font-size:14px;" data-i18n="noLicense">
+                Don't have a license? Contact your administrator.
+            </p>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="container hidden">
+        <div class="header">
+            <h1>🎓 <span data-i18n="teacherDashboard">Teacher Dashboard</span></h1>
+            <p data-i18n="dashboardSubtitle">Manage your class access codes</p>
+        </div>
+
+        <!-- License Info Card -->
+        <div class="card">
+            <div class="flex-between">
+                <h2>📋 <span data-i18n="licenseInfo">License Information</span></h2>
+                <button class="btn-secondary" onclick="doLogout()" data-i18n="logout">Logout</button>
+            </div>
+            
+            <div class="license-info">
+                <div class="info-item">
+                    <label data-i18n="licensee">Licensee</label>
+                    <div class="value" id="customerName">-</div>
                 </div>
-            `).join('');
-        } else {
-            feed.innerHTML = '<div class="empty">Waiting for scores...</div>';
-        }
-        
-        // Student table
-        const tbody = document.getElementById('studentTable');
-        if (data.students && data.students.length > 0) {
-            tbody.innerHTML = data.students.map(s => {
-                const badge = s.avgScore >= 80 ? 'green' : s.avgScore >= 60 ? 'yellow' : 'red';
-                const status = s.avgScore >= 80 ? 'Excellent' : s.avgScore >= 60 ? 'Good' : 'Needs Help';
-                return `<tr>
-                    <td><strong>${s.name}</strong></td>
-                    <td>${s.gamesPlayed}</td>
-                    <td>${s.avgScore}%</td>
-                    <td><span class="badge badge-${badge}">${status}</span></td>
-                </tr>`;
-            }).join('');
-        }
-        
-    } catch(e) {
-        console.error('Load error:', e);
-    }
-}
+                <div class="info-item">
+                    <label data-i18n="licenseKey">License Key</label>
+                    <div class="value" id="licenseKeyDisplay" style="font-size:1rem; font-family:monospace;">-</div>
+                </div>
+                <div class="info-item">
+                    <label data-i18n="status">Status</label>
+                    <div class="value green" id="licenseStatus">-</div>
+                </div>
+                <div class="info-item">
+                    <label data-i18n="expires">Expires</label>
+                    <div class="value" id="expiresAt">-</div>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="flex-between">
+                    <span data-i18n="studentUsage">Student Usage</span>
+                    <span id="usageText">0 / 0</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="usageBar" style="width:0%"></div>
+                </div>
+                <div class="progress-text">
+                    <span data-i18n="registered">Registered</span>
+                    <span data-i18n="available">Available</span>
+                </div>
+            </div>
+        </div>
 
-function formatGame(id) {
-    const names = {
-        'k2-visual-memory': '👁️ Visual Memory',
-        'k2-color-match': '🎨 Color Match',
-        'k2-sequence-memory': '🔲 Sequence',
-        '35-number-memory': '🔢 Numbers',
-        '35-word-search': '🔍 Word Search',
-        '35-visual-memory': '👁️ Visual+',
-        '68-typing-quiz': '⌨️ Typing',
-        '68-word-search': '🔍 Words',
-        '68-number-memory': '🔢 Numbers Pro',
-        '912-assessment': '📝 Assessment',
-        '912-typing': '⌨️ Speed Type',
-        '912-stroop-challenge': '🎨 Stroop'
+        <!-- Generate Code Card -->
+        <div class="card">
+            <h2>➕ <span data-i18n="generateCode">Generate Access Code</span></h2>
+            
+            <div class="generate-form">
+                <div class="form-group">
+                    <label data-i18n="className">Class/Group Name</label>
+                    <input type="text" id="className" placeholder="e.g., Math 101" data-i18n-placeholder="classExample" style="width:200px;">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="studentSlots">Student Slots</label>
+                    <input type="number" id="studentSlots" min="1" max="100" value="25" style="width:100px;">
+                </div>
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <button onclick="generateCode()" id="generateBtn" data-i18n="generate">Generate Code</button>
+                </div>
+            </div>
+            
+            <div id="generateMsg" class="message"></div>
+            
+            <div id="newCodeDisplay" class="hidden" style="margin-top:20px; padding:25px; background:#1a1a2e; border-radius:10px; text-align:center;">
+                <p style="color:#aaa; margin-bottom:10px;" data-i18n="newCodeGenerated">New access code generated!</p>
+                <div style="font-size:2rem; font-family:'Courier New',monospace; color:#ffd700; letter-spacing:4px; margin:15px 0;" id="newCode"></div>
+                <button class="btn-copy" onclick="copyCode()" data-i18n="copyCode">📋 Copy Code</button>
+            </div>
+        </div>
+
+        <!-- Class Codes Card -->
+        <div class="card">
+            <div class="flex-between">
+                <h2>📚 <span data-i18n="classCodes">Class Access Codes</span></h2>
+                <button class="btn-secondary" onclick="loadLicense()" data-i18n="refresh">🔄 Refresh</button>
+            </div>
+            
+            <div id="codesContainer">
+                <div class="empty-state" id="emptyState">
+                    <div class="icon">📭</div>
+                    <p data-i18n="noCodes">No access codes yet. Generate your first code above!</p>
+                </div>
+                
+                <table class="codes-table hidden" id="codesTable">
+                    <thead>
+                        <tr>
+                            <th data-i18n="code">Code</th>
+                            <th data-i18n="classGroup">Class/Group</th>
+                            <th data-i18n="usage">Usage</th>
+                            <th data-i18n="created">Created</th>
+                            <th data-i18n="actions">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="codesList"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Student Registration Info -->
+        <div class="card">
+            <h2>ℹ️ <span data-i18n="howItWorks">How It Works</span></h2>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:20px; margin-top:15px;">
+                <div style="background:#1a1a2e; padding:20px; border-radius:10px;">
+                    <div style="font-size:2rem; margin-bottom:10px;">1️⃣</div>
+                    <h3 style="color:#ffd700; margin-bottom:8px;" data-i18n="step1Title">Generate a Code</h3>
+                    <p style="color:#aaa; font-size:14px;" data-i18n="step1Desc">Create an access code for your class with the number of student slots you need.</p>
+                </div>
+                <div style="background:#1a1a2e; padding:20px; border-radius:10px;">
+                    <div style="font-size:2rem; margin-bottom:10px;">2️⃣</div>
+                    <h3 style="color:#ffd700; margin-bottom:8px;" data-i18n="step2Title">Share with Students</h3>
+                    <p style="color:#aaa; font-size:14px;" data-i18n="step2Desc">Give the access code to your students. They'll use it to register.</p>
+                </div>
+                <div style="background:#1a1a2e; padding:20px; border-radius:10px;">
+                    <div style="font-size:2rem; margin-bottom:10px;">3️⃣</div>
+                    <h3 style="color:#ffd700; margin-bottom:8px;" data-i18n="step3Title">Students Access Games</h3>
+                    <p style="color:#aaa; font-size:14px;" data-i18n="step3Desc">Once registered, students can access all cognitive training games.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Copy Toast -->
+    <div class="copy-toast" id="copyToast">✓ <span data-i18n="copied">Copied to clipboard!</span></div>
+
+    <script>
+    const API = 'https://akashic-academy-backend.onrender.com';
+    let LICENSE_KEY = '';
+    let licenseData = null;
+    let currentLang = 'en';
+    let generatedCode = '';
+
+    // Translations
+    const translations = {
+        en: {
+            welcome: 'Welcome',
+            loginSubtitle: 'Enter your license key to access your dashboard',
+            enterLicense: 'XXXX-XXXX-XXXX',
+            login: 'Access Dashboard',
+            noLicense: "Don't have a license? Contact your administrator.",
+            teacherDashboard: 'Teacher Dashboard',
+            dashboardSubtitle: 'Manage your class access codes',
+            licenseInfo: 'License Information',
+            logout: 'Logout',
+            licensee: 'Licensee',
+            licenseKey: 'License Key',
+            status: 'Status',
+            expires: 'Expires',
+            studentUsage: 'Student Usage',
+            registered: 'Registered',
+            available: 'Available',
+            generateCode: 'Generate Access Code',
+            className: 'Class/Group Name',
+            classExample: 'e.g., Math 101',
+            studentSlots: 'Student Slots',
+            generate: 'Generate Code',
+            newCodeGenerated: 'New access code generated!',
+            copyCode: '📋 Copy Code',
+            classCodes: 'Class Access Codes',
+            refresh: '🔄 Refresh',
+            noCodes: 'No access codes yet. Generate your first code above!',
+            code: 'Code',
+            classGroup: 'Class/Group',
+            usage: 'Usage',
+            created: 'Created',
+            actions: 'Actions',
+            howItWorks: 'How It Works',
+            step1Title: 'Generate a Code',
+            step1Desc: 'Create an access code for your class with the number of student slots you need.',
+            step2Title: 'Share with Students',
+            step2Desc: "Give the access code to your students. They'll use it to register.",
+            step3Title: 'Students Access Games',
+            step3Desc: 'Once registered, students can access all cognitive training games.',
+            copied: 'Copied to clipboard!',
+            active: 'Active',
+            expired: 'Expired',
+            trial: 'Trial',
+            copy: 'Copy',
+            invalidKey: 'Invalid license key. Please check and try again.',
+            connectionError: 'Connection failed. Please try again.',
+            codeGenerated: 'Access code generated successfully!',
+            generateError: 'Failed to generate code. Please try again.',
+            notEnoughSlots: 'Not enough student slots available.',
+            default: 'General'
+        },
+        es: {
+            welcome: 'Bienvenido',
+            loginSubtitle: 'Ingresa tu clave de licencia para acceder al panel',
+            enterLicense: 'XXXX-XXXX-XXXX',
+            login: 'Acceder al Panel',
+            noLicense: '¿No tienes licencia? Contacta a tu administrador.',
+            teacherDashboard: 'Panel del Maestro',
+            dashboardSubtitle: 'Administra los códigos de acceso de tu clase',
+            licenseInfo: 'Información de Licencia',
+            logout: 'Cerrar Sesión',
+            licensee: 'Licenciatario',
+            licenseKey: 'Clave de Licencia',
+            status: 'Estado',
+            expires: 'Expira',
+            studentUsage: 'Uso de Estudiantes',
+            registered: 'Registrados',
+            available: 'Disponibles',
+            generateCode: 'Generar Código de Acceso',
+            className: 'Nombre de Clase/Grupo',
+            classExample: 'ej., Matemáticas 101',
+            studentSlots: 'Cupos',
+            generate: 'Generar Código',
+            newCodeGenerated: '¡Nuevo código de acceso generado!',
+            copyCode: '📋 Copiar Código',
+            classCodes: 'Códigos de Acceso por Clase',
+            refresh: '🔄 Actualizar',
+            noCodes: 'No hay códigos aún. ¡Genera tu primer código arriba!',
+            code: 'Código',
+            classGroup: 'Clase/Grupo',
+            usage: 'Uso',
+            created: 'Creado',
+            actions: 'Acciones',
+            howItWorks: 'Cómo Funciona',
+            step1Title: 'Genera un Código',
+            step1Desc: 'Crea un código de acceso para tu clase con la cantidad de cupos que necesitas.',
+            step2Title: 'Comparte con Estudiantes',
+            step2Desc: 'Dale el código de acceso a tus estudiantes. Lo usarán para registrarse.',
+            step3Title: 'Estudiantes Acceden a Juegos',
+            step3Desc: 'Una vez registrados, los estudiantes pueden acceder a todos los juegos cognitivos.',
+            copied: '¡Copiado al portapapeles!',
+            active: 'Activo',
+            expired: 'Expirado',
+            trial: 'Prueba',
+            copy: 'Copiar',
+            invalidKey: 'Clave de licencia inválida. Por favor verifica e intenta de nuevo.',
+            connectionError: 'Error de conexión. Por favor intenta de nuevo.',
+            codeGenerated: '¡Código de acceso generado exitosamente!',
+            generateError: 'Error al generar código. Por favor intenta de nuevo.',
+            notEnoughSlots: 'No hay suficientes cupos disponibles.',
+            default: 'General'
+        }
     };
-    return names[id] || id;
-}
 
-function copyCode() {
-    navigator.clipboard.writeText(classCode);
-    alert('Class code copied: ' + classCode);
-}
-
-function logout() {
-    if (confirm('Switch to a different license?')) {
-        localStorage.removeItem('teacher_class_code');
-        localStorage.removeItem('teacher_license_key');
-        classCode = null;
-        licenseKey = null;
-        showActivate();
+    function t(key) {
+        return translations[currentLang][key] || translations['en'][key] || key;
     }
-}
 
-// Init
-if (classCode && licenseKey) {
-    showDashboard();
-    loadDashboard();
-    setInterval(loadDashboard, 15000); // Refresh every 15s
-} else {
-    showActivate();
-}
-</script>
+    function updateUI() {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            el.textContent = t(el.dataset.i18n);
+        });
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            el.placeholder = t(el.dataset.i18nPlaceholder);
+        });
+        document.getElementById('langBtn').textContent = currentLang === 'en' ? 'Español' : 'English';
+    }
 
+    function toggleLang() {
+        currentLang = currentLang === 'en' ? 'es' : 'en';
+        localStorage.setItem('lang', currentLang);
+        updateUI();
+        if (licenseData) updateLicenseDisplay();
+    }
+
+    async function doLogin() {
+        const key = document.getElementById('licenseKeyInput').value.trim().toUpperCase();
+        const errorDiv = document.getElementById('loginError');
+        const btn = document.getElementById('loginBtn');
+        
+        if (!key) {
+            errorDiv.textContent = t('invalidKey');
+            errorDiv.style.display = 'block';
+            return;
+        }
+        
+        btn.disabled = true;
+        btn.textContent = '...';
+        errorDiv.style.display = 'none';
+        
+        try {
+            const r = await fetch(`${API}/api/licenses/${key}/validate`);
+            if (r.ok) {
+                const data = await r.json();
+                if (data.valid) {
+                    LICENSE_KEY = key;
+                    localStorage.setItem('licenseKey', key);
+                    document.getElementById('loginScreen').classList.add('hidden');
+                    document.getElementById('dashboard').classList.remove('hidden');
+                    await loadLicense();
+                } else {
+                    errorDiv.textContent = data.message || t('invalidKey');
+                    errorDiv.style.display = 'block';
+                }
+            } else {
+                errorDiv.textContent = t('invalidKey');
+                errorDiv.style.display = 'block';
+            }
+        } catch (e) {
+            errorDiv.textContent = t('connectionError');
+            errorDiv.style.display = 'block';
+        }
+        
+        btn.disabled = false;
+        btn.textContent = t('login');
+    }
+
+    function doLogout() {
+        localStorage.removeItem('licenseKey');
+        location.reload();
+    }
+
+    async function loadLicense() {
+        try {
+            const r = await fetch(`${API}/api/licenses/${LICENSE_KEY}`);
+            if (r.ok) {
+                licenseData = await r.json();
+                updateLicenseDisplay();
+                loadCodes();
+            }
+        } catch (e) {
+            console.error('Failed to load license:', e);
+        }
+    }
+
+    function updateLicenseDisplay() {
+        const d = licenseData;
+        document.getElementById('customerName').textContent = d.customerName;
+        document.getElementById('licenseKeyDisplay').textContent = d.licenseKey;
+        
+        const statusEl = document.getElementById('licenseStatus');
+        if (d.isValid) {
+            statusEl.textContent = d.isTrial ? t('trial') : t('active');
+            statusEl.className = 'value green';
+        } else {
+            statusEl.textContent = t('expired');
+            statusEl.className = 'value red';
+        }
+        
+        document.getElementById('expiresAt').textContent = new Date(d.expiresAt).toLocaleDateString();
+        
+        const used = d.studentsUsed || 0;
+        const total = d.studentCount;
+        const pct = Math.round((used / total) * 100);
+        
+        document.getElementById('usageText').textContent = `${used} / ${total}`;
+        document.getElementById('usageBar').style.width = pct + '%';
+        
+        // Update max slots for generate
+        const remaining = total - used;
+        document.getElementById('studentSlots').max = remaining;
+        if (parseInt(document.getElementById('studentSlots').value) > remaining) {
+            document.getElementById('studentSlots').value = remaining;
+        }
+    }
+
+    function loadCodes() {
+        const codes = licenseData.classCodes || [];
+        const emptyState = document.getElementById('emptyState');
+        const table = document.getElementById('codesTable');
+        const tbody = document.getElementById('codesList');
+        
+        if (codes.length === 0) {
+            emptyState.classList.remove('hidden');
+            table.classList.add('hidden');
+            return;
+        }
+        
+        emptyState.classList.add('hidden');
+        table.classList.remove('hidden');
+        
+        tbody.innerHTML = codes.map(code => `
+            <tr>
+                <td><span class="code-display">${code.code}</span></td>
+                <td>${code.className || t('default')}</td>
+                <td>${code.studentsUsed || 0} / ${code.studentSlots}</td>
+                <td>${new Date(code.createdAt).toLocaleDateString()}</td>
+                <td><button class="btn-copy" onclick="copyToClipboard('${code.code}')">${t('copy')}</button></td>
+            </tr>
+        `).join('');
+    }
+
+    async function generateCode() {
+        const className = document.getElementById('className').value.trim();
+        const studentSlots = parseInt(document.getElementById('studentSlots').value);
+        const msgDiv = document.getElementById('generateMsg');
+        const btn = document.getElementById('generateBtn');
+        const newCodeDiv = document.getElementById('newCodeDisplay');
+        
+        // Check available slots
+        const remaining = licenseData.studentCount - (licenseData.studentsUsed || 0);
+        if (studentSlots > remaining) {
+            msgDiv.className = 'message error';
+            msgDiv.textContent = t('notEnoughSlots');
+            msgDiv.style.display = 'block';
+            return;
+        }
+        
+        btn.disabled = true;
+        msgDiv.style.display = 'none';
+        newCodeDiv.classList.add('hidden');
+        
+        try {
+            const r = await fetch(`${API}/api/licenses/${LICENSE_KEY}/class-codes`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    className: className || undefined,
+                    studentSlots: studentSlots
+                })
+            });
+            
+            const data = await r.json();
+            
+            if (r.ok) {
+                generatedCode = data.classCode.code;
+                document.getElementById('newCode').textContent = generatedCode;
+                newCodeDiv.classList.remove('hidden');
+                msgDiv.className = 'message success';
+                msgDiv.textContent = t('codeGenerated');
+                msgDiv.style.display = 'block';
+                
+                // Clear form
+                document.getElementById('className').value = '';
+                
+                // Reload license data
+                await loadLicense();
+            } else {
+                msgDiv.className = 'message error';
+                msgDiv.textContent = data.error || t('generateError');
+                msgDiv.style.display = 'block';
+            }
+        } catch (e) {
+            msgDiv.className = 'message error';
+            msgDiv.textContent = t('generateError');
+            msgDiv.style.display = 'block';
+        }
+        
+        btn.disabled = false;
+    }
+
+    function copyCode() {
+        copyToClipboard(generatedCode);
+    }
+
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            const toast = document.getElementById('copyToast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        });
+    }
+
+    // Allow Enter key to login
+    document.getElementById('licenseKeyInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') doLogin();
+    });
+
+    // Initialize
+    window.onload = function() {
+        // Load saved language
+        const savedLang = localStorage.getItem('lang');
+        if (savedLang) currentLang = savedLang;
+        updateUI();
+        
+        // Auto-login if saved
+        const savedKey = localStorage.getItem('licenseKey');
+        if (savedKey) {
+            document.getElementById('licenseKeyInput').value = savedKey;
+            doLogin();
+        }
+    };
+    </script>
 </body>
 </html>
