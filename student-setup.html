@@ -240,6 +240,150 @@
             font-size: 14px;
         }
         
+        /* Announcements */
+        .announcements-banner {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .announcements-banner.high {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+        .announcement-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        .announcement-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .announcement-item .title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .announcement-item .message {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        /* Goals Section */
+        .goals-section {
+            background: rgba(42, 42, 62, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .goals-section h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+        .goal-item {
+            background: #1a1a2e;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        .goal-item .goal-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .goal-item .goal-title {
+            font-weight: bold;
+        }
+        .goal-item .goal-status {
+            font-size: 13px;
+            color: #888;
+        }
+        .goal-item .goal-status.completed {
+            color: #10b981;
+        }
+        .progress-bar {
+            background: #333;
+            border-radius: 10px;
+            height: 10px;
+            overflow: hidden;
+        }
+        .progress-bar .fill {
+            background: linear-gradient(90deg, #ffd700, #ffaa00);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+        .progress-bar .fill.completed {
+            background: linear-gradient(90deg, #10b981, #059669);
+        }
+        
+        /* Assignments Section */
+        .assignments-section {
+            background: rgba(42, 42, 62, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .assignments-section h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+        .assignment-item {
+            background: #1a1a2e;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        .assignment-item .assignment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .assignment-item .assignment-title {
+            font-weight: bold;
+        }
+        .assignment-item .due-date {
+            font-size: 13px;
+            color: #f59e0b;
+        }
+        .assignment-games {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .assignment-game {
+            background: #2a2a3e;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .assignment-game.completed {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid #10b981;
+        }
+        .assignment-game .checkmark {
+            color: #10b981;
+        }
+        
+        /* Locked Game */
+        .game-card.locked {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .game-card.locked::after {
+            content: '🔒';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+        }
+        .game-card {
+            position: relative;
+        }
+        
         .forgot-link {
             text-align: center;
             margin-top: 15px;
@@ -412,6 +556,21 @@
             <button class="btn-secondary" onclick="logout()" data-i18n="logout">Logout</button>
         </div>
         
+        <!-- Announcements Banner -->
+        <div id="announcementsBanner" class="announcements-banner hidden"></div>
+        
+        <!-- Goals Progress -->
+        <div id="goalsSection" class="goals-section hidden">
+            <h3>🎯 <span data-i18n="yourGoals">Your Goals</span></h3>
+            <div id="goalsList"></div>
+        </div>
+        
+        <!-- Assignments -->
+        <div id="assignmentsSection" class="assignments-section hidden">
+            <h3>📋 <span data-i18n="assignedGames">Assigned Games</span></h3>
+            <div id="assignmentsList"></div>
+        </div>
+        
         <div class="filter-bar">
             <button class="filter-btn active" onclick="filterGames('all')" data-i18n="allGames">All Games</button>
             <button class="filter-btn" onclick="filterGames('K-2')">K-2</button>
@@ -522,7 +681,13 @@
             usernameTaken: 'Username already taken. Try another.',
             registrationFailed: 'Registration failed. Please try again.',
             invalidLogin: 'Invalid username or password.',
-            loginFailed: 'Login failed. Please try again.'
+            loginFailed: 'Login failed. Please try again.',
+            // Assignments, Goals, Announcements
+            yourGoals: 'Your Goals',
+            assignedGames: 'Assigned Games',
+            dueIn: 'Due:',
+            completed: 'Completed!',
+            gameLocked: 'Locked'
         },
         es: {
             studentPortal: 'Portal del Estudiante',
@@ -559,7 +724,13 @@
             usernameTaken: 'El usuario ya existe. Intenta otro.',
             registrationFailed: 'Error al registrar. Por favor intenta de nuevo.',
             invalidLogin: 'Usuario o contraseña inválidos.',
-            loginFailed: 'Error al iniciar sesión. Por favor intenta de nuevo.'
+            loginFailed: 'Error al iniciar sesión. Por favor intenta de nuevo.',
+            // Assignments, Goals, Announcements
+            yourGoals: 'Tus Metas',
+            assignedGames: 'Juegos Asignados',
+            dueIn: 'Fecha:',
+            completed: '¡Completado!',
+            gameLocked: 'Bloqueado'
         }
     };
 
@@ -735,6 +906,8 @@
         btn.disabled = false;
     }
 
+    let lockedGames = []; // Games locked by teacher
+
     function showGamesPortal() {
         document.getElementById('step1Screen').classList.add('hidden');
         document.getElementById('step2Screen').classList.add('hidden');
@@ -744,7 +917,142 @@
         document.getElementById('studentName').textContent = studentData.firstName;
         document.getElementById('studentGrade').textContent = studentData.gradeLevel;
         
+        // Load student-specific data
+        loadAnnouncements();
+        loadGoals();
+        loadAssignments();
+        loadGameLocks();
+        
         renderGames();
+    }
+
+    async function loadAnnouncements() {
+        const banner = document.getElementById('announcementsBanner');
+        
+        try {
+            const r = await fetch(`${API}/api/students/${studentData.id}/announcements`);
+            const announcements = await r.json();
+            
+            if (announcements.length === 0) {
+                banner.classList.add('hidden');
+                return;
+            }
+            
+            const hasHigh = announcements.some(a => a.priority === 'high');
+            banner.className = `announcements-banner ${hasHigh ? 'high' : ''}`;
+            
+            banner.innerHTML = announcements.map(a => `
+                <div class="announcement-item">
+                    <div class="title">${a.priority === 'high' ? '⚠️ ' : '📢 '}${a.title}</div>
+                    <div class="message">${a.message}</div>
+                </div>
+            `).join('');
+            
+            banner.classList.remove('hidden');
+        } catch (e) {
+            banner.classList.add('hidden');
+        }
+    }
+
+    async function loadGoals() {
+        const section = document.getElementById('goalsSection');
+        const list = document.getElementById('goalsList');
+        
+        try {
+            const r = await fetch(`${API}/api/students/${studentData.id}/goals`);
+            const goals = await r.json();
+            
+            if (goals.length === 0) {
+                section.classList.add('hidden');
+                return;
+            }
+            
+            const typeLabels = {
+                games_completed: { en: 'Complete games', es: 'Completar juegos' },
+                minutes_played: { en: 'Play minutes', es: 'Minutos jugados' },
+                score_average: { en: 'Average score', es: 'Puntaje promedio' },
+                streak_days: { en: 'Days played', es: 'Días jugados' }
+            };
+            
+            list.innerHTML = goals.map(g => {
+                const isCompleted = g.progress.completed;
+                return `
+                    <div class="goal-item">
+                        <div class="goal-header">
+                            <div class="goal-title">${g.title}</div>
+                            <div class="goal-status ${isCompleted ? 'completed' : ''}">
+                                ${isCompleted ? t('completed') : `${g.progress.current} / ${g.target}`}
+                            </div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="fill ${isCompleted ? 'completed' : ''}" style="width: ${g.progress.percentage}%"></div>
+                        </div>
+                        <div style="font-size:12px; color:#888; margin-top:8px;">
+                            ${typeLabels[g.type][currentLang]} • Ends: ${new Date(g.endDate).toLocaleDateString()}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            section.classList.remove('hidden');
+        } catch (e) {
+            section.classList.add('hidden');
+        }
+    }
+
+    async function loadAssignments() {
+        const section = document.getElementById('assignmentsSection');
+        const list = document.getElementById('assignmentsList');
+        
+        try {
+            const r = await fetch(`${API}/api/students/${studentData.id}/assignments`);
+            const assignments = await r.json();
+            
+            if (assignments.length === 0) {
+                section.classList.add('hidden');
+                return;
+            }
+            
+            list.innerHTML = assignments.map(a => {
+                const gamesHtml = a.gameIds.map(gameId => {
+                    const game = games.find(g => g.id === gameId);
+                    const isCompleted = a.progress.completedGames.includes(gameId);
+                    return `
+                        <div class="assignment-game ${isCompleted ? 'completed' : ''}" onclick="playGame('${gameId}')">
+                            ${game ? game.icon : '🎮'} ${game ? game.name[currentLang] : gameId}
+                            ${isCompleted ? '<span class="checkmark">✓</span>' : ''}
+                        </div>
+                    `;
+                }).join('');
+                
+                return `
+                    <div class="assignment-item">
+                        <div class="assignment-header">
+                            <div class="assignment-title">${a.title}</div>
+                            ${a.dueDate ? `<div class="due-date">${t('dueIn')} ${new Date(a.dueDate).toLocaleDateString()}</div>` : ''}
+                        </div>
+                        <div class="assignment-games">${gamesHtml}</div>
+                        <div style="font-size:12px; color:#888; margin-top:10px;">
+                            ${a.progress.completed} / ${a.progress.total} ${t('completed')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            section.classList.remove('hidden');
+        } catch (e) {
+            section.classList.add('hidden');
+        }
+    }
+
+    async function loadGameLocks() {
+        try {
+            const r = await fetch(`${API}/api/students/${studentData.id}/available-games`);
+            const data = await r.json();
+            lockedGames = data.lockedGames || [];
+        } catch (e) {
+            lockedGames = [];
+        }
     }
 
     function renderGames(filter = 'all') {
@@ -753,15 +1061,21 @@
         
         const filtered = filter === 'all' ? games : games.filter(g => g.grade === filter);
         
-        grid.innerHTML = filtered.map(game => `
-            <div class="game-card">
-                <div class="icon">${game.icon}</div>
-                <div class="grade-badge">${game.grade}</div>
-                <h3>${game.name[lang]}</h3>
-                <p>${game.desc[lang]}</p>
-                <button class="btn-play" onclick="playGame('${game.id}')">${t('play')}</button>
-            </div>
-        `).join('');
+        grid.innerHTML = filtered.map(game => {
+            const isLocked = lockedGames.includes(game.id);
+            return `
+                <div class="game-card ${isLocked ? 'locked' : ''}">
+                    <div class="icon">${game.icon}</div>
+                    <div class="grade-badge">${game.grade}</div>
+                    <h3>${game.name[lang]}</h3>
+                    <p>${game.desc[lang]}</p>
+                    ${isLocked 
+                        ? `<button class="btn-secondary" disabled>🔒 ${t('gameLocked')}</button>`
+                        : `<button class="btn-play" onclick="playGame('${game.id}')">${t('play')}</button>`
+                    }
+                </div>
+            `;
+        }).join('');
     }
 
     function filterGames(grade) {
@@ -771,6 +1085,12 @@
     }
 
     function playGame(gameId) {
+        // Check if game is locked
+        if (lockedGames.includes(gameId)) {
+            alert(t('gameLocked'));
+            return;
+        }
+        
         const lang = currentLang === 'es' ? 'es' : 'en';
         const url = `${API}/games/${gameId}-${lang}.html`;
         window.open(url, '_blank');
