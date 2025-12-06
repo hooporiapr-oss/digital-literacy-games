@@ -378,6 +378,78 @@
             z-index: 1000;
         }
         .copy-toast.show { opacity: 1; }
+        
+        /* Auth Tabs */
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+        }
+        .auth-tab {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .auth-tab:hover { color: #fff; }
+        .auth-tab.active {
+            color: #ffd700;
+            border-bottom: 2px solid #ffd700;
+            margin-bottom: -2px;
+        }
+        .auth-form { display: none; }
+        .auth-form.active { display: block; }
+        .form-row { margin-bottom: 15px; }
+        .form-row label { display: block; color: #aaa; font-size: 13px; margin-bottom: 5px; }
+        .form-row input { width: 100%; }
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            color: #666;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #444;
+        }
+        .divider span { padding: 0 15px; font-size: 13px; }
+        .license-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #1a1a2e;
+            padding: 10px 15px;
+            border-radius: 25px;
+            margin: 5px;
+        }
+        .license-pill .remove {
+            background: #ef4444;
+            border: none;
+            color: #fff;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 12px;
+            padding: 0;
+        }
+        .teacher-info {
+            background: #1a1a2e;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .teacher-info .name { font-size: 1.1rem; }
+        .teacher-info .email { color: #888; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -385,23 +457,70 @@
         <button onclick="toggleLang()" id="langBtn">Español</button>
     </div>
 
-    <!-- Login Screen -->
+    <!-- Login/Register Screen -->
     <div id="loginScreen" class="container">
-        <div class="card login-card">
+        <div class="card login-card" style="max-width:500px;">
             <div class="logo">🎓</div>
             <h1 style="color:#ffd700; margin-bottom:10px;" data-i18n="welcome">Welcome</h1>
-            <p style="color:#aaa; margin-bottom:30px;" data-i18n="loginSubtitle">Enter your license key to access your dashboard</p>
+            <p style="color:#aaa; margin-bottom:20px;" data-i18n="teacherPortal">Teacher Portal</p>
             
-            <input type="text" id="licenseKeyInput" placeholder="XXXX-XXXX-XXXX" data-i18n-placeholder="enterLicense" 
-                   style="text-transform:uppercase; text-align:center; font-size:1.2rem; letter-spacing:2px;">
+            <!-- Auth Tabs -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="showAuthTab('login')" data-i18n="signIn">Sign In</button>
+                <button class="auth-tab" onclick="showAuthTab('register')" data-i18n="createAccount">Create Account</button>
+            </div>
             
-            <button onclick="doLogin()" id="loginBtn" data-i18n="login">Access Dashboard</button>
+            <!-- Login Form -->
+            <div id="loginForm" class="auth-form active">
+                <div class="form-row">
+                    <label data-i18n="email">Email</label>
+                    <input type="email" id="loginEmail" placeholder="teacher@school.edu">
+                </div>
+                <div class="form-row">
+                    <label data-i18n="password">Password</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••">
+                </div>
+                <button onclick="doTeacherLogin()" id="loginBtn" style="width:100%; margin-top:10px;" data-i18n="signIn">Sign In</button>
+                
+                <div class="divider"><span data-i18n="or">or</span></div>
+                
+                <p style="color:#888; font-size:14px; text-align:center;" data-i18n="quickAccess">Quick access with license key:</p>
+                <input type="text" id="licenseKeyInput" placeholder="XXXX-XXXX-XXXX" data-i18n-placeholder="enterLicense" 
+                       style="text-transform:uppercase; text-align:center; font-size:1rem; letter-spacing:2px; margin-top:10px;">
+                <button onclick="doLicenseLogin()" class="btn-secondary" style="width:100%; margin-top:10px;" data-i18n="accessWithLicense">Access with License</button>
+            </div>
             
-            <div id="loginError" class="message error" style="display:none;"></div>
+            <!-- Register Form -->
+            <div id="registerForm" class="auth-form">
+                <div class="form-row">
+                    <label data-i18n="firstName">First Name</label>
+                    <input type="text" id="regFirstName" placeholder="Maria">
+                </div>
+                <div class="form-row">
+                    <label data-i18n="lastName">Last Name</label>
+                    <input type="text" id="regLastName" placeholder="García">
+                </div>
+                <div class="form-row">
+                    <label data-i18n="schoolName">School Name (optional)</label>
+                    <input type="text" id="regSchool" placeholder="Lincoln Elementary">
+                </div>
+                <div class="form-row">
+                    <label data-i18n="email">Email</label>
+                    <input type="email" id="regEmail" placeholder="teacher@school.edu">
+                </div>
+                <div class="form-row">
+                    <label data-i18n="password">Password</label>
+                    <input type="password" id="regPassword" placeholder="••••••••">
+                </div>
+                <div class="form-row">
+                    <label data-i18n="licenseKeyOptional">License Key (optional - can add later)</label>
+                    <input type="text" id="regLicense" placeholder="XXXX-XXXX-XXXX" style="text-transform:uppercase;">
+                </div>
+                <button onclick="doTeacherRegister()" style="width:100%; margin-top:10px;" data-i18n="createAccount">Create Account</button>
+            </div>
             
-            <p style="margin-top:30px; color:#666; font-size:14px;" data-i18n="noLicense">
-                Don't have a license? Contact your administrator.
-            </p>
+            <div id="authError" class="message error" style="display:none;"></div>
+            <div id="authSuccess" class="message success" style="display:none;"></div>
         </div>
     </div>
 
@@ -412,11 +531,35 @@
             <p data-i18n="dashboardSubtitle">Manage your class access codes</p>
         </div>
 
+        <!-- Teacher Info (shown when logged in with account) -->
+        <div class="teacher-info hidden" id="teacherInfoBar">
+            <div>
+                <div class="name" id="teacherName">-</div>
+                <div class="email" id="teacherEmail">-</div>
+            </div>
+            <button class="btn-secondary" onclick="doLogout()" data-i18n="logout">Logout</button>
+        </div>
+
+        <!-- License Selector (for teachers with multiple licenses) -->
+        <div class="card hidden" id="licenseSelectorCard">
+            <h2>🔑 <span data-i18n="yourLicenses">Your Licenses</span></h2>
+            <div id="licensesList"></div>
+            
+            <div style="margin-top:20px; padding-top:20px; border-top:1px solid #444;">
+                <h3 style="color:#aaa; font-size:14px; margin-bottom:10px;" data-i18n="addLicense">Add Another License</h3>
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="addLicenseKey" placeholder="XXXX-XXXX-XXXX" style="text-transform:uppercase; flex:1;">
+                    <button onclick="linkLicense()" data-i18n="add">Add</button>
+                </div>
+                <div id="addLicenseMsg" class="message" style="margin-top:10px;"></div>
+            </div>
+        </div>
+
         <!-- License Info Card -->
-        <div class="card">
+        <div class="card" id="licenseInfoCard">
             <div class="flex-between">
                 <h2>📋 <span data-i18n="licenseInfo">License Information</span></h2>
-                <button class="btn-secondary" onclick="doLogout()" data-i18n="logout">Logout</button>
+                <button class="btn-secondary hidden" id="logoutBtnSimple" onclick="doLogout()" data-i18n="logout">Logout</button>
             </div>
             
             <div class="license-info">
@@ -637,6 +780,8 @@
     let licenseData = null;
     let currentLang = 'en';
     let generatedCode = '';
+    let teacherData = null;  // Teacher account data
+    let teacherLicenses = []; // All licenses linked to teacher
 
     // Translations
     const translations = {
@@ -690,6 +835,27 @@
             generateError: 'Failed to generate code. Please try again.',
             notEnoughSlots: 'Not enough student slots available.',
             default: 'General',
+            // Teacher account translations
+            teacherPortal: 'Teacher Portal',
+            signIn: 'Sign In',
+            createAccount: 'Create Account',
+            email: 'Email',
+            password: 'Password',
+            firstName: 'First Name',
+            lastName: 'Last Name',
+            schoolName: 'School Name (optional)',
+            licenseKeyOptional: 'License Key (optional - can add later)',
+            or: 'or',
+            quickAccess: 'Quick access with license key:',
+            accessWithLicense: 'Access with License',
+            yourLicenses: 'Your Licenses',
+            addLicense: 'Add Another License',
+            add: 'Add',
+            licenseAdded: 'License added successfully!',
+            invalidCredentials: 'Invalid email or password',
+            emailExists: 'Email already registered',
+            registrationSuccess: 'Account created! Signing you in...',
+            selectLicense: 'Select a license to manage',
             // Difficulty translations
             difficulty: 'Difficulty',
             easy: 'Easy',
@@ -772,6 +938,27 @@
             generateError: 'Error al generar código. Por favor intenta de nuevo.',
             notEnoughSlots: 'No hay suficientes cupos disponibles.',
             default: 'General',
+            // Teacher account translations
+            teacherPortal: 'Portal del Maestro',
+            signIn: 'Iniciar Sesión',
+            createAccount: 'Crear Cuenta',
+            email: 'Correo Electrónico',
+            password: 'Contraseña',
+            firstName: 'Nombre',
+            lastName: 'Apellido',
+            schoolName: 'Nombre de Escuela (opcional)',
+            licenseKeyOptional: 'Clave de Licencia (opcional - puedes agregar después)',
+            or: 'o',
+            quickAccess: 'Acceso rápido con clave de licencia:',
+            accessWithLicense: 'Acceder con Licencia',
+            yourLicenses: 'Tus Licencias',
+            addLicense: 'Agregar Otra Licencia',
+            add: 'Agregar',
+            licenseAdded: '¡Licencia agregada exitosamente!',
+            invalidCredentials: 'Correo o contraseña inválidos',
+            emailExists: 'El correo ya está registrado',
+            registrationSuccess: '¡Cuenta creada! Iniciando sesión...',
+            selectLicense: 'Selecciona una licencia para administrar',
             // Difficulty translations
             difficulty: 'Dificultad',
             easy: 'Fácil',
@@ -825,6 +1012,336 @@
         localStorage.setItem('lang', currentLang);
         updateUI();
         if (licenseData) updateLicenseDisplay();
+    }
+
+    // Auth tab switching
+    function showAuthTab(tab) {
+        document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+        
+        if (tab === 'login') {
+            document.querySelector('.auth-tab:first-child').classList.add('active');
+            document.getElementById('loginForm').classList.add('active');
+        } else {
+            document.querySelector('.auth-tab:last-child').classList.add('active');
+            document.getElementById('registerForm').classList.add('active');
+        }
+        
+        // Clear messages
+        document.getElementById('authError').style.display = 'none';
+        document.getElementById('authSuccess').style.display = 'none';
+    }
+
+    // Teacher account login
+    async function doTeacherLogin() {
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        const errorDiv = document.getElementById('authError');
+        const btn = document.getElementById('loginBtn');
+        
+        if (!email || !password) {
+            errorDiv.textContent = t('invalidCredentials');
+            errorDiv.style.display = 'block';
+            return;
+        }
+        
+        btn.disabled = true;
+        btn.textContent = '...';
+        errorDiv.style.display = 'none';
+        
+        try {
+            const r = await fetch(`${API}/api/teachers/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+            
+            const data = await r.json();
+            
+            if (r.ok) {
+                teacherData = data.teacher;
+                teacherLicenses = data.licenses || [];
+                localStorage.setItem('teacherData', JSON.stringify(teacherData));
+                localStorage.setItem('teacherToken', data.token);
+                
+                showDashboard();
+            } else {
+                errorDiv.textContent = data.error || t('invalidCredentials');
+                errorDiv.style.display = 'block';
+            }
+        } catch (e) {
+            errorDiv.textContent = t('connectionError');
+            errorDiv.style.display = 'block';
+        }
+        
+        btn.disabled = false;
+        btn.textContent = t('signIn');
+    }
+
+    // Teacher registration
+    async function doTeacherRegister() {
+        const firstName = document.getElementById('regFirstName').value.trim();
+        const lastName = document.getElementById('regLastName').value.trim();
+        const schoolName = document.getElementById('regSchool').value.trim();
+        const email = document.getElementById('regEmail').value.trim();
+        const password = document.getElementById('regPassword').value;
+        const licenseKey = document.getElementById('regLicense').value.trim().toUpperCase();
+        
+        const errorDiv = document.getElementById('authError');
+        const successDiv = document.getElementById('authSuccess');
+        
+        if (!firstName || !lastName || !email || !password) {
+            errorDiv.textContent = 'Please fill in all required fields';
+            errorDiv.style.display = 'block';
+            return;
+        }
+        
+        errorDiv.style.display = 'none';
+        
+        try {
+            const r = await fetch(`${API}/api/teachers/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ firstName, lastName, schoolName, email, password })
+            });
+            
+            const data = await r.json();
+            
+            if (r.ok) {
+                teacherData = data.teacher;
+                localStorage.setItem('teacherData', JSON.stringify(teacherData));
+                localStorage.setItem('teacherToken', data.token);
+                
+                // If license key provided, link it
+                if (licenseKey) {
+                    await linkLicenseToTeacher(licenseKey);
+                }
+                
+                successDiv.textContent = t('registrationSuccess');
+                successDiv.style.display = 'block';
+                
+                setTimeout(() => {
+                    showDashboard();
+                }, 1000);
+            } else {
+                if (data.error?.includes('already')) {
+                    errorDiv.textContent = t('emailExists');
+                } else {
+                    errorDiv.textContent = data.error || 'Registration failed';
+                }
+                errorDiv.style.display = 'block';
+            }
+        } catch (e) {
+            errorDiv.textContent = t('connectionError');
+            errorDiv.style.display = 'block';
+        }
+    }
+
+    // Quick license login (no account)
+    async function doLicenseLogin() {
+        const key = document.getElementById('licenseKeyInput').value.trim().toUpperCase();
+        const errorDiv = document.getElementById('authError');
+        
+        if (!key) {
+            errorDiv.textContent = t('invalidKey');
+            errorDiv.style.display = 'block';
+            return;
+        }
+        
+        errorDiv.style.display = 'none';
+        
+        try {
+            const r = await fetch(`${API}/api/licenses/${key}`);
+            
+            if (r.ok) {
+                const data = await r.json();
+                if (data && (data.licenseKey || data.customerName)) {
+                    LICENSE_KEY = key;
+                    licenseData = data;
+                    teacherData = null; // Not using account
+                    localStorage.setItem('licenseKey', key);
+                    localStorage.removeItem('teacherData');
+                    
+                    showDashboard();
+                } else {
+                    errorDiv.textContent = t('invalidKey');
+                    errorDiv.style.display = 'block';
+                }
+            } else {
+                errorDiv.textContent = t('invalidKey');
+                errorDiv.style.display = 'block';
+            }
+        } catch (e) {
+            errorDiv.textContent = t('connectionError');
+            errorDiv.style.display = 'block';
+        }
+    }
+
+    // Link license to teacher account
+    async function linkLicenseToTeacher(key) {
+        if (!teacherData) return;
+        
+        try {
+            const r = await fetch(`${API}/api/teachers/${teacherData.id}/licenses`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ licenseKey: key })
+            });
+            
+            if (r.ok) {
+                const data = await r.json();
+                teacherLicenses.push(data.license);
+                teacherData.licenseKeys.push(data.license.licenseKey);
+                localStorage.setItem('teacherData', JSON.stringify(teacherData));
+                return true;
+            }
+        } catch (e) {
+            console.error('Failed to link license:', e);
+        }
+        return false;
+    }
+
+    // Add license from dashboard
+    async function linkLicense() {
+        const key = document.getElementById('addLicenseKey').value.trim().toUpperCase();
+        const msgDiv = document.getElementById('addLicenseMsg');
+        
+        if (!key) return;
+        
+        if (await linkLicenseToTeacher(key)) {
+            msgDiv.className = 'message success';
+            msgDiv.textContent = t('licenseAdded');
+            msgDiv.style.display = 'block';
+            document.getElementById('addLicenseKey').value = '';
+            updateLicenseSelector();
+            
+            // If no license selected, select this one
+            if (!LICENSE_KEY) {
+                selectLicense(key);
+            }
+        } else {
+            msgDiv.className = 'message error';
+            msgDiv.textContent = t('invalidKey');
+            msgDiv.style.display = 'block';
+        }
+        
+        setTimeout(() => { msgDiv.style.display = 'none'; }, 3000);
+    }
+
+    // Show dashboard after login
+    function showDashboard() {
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('dashboard').classList.remove('hidden');
+        
+        if (teacherData) {
+            // Teacher account login
+            document.getElementById('teacherInfoBar').classList.remove('hidden');
+            document.getElementById('teacherName').textContent = `${teacherData.firstName} ${teacherData.lastName}`;
+            document.getElementById('teacherEmail').textContent = teacherData.email;
+            document.getElementById('logoutBtnSimple').classList.add('hidden');
+            
+            // Show license selector if multiple licenses
+            if (teacherData.licenseKeys && teacherData.licenseKeys.length > 0) {
+                document.getElementById('licenseSelectorCard').classList.remove('hidden');
+                updateLicenseSelector();
+                
+                // Auto-select first license
+                if (!LICENSE_KEY && teacherData.licenseKeys.length > 0) {
+                    selectLicense(teacherData.licenseKeys[0]);
+                }
+            } else {
+                document.getElementById('licenseSelectorCard').classList.remove('hidden');
+                document.getElementById('licenseInfoCard').classList.add('hidden');
+            }
+        } else {
+            // Quick license login (no account)
+            document.getElementById('teacherInfoBar').classList.add('hidden');
+            document.getElementById('licenseSelectorCard').classList.add('hidden');
+            document.getElementById('logoutBtnSimple').classList.remove('hidden');
+            updateLicenseDisplay();
+            loadCodes();
+            startActivityTracking();
+        }
+    }
+
+    // Update license selector display
+    function updateLicenseSelector() {
+        const list = document.getElementById('licensesList');
+        
+        if (!teacherData || !teacherData.licenseKeys || teacherData.licenseKeys.length === 0) {
+            list.innerHTML = `<p style="color:#888;">${t('selectLicense')}</p>`;
+            return;
+        }
+        
+        list.innerHTML = teacherLicenses.map(lic => {
+            const isSelected = LICENSE_KEY === lic.licenseKey;
+            const statusClass = lic.isValid ? 'active' : 'expired';
+            const statusText = lic.isValid ? t('active') : t('expired');
+            
+            return `
+                <div class="license-pill" style="${isSelected ? 'background:#ffd700; color:#000;' : ''}">
+                    <span onclick="selectLicense('${lic.licenseKey}')" style="cursor:pointer;">
+                        <strong>${lic.customerName}</strong>
+                        <span class="badge ${statusClass}" style="margin-left:8px;">${statusText}</span>
+                    </span>
+                    <button class="remove" onclick="removeLicense('${lic.licenseKey}')" title="Remove">×</button>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // Select a license to manage
+    async function selectLicense(key) {
+        LICENSE_KEY = key;
+        localStorage.setItem('licenseKey', key);
+        
+        // Find license data
+        licenseData = teacherLicenses.find(l => l.licenseKey === key);
+        
+        if (!licenseData) {
+            // Fetch from API
+            try {
+                const r = await fetch(`${API}/api/licenses/${key}`);
+                if (r.ok) {
+                    licenseData = await r.json();
+                }
+            } catch (e) {}
+        }
+        
+        document.getElementById('licenseInfoCard').classList.remove('hidden');
+        updateLicenseSelector();
+        updateLicenseDisplay();
+        loadCodes();
+        startActivityTracking();
+    }
+
+    // Remove license from account
+    async function removeLicense(key) {
+        if (!teacherData) return;
+        if (!confirm('Remove this license from your account?')) return;
+        
+        try {
+            const r = await fetch(`${API}/api/teachers/${teacherData.id}/licenses/${key}`, {
+                method: 'DELETE'
+            });
+            
+            if (r.ok) {
+                teacherData.licenseKeys = teacherData.licenseKeys.filter(k => k !== key);
+                teacherLicenses = teacherLicenses.filter(l => l.licenseKey !== key);
+                localStorage.setItem('teacherData', JSON.stringify(teacherData));
+                
+                // If this was the selected license, clear it
+                if (LICENSE_KEY === key) {
+                    LICENSE_KEY = '';
+                    licenseData = null;
+                    document.getElementById('licenseInfoCard').classList.add('hidden');
+                }
+                
+                updateLicenseSelector();
+            }
+        } catch (e) {
+            console.error('Failed to remove license:', e);
+        }
     }
 
     async function doLogin() {
@@ -932,6 +1449,8 @@
 
     function doLogout() {
         localStorage.removeItem('licenseKey');
+        localStorage.removeItem('teacherData');
+        localStorage.removeItem('teacherToken');
         location.reload();
     }
 
@@ -1313,17 +1832,46 @@
     });
 
     // Initialize
-    window.onload = function() {
+    window.onload = async function() {
         // Load saved language
         const savedLang = localStorage.getItem('lang');
         if (savedLang) currentLang = savedLang;
         updateUI();
         
-        // Auto-login if saved
+        // Check for saved teacher session first
+        const savedTeacher = localStorage.getItem('teacherData');
+        if (savedTeacher) {
+            try {
+                teacherData = JSON.parse(savedTeacher);
+                
+                // Load teacher's licenses
+                const r = await fetch(`${API}/api/teachers/${teacherData.id}`);
+                if (r.ok) {
+                    const data = await r.json();
+                    teacherData = data;
+                    teacherLicenses = data.licenses || [];
+                    
+                    // Check for previously selected license
+                    const savedKey = localStorage.getItem('licenseKey');
+                    if (savedKey && teacherData.licenseKeys.includes(savedKey)) {
+                        LICENSE_KEY = savedKey;
+                        licenseData = teacherLicenses.find(l => l.licenseKey === savedKey);
+                    }
+                    
+                    showDashboard();
+                    return;
+                }
+            } catch (e) {
+                console.error('Failed to restore session:', e);
+                localStorage.removeItem('teacherData');
+            }
+        }
+        
+        // Fall back to quick license login
         const savedKey = localStorage.getItem('licenseKey');
         if (savedKey) {
             document.getElementById('licenseKeyInput').value = savedKey;
-            doLogin();
+            doLicenseLogin();
         }
     };
     </script>
