@@ -1,236 +1,898 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Student Setup | Akashic Academy</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Georgia,serif;background:linear-gradient(135deg,#1e3a5f,#2d5a87);min-height:100vh;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
-.container{background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.3);border-radius:20px;padding:30px;width:100%;max-width:400px;text-align:center}
-.logo{font-size:3em;margin-bottom:10px}
-h1{font-size:1.5em;margin-bottom:5px}
-.subtitle{opacity:0.8;margin-bottom:25px}
-.form-group{margin-bottom:20px;text-align:left}
-.form-group label{display:block;margin-bottom:8px;font-size:0.9em;opacity:0.9}
-.form-group input{width:100%;padding:15px;font-size:1.1em;border:3px solid rgba(255,255,255,0.3);border-radius:12px;background:rgba(255,255,255,0.1);color:#fff;text-align:center}
-.form-group input:focus{outline:none;border-color:#ffd700}
-.form-group input::placeholder{color:rgba(255,255,255,0.5)}
-.form-group input.error{border-color:#e74c3c}
-.form-group input.success{border-color:#2ecc71}
-.form-group .hint{font-size:0.8em;margin-top:5px;opacity:0.7}
-.form-group .error-msg{font-size:0.85em;color:#e74c3c;margin-top:5px}
-.form-group .success-msg{font-size:0.85em;color:#2ecc71;margin-top:5px}
-.btn{width:100%;padding:15px;font-size:1.1em;font-weight:bold;border:none;border-radius:25px;cursor:pointer;margin-top:10px;transition:transform 0.2s}
-.btn:hover{transform:translateY(-2px)}
-.btn:active{transform:scale(0.98)}
-.btn:disabled{opacity:0.5;cursor:not-allowed}
-.btn-primary{background:linear-gradient(135deg,#2ecc71,#27ae60);color:#fff}
-.btn-secondary{background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.3);color:#fff;margin-top:15px}
-.current-info{background:rgba(46,204,113,0.2);border:2px solid rgba(46,204,113,0.4);padding:20px;border-radius:12px;margin-bottom:20px}
-.current-info h3{color:#2ecc71;margin-bottom:10px}
-.current-info p{font-size:0.9em;margin-bottom:5px}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}
-.stat{background:rgba(0,0,0,0.2);padding:10px;border-radius:8px;text-align:center}
-.stat b{display:block;color:#ffd700;font-size:1.3em}
-.stat span{font-size:0.75em;opacity:0.8}
-.hidden{display:none}
-.spinner{display:inline-block;width:20px;height:20px;border:3px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 1s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration - Akashic Academy</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
+            color: #fff; 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Language Toggle */
+        .lang-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        .lang-toggle button {
+            padding: 8px 16px;
+            font-size: 14px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .lang-toggle button:hover { background: rgba(255,255,255,0.2); }
+        
+        /* Container */
+        .container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        /* Cards */
+        .card {
+            background: rgba(42, 42, 62, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        
+        .card-wide {
+            max-width: 900px;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header .logo {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .header h1 {
+            color: #ffd700;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        .header p {
+            color: #aaa;
+            font-size: 1rem;
+        }
+        
+        /* Forms */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        input, select {
+            width: 100%;
+            padding: 15px 18px;
+            font-size: 16px;
+            border-radius: 10px;
+            border: 2px solid #444;
+            background: #1a1a2e;
+            color: #fff;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus { border-color: #ffd700; }
+        input::placeholder { color: #666; }
+        
+        .code-input {
+            text-transform: uppercase;
+            text-align: center;
+            font-size: 1.5rem;
+            letter-spacing: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        button {
+            width: 100%;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+            color: #000;
+        }
+        button:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 10px 30px rgba(255,215,0,0.3); 
+        }
+        button:disabled { 
+            opacity: 0.5; 
+            cursor: not-allowed; 
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .btn-secondary {
+            background: #444;
+            color: #fff;
+            margin-top: 15px;
+        }
+        .btn-secondary:hover { 
+            background: #555; 
+            box-shadow: none;
+        }
+        
+        .btn-game {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: #fff;
+            padding: 20px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-align: left;
+        }
+        .btn-game:hover {
+            box-shadow: 0 10px 30px rgba(99,102,241,0.3);
+        }
+        .btn-game .icon { font-size: 2rem; }
+        .btn-game .info h3 { margin-bottom: 5px; }
+        .btn-game .info p { font-size: 13px; opacity: 0.8; font-weight: normal; }
+        
+        /* Messages */
+        .message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+        .message.error { 
+            background: rgba(239,68,68,0.2); 
+            border: 1px solid #ef4444; 
+            color: #fca5a5;
+            display: block;
+        }
+        .message.success { 
+            background: rgba(16,185,129,0.2); 
+            border: 1px solid #10b981; 
+            color: #6ee7b7;
+            display: block;
+        }
+        .message.info {
+            background: rgba(99,102,241,0.2);
+            border: 1px solid #6366f1;
+            color: #a5b4fc;
+            display: block;
+        }
+        
+        /* Steps indicator */
+        .steps {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #666;
+            transition: all 0.3s;
+        }
+        .step.active {
+            background: #ffd700;
+            color: #000;
+        }
+        .step.done {
+            background: #10b981;
+            color: #fff;
+        }
+        .step-line {
+            width: 50px;
+            height: 2px;
+            background: #333;
+            align-self: center;
+        }
+        .step-line.done { background: #10b981; }
+        
+        /* Code verification display */
+        .code-info {
+            background: #1a1a2e;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .code-info .class-name {
+            color: #ffd700;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .code-info .school-name {
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+        .code-info .slots {
+            margin-top: 10px;
+            color: #10b981;
+            font-size: 0.9rem;
+        }
+        
+        /* Welcome screen */
+        .welcome-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .welcome-header .avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 20px;
+        }
+        .welcome-header h1 {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        .welcome-header h1 span { color: #ffd700; }
+        .welcome-header p { color: #aaa; }
+        
+        /* Games grid */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        /* Grade level tabs */
+        .grade-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .grade-tab {
+            padding: 10px 20px;
+            background: #333;
+            border: none;
+            border-radius: 20px;
+            color: #aaa;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            width: auto;
+        }
+        .grade-tab:hover { background: #444; color: #fff; }
+        .grade-tab.active { 
+            background: #ffd700; 
+            color: #000;
+        }
+        
+        /* Hidden utility */
+        .hidden { display: none !important; }
+        
+        /* Footer link */
+        .footer-link {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+        }
+        .footer-link a {
+            color: #6366f1;
+            text-decoration: none;
+        }
+        .footer-link a:hover { text-decoration: underline; }
+        
+        /* Loading spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
+    <div class="lang-toggle">
+        <button onclick="toggleLang()" id="langBtn">Español</button>
+    </div>
 
-<div class="container">
-<div class="logo">🎓</div>
-<h1>Student Setup</h1>
-<p class="subtitle">Configuración del Estudiante</p>
-
-<!-- Current Info (if registered) -->
-<div id="currentInfo" class="current-info hidden">
-<h3>✓ You're all set!</h3>
-<p><strong>Name:</strong> <span id="displayName"></span></p>
-<p><strong>Class:</strong> <span id="displayClass"></span></p>
-<div class="stats">
-<div class="stat"><b id="displayGames">0</b><span>Games</span></div>
-<div class="stat"><b id="displayAvg">0%</b><span>Avg Score</span></div>
-</div>
-</div>
-
-<!-- Setup Form -->
-<div id="setupForm">
-<div class="form-group">
-<label>👤 Your Name / Tu Nombre</label>
-<input type="text" id="studentName" placeholder="Enter your name...">
-</div>
-
-<div class="form-group">
-<label>🔑 Class Code / Código de Clase</label>
-<input type="text" id="classCode" placeholder="ABC123" maxlength="6" style="text-transform:uppercase;letter-spacing:3px">
-<div class="hint">Get this code from your teacher</div>
-<div id="codeError" class="error-msg hidden"></div>
-<div id="codeSuccess" class="success-msg hidden"></div>
-</div>
-
-<button class="btn btn-primary" id="saveBtn" onclick="saveSetup()">✓ Join Class</button>
-</div>
-
-<button class="btn btn-secondary" onclick="goToGames()">🎮 Go to Games</button>
-
-<div id="resetSection" class="hidden" style="margin-top:20px">
-<button class="btn btn-secondary" onclick="resetSetup()" style="background:rgba(231,76,60,0.2);border-color:#e74c3c">🔄 Reset My Info</button>
-</div>
-</div>
-
-<script>
-const API_URL = 'https://digital-literacy-backend.onrender.com/api';
-
-let validatedCode = null;
-
-function loadExisting() {
-    const name = localStorage.getItem('akashic_student_name');
-    const code = localStorage.getItem('akashic_class_code');
-    const stats = JSON.parse(localStorage.getItem('akashic_student_stats') || '{}');
-    
-    if (name && code) {
-        document.getElementById('displayName').textContent = name;
-        document.getElementById('displayClass').textContent = code;
-        document.getElementById('displayGames').textContent = stats.gamesPlayed || 0;
-        document.getElementById('displayAvg').textContent = (stats.avgScore || 0) + '%';
-        
-        document.getElementById('currentInfo').classList.remove('hidden');
-        document.getElementById('setupForm').classList.add('hidden');
-        document.getElementById('resetSection').classList.remove('hidden');
-    }
-}
-
-// Validate class code as user types
-let validateTimeout;
-document.getElementById('classCode').addEventListener('input', function(e) {
-    e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
-    
-    const code = e.target.value;
-    const errorEl = document.getElementById('codeError');
-    const successEl = document.getElementById('codeSuccess');
-    
-    errorEl.classList.add('hidden');
-    successEl.classList.add('hidden');
-    e.target.classList.remove('error', 'success');
-    validatedCode = null;
-    
-    if (code.length >= 6) {
-        clearTimeout(validateTimeout);
-        validateTimeout = setTimeout(() => validateCode(code), 300);
-    }
-});
-
-async function validateCode(code) {
-    const input = document.getElementById('classCode');
-    const errorEl = document.getElementById('codeError');
-    const successEl = document.getElementById('codeSuccess');
-    
-    try {
-        const res = await fetch(`${API_URL}/classes/${code}/validate`);
-        const data = await res.json();
-        
-        if (data.valid) {
-            input.classList.add('success');
-            successEl.textContent = `✓ ${data.className}`;
-            successEl.classList.remove('hidden');
-            validatedCode = code;
-        } else {
-            input.classList.add('error');
-            errorEl.textContent = data.error || 'Invalid code';
-            errorEl.classList.remove('hidden');
-            validatedCode = null;
-        }
-    } catch(e) {
-        input.classList.add('error');
-        errorEl.textContent = 'Could not verify code';
-        errorEl.classList.remove('hidden');
-    }
-}
-
-async function saveSetup() {
-    const name = document.getElementById('studentName').value.trim();
-    const code = document.getElementById('classCode').value.trim().toUpperCase();
-    const btn = document.getElementById('saveBtn');
-    
-    if (!name) {
-        alert('Please enter your name');
-        return;
-    }
-    
-    if (!code || code.length < 6) {
-        alert('Please enter a valid class code');
-        return;
-    }
-    
-    if (!validatedCode) {
-        alert('Please wait for class code validation');
-        return;
-    }
-    
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner"></span> Joining...';
-    
-    try {
-        // Register with backend
-        const studentId = localStorage.getItem('akashic_student_id') || 's_' + Date.now() + '_' + Math.random().toString(36).substr(2,6);
-        
-        const res = await fetch(`${API_URL}/students`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ studentId, name, classCode: code })
-        });
-        
-        const data = await res.json();
-        
-        if (data.success) {
-            localStorage.setItem('akashic_student_id', data.studentId);
-            localStorage.setItem('akashic_student_name', name);
-            localStorage.setItem('akashic_class_code', code);
+    <div class="container">
+        <!-- Step 1: Enter Code -->
+        <div id="step1" class="card">
+            <div class="header">
+                <div class="logo">🎮</div>
+                <h1 data-i18n="studentReg">Student Registration</h1>
+                <p data-i18n="enterCode">Enter your class access code to get started</p>
+            </div>
             
-            alert('Success! You\'ve joined the class.\n\nYou can now play games and your scores will be tracked.');
-            loadExisting();
-        } else {
-            alert('Error: ' + data.error);
+            <div class="steps">
+                <div class="step active">1</div>
+                <div class="step-line"></div>
+                <div class="step">2</div>
+                <div class="step-line"></div>
+                <div class="step">3</div>
+            </div>
+            
+            <div id="step1Error" class="message"></div>
+            
+            <div class="form-group">
+                <label data-i18n="accessCode">Access Code</label>
+                <input type="text" id="accessCode" class="code-input" placeholder="ABC123" maxlength="10">
+            </div>
+            
+            <button onclick="verifyCode()" id="verifyBtn" data-i18n="continue">Continue</button>
+            
+            <div class="footer-link">
+                <p style="color:#666;" data-i18n="alreadyRegistered">Already registered? <a href="#" onclick="showLogin()" data-i18n="loginHere">Login here</a></p>
+            </div>
+        </div>
+
+        <!-- Step 2: Create Account -->
+        <div id="step2" class="card hidden">
+            <div class="header">
+                <div class="logo">📝</div>
+                <h1 data-i18n="createAccount">Create Your Account</h1>
+                <p data-i18n="fillDetails">Fill in your details to complete registration</p>
+            </div>
+            
+            <div class="steps">
+                <div class="step done">✓</div>
+                <div class="step-line done"></div>
+                <div class="step active">2</div>
+                <div class="step-line"></div>
+                <div class="step">3</div>
+            </div>
+            
+            <div class="code-info">
+                <div class="class-name" id="className">-</div>
+                <div class="school-name" id="schoolName">-</div>
+                <div class="slots" id="slotsInfo">-</div>
+            </div>
+            
+            <div id="step2Error" class="message"></div>
+            
+            <form onsubmit="return registerStudent(event)">
+                <div class="form-group">
+                    <label data-i18n="firstName">First Name</label>
+                    <input type="text" id="firstName" required placeholder="Juan" data-i18n-placeholder="firstNamePlaceholder">
+                </div>
+                
+                <div class="form-group">
+                    <label data-i18n="lastName">Last Name</label>
+                    <input type="text" id="lastName" required placeholder="García" data-i18n-placeholder="lastNamePlaceholder">
+                </div>
+                
+                <div class="form-group">
+                    <label data-i18n="username">Username</label>
+                    <input type="text" id="username" required placeholder="juang2025" pattern="[a-zA-Z0-9_]+" minlength="3" maxlength="20">
+                    <small style="color:#666; font-size:12px;" data-i18n="usernameHint">Letters, numbers, and underscores only</small>
+                </div>
+                
+                <div class="form-group">
+                    <label data-i18n="password">Password</label>
+                    <input type="password" id="password" required minlength="4" placeholder="••••••••">
+                    <small style="color:#666; font-size:12px;" data-i18n="passwordHint">At least 4 characters</small>
+                </div>
+                
+                <div class="form-group">
+                    <label data-i18n="gradeLevel">Grade Level</label>
+                    <select id="gradeLevel" required>
+                        <option value="" data-i18n="selectGrade">-- Select Grade --</option>
+                        <option value="K">Kindergarten / Kinder</option>
+                        <option value="1">1st Grade / 1er Grado</option>
+                        <option value="2">2nd Grade / 2do Grado</option>
+                        <option value="3">3rd Grade / 3er Grado</option>
+                        <option value="4">4th Grade / 4to Grado</option>
+                        <option value="5">5th Grade / 5to Grado</option>
+                        <option value="6">6th Grade / 6to Grado</option>
+                        <option value="7">7th Grade / 7mo Grado</option>
+                        <option value="8">8th Grade / 8vo Grado</option>
+                        <option value="9">9th Grade / 9no Grado</option>
+                        <option value="10">10th Grade / 10mo Grado</option>
+                        <option value="11">11th Grade / 11mo Grado</option>
+                        <option value="12">12th Grade / 12mo Grado</option>
+                    </select>
+                </div>
+                
+                <button type="submit" id="registerBtn" data-i18n="register">Create Account</button>
+            </form>
+            
+            <button class="btn-secondary" onclick="goBack(1)" data-i18n="back">← Back</button>
+        </div>
+
+        <!-- Step 3: Success / Games Portal -->
+        <div id="step3" class="card card-wide hidden">
+            <div class="welcome-header">
+                <div class="avatar">🎓</div>
+                <h1><span data-i18n="welcome2">Welcome,</span> <span id="welcomeName">Student</span>!</h1>
+                <p data-i18n="readyToPlay">You're all set! Choose a game to start training your brain.</p>
+            </div>
+            
+            <div class="grade-tabs">
+                <button class="grade-tab active" onclick="filterGames('all')" data-i18n="allGames">All Games</button>
+                <button class="grade-tab" onclick="filterGames('K-2')">K-2</button>
+                <button class="grade-tab" onclick="filterGames('3-5')">3-5</button>
+                <button class="grade-tab" onclick="filterGames('6-8')">6-8</button>
+                <button class="grade-tab" onclick="filterGames('9-12')">9-12</button>
+            </div>
+            
+            <div class="games-grid" id="gamesGrid">
+                <!-- Games populated by JS -->
+            </div>
+            
+            <button class="btn-secondary" onclick="doLogout()" style="margin-top:30px;" data-i18n="logout">Logout</button>
+        </div>
+
+        <!-- Login Screen -->
+        <div id="loginScreen" class="card hidden">
+            <div class="header">
+                <div class="logo">🔐</div>
+                <h1 data-i18n="studentLogin">Student Login</h1>
+                <p data-i18n="welcomeBack">Welcome back! Enter your credentials</p>
+            </div>
+            
+            <div id="loginError" class="message"></div>
+            
+            <form onsubmit="return doLogin(event)">
+                <div class="form-group">
+                    <label data-i18n="username">Username</label>
+                    <input type="text" id="loginUsername" required>
+                </div>
+                
+                <div class="form-group">
+                    <label data-i18n="password">Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                
+                <button type="submit" id="loginBtn" data-i18n="login">Login</button>
+            </form>
+            
+            <button class="btn-secondary" onclick="showRegister()" data-i18n="needAccount">Need an account? Register here</button>
+        </div>
+    </div>
+
+    <script>
+    const API = 'https://akashic-academy-backend.onrender.com';
+    let currentLang = 'en';
+    let verifiedCode = null;
+    let studentData = null;
+
+    // Games data
+    const games = [
+        { id: 'number-memory', icon: '🔢', name: 'Number Memory', nameEs: 'Memoria de Números', desc: 'Remember number sequences', descEs: 'Recuerda secuencias de números', grades: ['K-2', '3-5', '6-8', '9-12'] },
+        { id: 'sequence-memory', icon: '🔲', name: 'Sequence Memory', nameEs: 'Memoria de Secuencias', desc: 'Recall visual patterns', descEs: 'Recuerda patrones visuales', grades: ['K-2', '3-5', '6-8', '9-12'] },
+        { id: 'memory-match', icon: '🃏', name: 'Memory Match', nameEs: 'Memoria de Parejas', desc: 'Match pairs of cards', descEs: 'Encuentra pares de cartas', grades: ['K-2', '3-5'] },
+        { id: 'reaction-time', icon: '⚡', name: 'Reaction Time', nameEs: 'Tiempo de Reacción', desc: 'Test your reflexes', descEs: 'Prueba tus reflejos', grades: ['3-5', '6-8', '9-12'] },
+        { id: 'reflex-training', icon: '🎯', name: 'Reflex Training', nameEs: 'Entrenamiento de Reflejos', desc: 'Improve reaction speed', descEs: 'Mejora tu velocidad de reacción', grades: ['6-8', '9-12'] },
+        { id: 'word-search', icon: '🔤', name: 'Word Search', nameEs: 'Sopa de Letras', desc: 'Find hidden words', descEs: 'Encuentra palabras ocultas', grades: ['3-5', '6-8', '9-12'] }
+    ];
+
+    // Translations
+    const translations = {
+        en: {
+            studentReg: 'Student Registration',
+            enterCode: 'Enter your class access code to get started',
+            accessCode: 'Access Code',
+            continue: 'Continue',
+            alreadyRegistered: 'Already registered?',
+            loginHere: 'Login here',
+            createAccount: 'Create Your Account',
+            fillDetails: 'Fill in your details to complete registration',
+            firstName: 'First Name',
+            lastName: 'Last Name',
+            username: 'Username',
+            password: 'Password',
+            gradeLevel: 'Grade Level',
+            selectGrade: '-- Select Grade --',
+            register: 'Create Account',
+            back: '← Back',
+            welcome2: 'Welcome,',
+            readyToPlay: "You're all set! Choose a game to start training your brain.",
+            allGames: 'All Games',
+            logout: 'Logout',
+            studentLogin: 'Student Login',
+            welcomeBack: 'Welcome back! Enter your credentials',
+            login: 'Login',
+            needAccount: 'Need an account? Register here',
+            invalidCode: 'Invalid access code. Please check and try again.',
+            codeFull: 'This class code is full. Contact your teacher.',
+            codeExpired: 'This access code has expired.',
+            connectionError: 'Connection error. Please try again.',
+            usernameHint: 'Letters, numbers, and underscores only',
+            passwordHint: 'At least 4 characters',
+            firstNamePlaceholder: 'Juan',
+            lastNamePlaceholder: 'García',
+            slotsAvailable: 'spots available',
+            registrationSuccess: 'Account created successfully!',
+            usernameTaken: 'Username already taken. Try another.',
+            registrationError: 'Registration failed. Please try again.',
+            loginError: 'Invalid username or password.',
+            play: 'Play'
+        },
+        es: {
+            studentReg: 'Registro de Estudiante',
+            enterCode: 'Ingresa tu código de acceso para comenzar',
+            accessCode: 'Código de Acceso',
+            continue: 'Continuar',
+            alreadyRegistered: '¿Ya estás registrado?',
+            loginHere: 'Inicia sesión aquí',
+            createAccount: 'Crea Tu Cuenta',
+            fillDetails: 'Completa tus datos para finalizar el registro',
+            firstName: 'Nombre',
+            lastName: 'Apellido',
+            username: 'Usuario',
+            password: 'Contraseña',
+            gradeLevel: 'Grado',
+            selectGrade: '-- Selecciona Grado --',
+            register: 'Crear Cuenta',
+            back: '← Volver',
+            welcome2: 'Bienvenido,',
+            readyToPlay: '¡Todo listo! Escoge un juego para entrenar tu cerebro.',
+            allGames: 'Todos',
+            logout: 'Cerrar Sesión',
+            studentLogin: 'Inicio de Sesión',
+            welcomeBack: '¡Bienvenido de nuevo! Ingresa tus credenciales',
+            login: 'Iniciar Sesión',
+            needAccount: '¿Necesitas cuenta? Regístrate aquí',
+            invalidCode: 'Código inválido. Por favor verifica e intenta de nuevo.',
+            codeFull: 'Este código está lleno. Contacta a tu maestro.',
+            codeExpired: 'Este código de acceso ha expirado.',
+            connectionError: 'Error de conexión. Por favor intenta de nuevo.',
+            usernameHint: 'Solo letras, números y guiones bajos',
+            passwordHint: 'Mínimo 4 caracteres',
+            firstNamePlaceholder: 'Juan',
+            lastNamePlaceholder: 'García',
+            slotsAvailable: 'cupos disponibles',
+            registrationSuccess: '¡Cuenta creada exitosamente!',
+            usernameTaken: 'Usuario no disponible. Intenta otro.',
+            registrationError: 'Error en el registro. Por favor intenta de nuevo.',
+            loginError: 'Usuario o contraseña inválidos.',
+            play: 'Jugar'
         }
-    } catch(e) {
-        alert('Connection error. Please try again.');
-    }
-    
-    btn.disabled = false;
-    btn.innerHTML = '✓ Join Class';
-}
+    };
 
-function resetSetup() {
-    if (confirm('This will reset your profile. Continue?')) {
-        localStorage.removeItem('dl_student_name');
-        localStorage.removeItem('dl_class_code');
-        localStorage.removeItem('dl_student_id');
-        localStorage.removeItem('dl_student_stats');
-        localStorage.removeItem('dl_scores');
+    function t(key) {
+        return translations[currentLang][key] || translations['en'][key] || key;
+    }
+
+    function updateUI() {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            el.textContent = t(el.dataset.i18n);
+        });
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            el.placeholder = t(el.dataset.i18nPlaceholder);
+        });
+        document.getElementById('langBtn').textContent = currentLang === 'en' ? 'Español' : 'English';
         
-        document.getElementById('currentInfo').classList.add('hidden');
-        document.getElementById('setupForm').classList.remove('hidden');
-        document.getElementById('resetSection').classList.add('hidden');
-        document.getElementById('studentName').value = '';
-        document.getElementById('classCode').value = '';
+        // Re-render games if on step 3
+        if (!document.getElementById('step3').classList.contains('hidden')) {
+            renderGames();
+        }
     }
-}
 
-function goToGames() {
-    const code = localStorage.getItem('akashic_class_code');
-    if (!code) {
-        alert('Please join a class first to access games.');
-        return;
+    function toggleLang() {
+        currentLang = currentLang === 'en' ? 'es' : 'en';
+        localStorage.setItem('lang', currentLang);
+        updateUI();
     }
-    window.location.href = 'games.html';
-}
 
-loadExisting();
-</script>
+    // Navigation
+    function showStep(step) {
+        document.getElementById('step1').classList.add('hidden');
+        document.getElementById('step2').classList.add('hidden');
+        document.getElementById('step3').classList.add('hidden');
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('step' + step).classList.remove('hidden');
+    }
 
+    function showLogin() {
+        document.getElementById('step1').classList.add('hidden');
+        document.getElementById('loginScreen').classList.remove('hidden');
+    }
+
+    function showRegister() {
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('step1').classList.remove('hidden');
+    }
+
+    function goBack(step) {
+        showStep(step);
+    }
+
+    // Step 1: Verify Code
+    async function verifyCode() {
+        const code = document.getElementById('accessCode').value.trim().toUpperCase();
+        const errorDiv = document.getElementById('step1Error');
+        const btn = document.getElementById('verifyBtn');
+        
+        if (!code) {
+            errorDiv.className = 'message error';
+            errorDiv.textContent = t('invalidCode');
+            return;
+        }
+        
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span>' + t('continue');
+        errorDiv.style.display = 'none';
+        
+        try {
+            const r = await fetch(`${API}/api/class-codes/${code}/validate`);
+            const data = await r.json();
+            
+            if (r.ok && data.valid) {
+                verifiedCode = {
+                    code: code,
+                    className: data.className || 'General',
+                    customerName: data.customerName,
+                    slotsRemaining: data.slotsRemaining
+                };
+                
+                // Update step 2 info
+                document.getElementById('className').textContent = verifiedCode.className;
+                document.getElementById('schoolName').textContent = verifiedCode.customerName;
+                document.getElementById('slotsInfo').textContent = `${verifiedCode.slotsRemaining} ${t('slotsAvailable')}`;
+                
+                showStep(2);
+            } else {
+                errorDiv.className = 'message error';
+                if (data.message?.includes('full')) {
+                    errorDiv.textContent = t('codeFull');
+                } else if (data.message?.includes('expired')) {
+                    errorDiv.textContent = t('codeExpired');
+                } else {
+                    errorDiv.textContent = t('invalidCode');
+                }
+            }
+        } catch (e) {
+            errorDiv.className = 'message error';
+            errorDiv.textContent = t('connectionError');
+        }
+        
+        btn.disabled = false;
+        btn.textContent = t('continue');
+    }
+
+    // Step 2: Register Student
+    async function registerStudent(e) {
+        e.preventDefault();
+        
+        const errorDiv = document.getElementById('step2Error');
+        const btn = document.getElementById('registerBtn');
+        
+        const data = {
+            classCode: verifiedCode.code,
+            firstName: document.getElementById('firstName').value.trim(),
+            lastName: document.getElementById('lastName').value.trim(),
+            username: document.getElementById('username').value.trim().toLowerCase(),
+            password: document.getElementById('password').value,
+            gradeLevel: document.getElementById('gradeLevel').value
+        };
+        
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span>' + t('register');
+        errorDiv.style.display = 'none';
+        
+        try {
+            const r = await fetch(`${API}/api/students/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            
+            const result = await r.json();
+            
+            if (r.ok) {
+                // Save student session
+                studentData = {
+                    id: result.student.id,
+                    firstName: result.student.firstName,
+                    lastName: result.student.lastName,
+                    username: result.student.username,
+                    gradeLevel: result.student.gradeLevel,
+                    token: result.token
+                };
+                localStorage.setItem('studentData', JSON.stringify(studentData));
+                
+                // Show success and games
+                document.getElementById('welcomeName').textContent = studentData.firstName;
+                renderGames();
+                showStep(3);
+            } else {
+                errorDiv.className = 'message error';
+                if (result.error?.includes('username') || result.error?.includes('exists')) {
+                    errorDiv.textContent = t('usernameTaken');
+                } else {
+                    errorDiv.textContent = result.error || t('registrationError');
+                }
+            }
+        } catch (e) {
+            errorDiv.className = 'message error';
+            errorDiv.textContent = t('connectionError');
+        }
+        
+        btn.disabled = false;
+        btn.textContent = t('register');
+        return false;
+    }
+
+    // Login
+    async function doLogin(e) {
+        e.preventDefault();
+        
+        const errorDiv = document.getElementById('loginError');
+        const btn = document.getElementById('loginBtn');
+        
+        const username = document.getElementById('loginUsername').value.trim().toLowerCase();
+        const password = document.getElementById('loginPassword').value;
+        
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span>' + t('login');
+        errorDiv.style.display = 'none';
+        
+        try {
+            const r = await fetch(`${API}/api/students/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+            
+            const result = await r.json();
+            
+            if (r.ok) {
+                studentData = {
+                    id: result.student.id,
+                    firstName: result.student.firstName,
+                    lastName: result.student.lastName,
+                    username: result.student.username,
+                    gradeLevel: result.student.gradeLevel,
+                    token: result.token
+                };
+                localStorage.setItem('studentData', JSON.stringify(studentData));
+                
+                document.getElementById('welcomeName').textContent = studentData.firstName;
+                renderGames();
+                showStep(3);
+            } else {
+                errorDiv.className = 'message error';
+                errorDiv.textContent = t('loginError');
+            }
+        } catch (e) {
+            errorDiv.className = 'message error';
+            errorDiv.textContent = t('connectionError');
+        }
+        
+        btn.disabled = false;
+        btn.textContent = t('login');
+        return false;
+    }
+
+    function doLogout() {
+        localStorage.removeItem('studentData');
+        studentData = null;
+        location.reload();
+    }
+
+    // Games
+    function renderGames(filter = 'all') {
+        const grid = document.getElementById('gamesGrid');
+        const studentGrade = studentData?.gradeLevel || '6';
+        
+        let filteredGames = games;
+        if (filter !== 'all') {
+            filteredGames = games.filter(g => g.grades.includes(filter));
+        }
+        
+        grid.innerHTML = filteredGames.map(game => `
+            <button class="btn-game" onclick="playGame('${game.id}')">
+                <div class="icon">${game.icon}</div>
+                <div class="info">
+                    <h3>${currentLang === 'es' ? game.nameEs : game.name}</h3>
+                    <p>${currentLang === 'es' ? game.descEs : game.desc}</p>
+                </div>
+            </button>
+        `).join('');
+    }
+
+    function filterGames(filter) {
+        // Update active tab
+        document.querySelectorAll('.grade-tab').forEach(tab => tab.classList.remove('active'));
+        event.target.classList.add('active');
+        renderGames(filter);
+    }
+
+    function playGame(gameId) {
+        // Replace with your actual game URLs
+        const gameUrls = {
+            'number-memory': 'https://akashicworks.onrender.com/games/number-memory.html',
+            'sequence-memory': 'https://akashicworks.onrender.com/games/sequence-memory.html',
+            'memory-match': 'https://akashicworks.onrender.com/games/memory-match.html',
+            'reaction-time': 'https://akashicworks.onrender.com/games/reaction-time.html',
+            'reflex-training': 'https://akashicworks.onrender.com/games/reflex-training.html',
+            'word-search': 'https://akashicworks.onrender.com/games/word-search.html'
+        };
+        
+        const url = gameUrls[gameId];
+        if (url) {
+            // Add auth token as query param if needed
+            const authUrl = studentData?.token ? `${url}?token=${studentData.token}` : url;
+            window.open(authUrl, '_blank');
+        }
+    }
+
+    // Enter key handlers
+    document.getElementById('accessCode').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') verifyCode();
+    });
+
+    // Initialize
+    window.onload = function() {
+        // Load saved language
+        const savedLang = localStorage.getItem('lang');
+        if (savedLang) currentLang = savedLang;
+        updateUI();
+        
+        // Check for existing session
+        const saved = localStorage.getItem('studentData');
+        if (saved) {
+            try {
+                studentData = JSON.parse(saved);
+                document.getElementById('welcomeName').textContent = studentData.firstName;
+                renderGames();
+                showStep(3);
+            } catch (e) {
+                localStorage.removeItem('studentData');
+            }
+        }
+    };
+    </script>
 </body>
 </html>
