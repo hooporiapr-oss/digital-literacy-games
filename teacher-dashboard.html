@@ -379,6 +379,158 @@
         }
         .copy-toast.show { opacity: 1; }
         
+        /* Classroom Management Styles */
+        .manage-tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #333;
+        }
+        .manage-tab {
+            padding: 10px 20px;
+            background: #1a1a2e;
+            border: none;
+            border-radius: 8px;
+            color: #888;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .manage-tab:hover { color: #fff; background: #333; }
+        .manage-tab.active { background: #ffd700; color: #000; }
+        .manage-content { display: block; }
+        .manage-content.hidden { display: none; }
+        .manage-form {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .manage-form h3 { color: #ffd700; margin-bottom: 15px; font-size: 1rem; }
+        .manage-form .form-row { margin-bottom: 15px; }
+        .manage-form .form-row label { display: block; color: #aaa; font-size: 13px; margin-bottom: 5px; }
+        .manage-form .form-row input,
+        .manage-form .form-row select,
+        .manage-form .form-row textarea {
+            width: 100%;
+            padding: 10px;
+            background: #2a2a3e;
+            border: 1px solid #444;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 14px;
+        }
+        .manage-form .form-row textarea { resize: vertical; font-family: inherit; }
+        .manage-form button { margin-top: 10px; }
+        .manage-list { margin-top: 20px; }
+        .manage-list h3 { color: #aaa; font-size: 0.9rem; margin-bottom: 15px; }
+        .manage-item {
+            background: #1a1a2e;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .manage-item .info { flex: 1; }
+        .manage-item .title { color: #fff; font-weight: bold; margin-bottom: 5px; }
+        .manage-item .meta { color: #888; font-size: 13px; }
+        .manage-item .delete-btn {
+            background: #ef4444;
+            border: none;
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 0;
+        }
+        .game-checkboxes {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 10px;
+            background: #2a2a3e;
+            border-radius: 6px;
+        }
+        .game-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            background: #1a1a2e;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .game-checkbox:hover { background: #333; }
+        .game-checkbox input { width: auto; }
+        .game-locks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .game-lock-item {
+            background: #1a1a2e;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .game-lock-item .game-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .game-lock-item .game-name .icon { font-size: 1.5rem; }
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #ef4444;
+            border-radius: 26px;
+            transition: 0.3s;
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        .toggle-switch input:checked + .toggle-slider { background: #10b981; }
+        .toggle-switch input:checked + .toggle-slider:before { transform: translateX(24px); }
+        .priority-high { border-left: 3px solid #ef4444; }
+        .priority-normal { border-left: 3px solid #6366f1; }
+        .priority-low { border-left: 3px solid #888; }
+        .btn-manage {
+            background: #6366f1;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 5px;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+        .btn-manage:hover { background: #4f46e5; }
+        .empty-list { color: #666; text-align: center; padding: 20px; }
+        
         /* Auth Tabs */
         .auth-tabs {
             display: flex;
@@ -653,6 +805,117 @@
             </div>
         </div>
 
+        <!-- Classroom Management Card -->
+        <div class="card hidden" id="classManageCard">
+            <div class="flex-between">
+                <h2>⚙️ <span data-i18n="manageClass">Manage Class:</span> <span id="manageClassName" style="color:#ffd700;">-</span></h2>
+                <button class="btn-secondary" onclick="closeManageClass()">✕ Close</button>
+            </div>
+            
+            <!-- Management Tabs -->
+            <div class="manage-tabs">
+                <button class="manage-tab active" onclick="showManageTab('assignments')" data-i18n="assignments">📋 Assignments</button>
+                <button class="manage-tab" onclick="showManageTab('goals')" data-i18n="goals">🎯 Goals</button>
+                <button class="manage-tab" onclick="showManageTab('announcements')" data-i18n="announcements">📢 Announcements</button>
+                <button class="manage-tab" onclick="showManageTab('locks')" data-i18n="gameLocks">🔒 Game Locks</button>
+            </div>
+            
+            <!-- Assignments Tab -->
+            <div id="assignmentsTab" class="manage-content">
+                <div class="manage-form">
+                    <h3 data-i18n="createAssignment">Create Assignment</h3>
+                    <div class="form-row">
+                        <label data-i18n="assignmentTitle">Title</label>
+                        <input type="text" id="assignmentTitle" placeholder="Weekly Practice">
+                    </div>
+                    <div class="form-row">
+                        <label data-i18n="selectGames">Select Games</label>
+                        <div class="game-checkboxes" id="assignmentGames"></div>
+                    </div>
+                    <div class="form-row">
+                        <label data-i18n="dueDate">Due Date (optional)</label>
+                        <input type="date" id="assignmentDue">
+                    </div>
+                    <button onclick="createAssignment()" data-i18n="createAssignment">Create Assignment</button>
+                </div>
+                <div class="manage-list" id="assignmentsList">
+                    <h3 data-i18n="currentAssignments">Current Assignments</h3>
+                    <div id="assignmentsListContent"></div>
+                </div>
+            </div>
+            
+            <!-- Goals Tab -->
+            <div id="goalsTab" class="manage-content hidden">
+                <div class="manage-form">
+                    <h3 data-i18n="setGoal">Set Goal</h3>
+                    <div class="form-row">
+                        <label data-i18n="goalTitle">Title</label>
+                        <input type="text" id="goalTitle" placeholder="Weekly Challenge">
+                    </div>
+                    <div class="form-row">
+                        <label data-i18n="goalType">Goal Type</label>
+                        <select id="goalType">
+                            <option value="games_completed">Complete X Games</option>
+                            <option value="minutes_played">Play X Minutes</option>
+                            <option value="score_average">Achieve X Average Score</option>
+                            <option value="streak_days">Play X Days</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label data-i18n="target">Target</label>
+                        <input type="number" id="goalTarget" value="5" min="1">
+                    </div>
+                    <div class="form-row">
+                        <label data-i18n="endDate">End Date</label>
+                        <input type="date" id="goalEndDate">
+                    </div>
+                    <button onclick="createGoal()" data-i18n="setGoal">Set Goal</button>
+                </div>
+                <div class="manage-list" id="goalsList">
+                    <h3 data-i18n="currentGoals">Current Goals</h3>
+                    <div id="goalsListContent"></div>
+                </div>
+            </div>
+            
+            <!-- Announcements Tab -->
+            <div id="announcementsTab" class="manage-content hidden">
+                <div class="manage-form">
+                    <h3 data-i18n="postAnnouncement">Post Announcement</h3>
+                    <div class="form-row">
+                        <label data-i18n="announcementTitle">Title</label>
+                        <input type="text" id="announcementTitle" placeholder="Important Update">
+                    </div>
+                    <div class="form-row">
+                        <label data-i18n="message">Message</label>
+                        <textarea id="announcementMessage" rows="3" placeholder="Type your message..."></textarea>
+                    </div>
+                    <div class="form-row">
+                        <label data-i18n="priority">Priority</label>
+                        <select id="announcementPriority">
+                            <option value="normal">Normal</option>
+                            <option value="high">High (Pinned)</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                    <button onclick="postAnnouncement()" data-i18n="post">Post</button>
+                </div>
+                <div class="manage-list" id="announcementsList">
+                    <h3 data-i18n="currentAnnouncements">Current Announcements</h3>
+                    <div id="announcementsListContent"></div>
+                </div>
+            </div>
+            
+            <!-- Game Locks Tab -->
+            <div id="locksTab" class="manage-content hidden">
+                <div class="manage-form">
+                    <h3 data-i18n="lockUnlockGames">Lock/Unlock Games</h3>
+                    <p style="color:#888; margin-bottom:15px; font-size:14px;" data-i18n="lockDescription">Locked games will not be available to students in this class.</p>
+                    <div class="game-locks-grid" id="gameLocksGrid"></div>
+                    <button onclick="saveGameLocks()" data-i18n="saveLocks">Save Changes</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Live Activity Card -->
         <div class="card">
             <div class="flex-between">
@@ -782,6 +1045,24 @@
     let generatedCode = '';
     let teacherData = null;  // Teacher account data
     let teacherLicenses = []; // All licenses linked to teacher
+    let managingClassCode = null; // Current class being managed
+    let currentLockedGames = []; // Locked games for current class
+
+    // Games list for assignments and locks
+    const allGames = [
+        { id: 'k2-sequence-memory', icon: '🔢', name: { en: 'Sequence Memory', es: 'Memoria de Secuencias' }, grade: 'K-2' },
+        { id: 'k2-color-match', icon: '🎨', name: { en: 'Color Match', es: 'Combinar Colores' }, grade: 'K-2' },
+        { id: 'k2-visual-memory', icon: '👁️', name: { en: 'Visual Memory', es: 'Memoria Visual' }, grade: 'K-2' },
+        { id: '35-number-memory', icon: '🔢', name: { en: 'Number Memory', es: 'Memoria de Números' }, grade: '3-5' },
+        { id: '35-visual-memory', icon: '👁️', name: { en: 'Visual Memory', es: 'Memoria Visual' }, grade: '3-5' },
+        { id: '35-word-search', icon: '🔤', name: { en: 'Word Search', es: 'Sopa de Letras' }, grade: '3-5' },
+        { id: '68-number-memory', icon: '🔢', name: { en: 'Number Memory', es: 'Memoria de Números' }, grade: '6-8' },
+        { id: '68-typing-quiz', icon: '⌨️', name: { en: 'Typing Quiz', es: 'Quiz de Mecanografía' }, grade: '6-8' },
+        { id: '68-word-search', icon: '🔤', name: { en: 'Word Search', es: 'Sopa de Letras' }, grade: '6-8' },
+        { id: '912-assessment', icon: '📊', name: { en: 'Cognitive Assessment', es: 'Evaluación Cognitiva' }, grade: '9-12' },
+        { id: '912-stroop-challenge', icon: '🧠', name: { en: 'Stroop Challenge', es: 'Desafío Stroop' }, grade: '9-12' },
+        { id: '912-typing', icon: '⌨️', name: { en: 'Typing Test', es: 'Prueba de Mecanografía' }, grade: '9-12' }
+    ];
 
     // Translations
     const translations = {
@@ -886,7 +1167,45 @@
             noGamesData: 'No games data yet',
             gamesCompleted: 'games completed',
             totalTime: 'total time',
-            playing: 'Playing'
+            playing: 'Playing',
+            // Classroom management translations
+            manage: 'Manage',
+            manageClass: 'Manage Class:',
+            assignments: '📋 Assignments',
+            goals: '🎯 Goals',
+            announcements: '📢 Announcements',
+            gameLocks: '🔒 Game Locks',
+            createAssignment: 'Create Assignment',
+            assignmentTitle: 'Title',
+            selectGames: 'Select Games',
+            dueDate: 'Due Date (optional)',
+            currentAssignments: 'Current Assignments',
+            setGoal: 'Set Goal',
+            goalTitle: 'Title',
+            goalType: 'Goal Type',
+            target: 'Target',
+            endDate: 'End Date',
+            currentGoals: 'Current Goals',
+            postAnnouncement: 'Post Announcement',
+            announcementTitle: 'Title',
+            message: 'Message',
+            priority: 'Priority',
+            post: 'Post',
+            currentAnnouncements: 'Current Announcements',
+            lockUnlockGames: 'Lock/Unlock Games',
+            lockDescription: 'Locked games will not be available to students in this class.',
+            saveLocks: 'Save Changes',
+            unlocked: 'Unlocked',
+            locked: 'Locked',
+            dueDateLabel: 'Due:',
+            gamesAssigned: 'games assigned',
+            noAssignments: 'No assignments yet',
+            noGoals: 'No goals yet',
+            noAnnouncements: 'No announcements yet',
+            assignmentCreated: 'Assignment created!',
+            goalCreated: 'Goal created!',
+            announcementPosted: 'Announcement posted!',
+            locksSaved: 'Game locks saved!'
         },
         es: {
             welcome: 'Bienvenido',
@@ -989,7 +1308,45 @@
             noGamesData: 'Sin datos de juegos aún',
             gamesCompleted: 'juegos completados',
             totalTime: 'tiempo total',
-            playing: 'Jugando'
+            playing: 'Jugando',
+            // Classroom management translations
+            manage: 'Gestionar',
+            manageClass: 'Gestionar Clase:',
+            assignments: '📋 Tareas',
+            goals: '🎯 Metas',
+            announcements: '📢 Anuncios',
+            gameLocks: '🔒 Bloquear Juegos',
+            createAssignment: 'Crear Tarea',
+            assignmentTitle: 'Título',
+            selectGames: 'Seleccionar Juegos',
+            dueDate: 'Fecha Límite (opcional)',
+            currentAssignments: 'Tareas Actuales',
+            setGoal: 'Establecer Meta',
+            goalTitle: 'Título',
+            goalType: 'Tipo de Meta',
+            target: 'Objetivo',
+            endDate: 'Fecha de Fin',
+            currentGoals: 'Metas Actuales',
+            postAnnouncement: 'Publicar Anuncio',
+            announcementTitle: 'Título',
+            message: 'Mensaje',
+            priority: 'Prioridad',
+            post: 'Publicar',
+            currentAnnouncements: 'Anuncios Actuales',
+            lockUnlockGames: 'Bloquear/Desbloquear Juegos',
+            lockDescription: 'Los juegos bloqueados no estarán disponibles para los estudiantes de esta clase.',
+            saveLocks: 'Guardar Cambios',
+            unlocked: 'Desbloqueado',
+            locked: 'Bloqueado',
+            dueDateLabel: 'Fecha:',
+            gamesAssigned: 'juegos asignados',
+            noAssignments: 'Sin tareas aún',
+            noGoals: 'Sin metas aún',
+            noAnnouncements: 'Sin anuncios aún',
+            assignmentCreated: '¡Tarea creada!',
+            goalCreated: '¡Meta creada!',
+            announcementPosted: '¡Anuncio publicado!',
+            locksSaved: '¡Bloqueos guardados!'
         }
     };
 
@@ -1526,7 +1883,10 @@
                     </select>
                 </td>
                 <td>${new Date(code.createdAt).toLocaleDateString()}</td>
-                <td><button class="btn-copy" onclick="copyToClipboard('${code.code}')">${t('copy')}</button></td>
+                <td>
+                    <button class="btn-copy" onclick="copyToClipboard('${code.code}')">${t('copy')}</button>
+                    <button class="btn-manage" onclick="openManageClass('${code.code}', '${code.className || 'Class'}')">${t('manage')}</button>
+                </td>
             </tr>
         `).join('');
     }
@@ -1824,6 +2184,352 @@
         if (document.getElementById('autoRefresh').checked) {
             activityRefreshInterval = setInterval(loadActivity, 30000);
         }
+    }
+
+    // ============================================
+    // CLASSROOM MANAGEMENT FUNCTIONS
+    // ============================================
+
+    function openManageClass(code, className) {
+        managingClassCode = code;
+        document.getElementById('manageClassName').textContent = className;
+        document.getElementById('classManageCard').classList.remove('hidden');
+        
+        // Load game checkboxes for assignments
+        renderGameCheckboxes();
+        
+        // Load game locks grid
+        loadGameLocks();
+        
+        // Load existing data
+        loadAssignments();
+        loadGoals();
+        loadAnnouncements();
+        
+        // Show first tab
+        showManageTab('assignments');
+        
+        // Scroll to management card
+        document.getElementById('classManageCard').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function closeManageClass() {
+        managingClassCode = null;
+        document.getElementById('classManageCard').classList.add('hidden');
+    }
+
+    function showManageTab(tab) {
+        document.querySelectorAll('.manage-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.manage-content').forEach(c => c.classList.add('hidden'));
+        
+        event.target.classList.add('active');
+        document.getElementById(tab + 'Tab').classList.remove('hidden');
+    }
+
+    function renderGameCheckboxes() {
+        const container = document.getElementById('assignmentGames');
+        container.innerHTML = allGames.map(game => `
+            <label class="game-checkbox">
+                <input type="checkbox" value="${game.id}">
+                <span>${game.icon} ${game.name[currentLang]} (${game.grade})</span>
+            </label>
+        `).join('');
+    }
+
+    // --- Assignments ---
+    async function createAssignment() {
+        const title = document.getElementById('assignmentTitle').value.trim();
+        const dueDate = document.getElementById('assignmentDue').value;
+        const checkboxes = document.querySelectorAll('#assignmentGames input:checked');
+        const gameIds = Array.from(checkboxes).map(cb => cb.value);
+        
+        if (gameIds.length === 0) {
+            alert('Please select at least one game');
+            return;
+        }
+        
+        try {
+            const r = await fetch(`${API}/api/class-codes/${managingClassCode}/assignments`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    title: title || 'Game Assignment',
+                    gameIds,
+                    dueDate: dueDate || null
+                })
+            });
+            
+            if (r.ok) {
+                showToast(t('assignmentCreated'));
+                document.getElementById('assignmentTitle').value = '';
+                document.getElementById('assignmentDue').value = '';
+                document.querySelectorAll('#assignmentGames input').forEach(cb => cb.checked = false);
+                loadAssignments();
+            }
+        } catch (e) {
+            console.error('Failed to create assignment:', e);
+        }
+    }
+
+    async function loadAssignments() {
+        const container = document.getElementById('assignmentsListContent');
+        
+        try {
+            const r = await fetch(`${API}/api/class-codes/${managingClassCode}/assignments`);
+            const assignments = await r.json();
+            
+            if (assignments.length === 0) {
+                container.innerHTML = `<div class="empty-list">${t('noAssignments')}</div>`;
+                return;
+            }
+            
+            container.innerHTML = assignments.map(a => `
+                <div class="manage-item">
+                    <div class="info">
+                        <div class="title">${a.title}</div>
+                        <div class="meta">
+                            ${a.gameIds.length} ${t('gamesAssigned')}
+                            ${a.dueDate ? ` • ${t('dueDateLabel')} ${new Date(a.dueDate).toLocaleDateString()}` : ''}
+                        </div>
+                    </div>
+                    <button class="delete-btn" onclick="deleteAssignment('${a.id}')">×</button>
+                </div>
+            `).join('');
+        } catch (e) {
+            container.innerHTML = `<div class="empty-list">${t('noAssignments')}</div>`;
+        }
+    }
+
+    async function deleteAssignment(id) {
+        if (!confirm('Delete this assignment?')) return;
+        
+        try {
+            await fetch(`${API}/api/assignments/${id}`, { method: 'DELETE' });
+            loadAssignments();
+        } catch (e) {
+            console.error('Failed to delete assignment:', e);
+        }
+    }
+
+    // --- Goals ---
+    async function createGoal() {
+        const title = document.getElementById('goalTitle').value.trim();
+        const type = document.getElementById('goalType').value;
+        const target = document.getElementById('goalTarget').value;
+        const endDate = document.getElementById('goalEndDate').value;
+        
+        if (!endDate) {
+            alert('Please select an end date');
+            return;
+        }
+        
+        try {
+            const r = await fetch(`${API}/api/class-codes/${managingClassCode}/goals`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    title: title || 'Class Goal',
+                    type,
+                    target: parseInt(target),
+                    endDate
+                })
+            });
+            
+            if (r.ok) {
+                showToast(t('goalCreated'));
+                document.getElementById('goalTitle').value = '';
+                document.getElementById('goalTarget').value = '5';
+                document.getElementById('goalEndDate').value = '';
+                loadGoals();
+            }
+        } catch (e) {
+            console.error('Failed to create goal:', e);
+        }
+    }
+
+    async function loadGoals() {
+        const container = document.getElementById('goalsListContent');
+        
+        try {
+            const r = await fetch(`${API}/api/class-codes/${managingClassCode}/goals`);
+            const goals = await r.json();
+            
+            if (goals.length === 0) {
+                container.innerHTML = `<div class="empty-list">${t('noGoals')}</div>`;
+                return;
+            }
+            
+            const typeLabels = {
+                games_completed: 'Complete games',
+                minutes_played: 'Play minutes',
+                score_average: 'Average score',
+                streak_days: 'Days played'
+            };
+            
+            container.innerHTML = goals.map(g => `
+                <div class="manage-item">
+                    <div class="info">
+                        <div class="title">${g.title}</div>
+                        <div class="meta">
+                            ${typeLabels[g.type]}: ${g.target} • Ends: ${new Date(g.endDate).toLocaleDateString()}
+                        </div>
+                    </div>
+                    <button class="delete-btn" onclick="deleteGoal('${g.id}')">×</button>
+                </div>
+            `).join('');
+        } catch (e) {
+            container.innerHTML = `<div class="empty-list">${t('noGoals')}</div>`;
+        }
+    }
+
+    async function deleteGoal(id) {
+        if (!confirm('Delete this goal?')) return;
+        
+        try {
+            await fetch(`${API}/api/goals/${id}`, { method: 'DELETE' });
+            loadGoals();
+        } catch (e) {
+            console.error('Failed to delete goal:', e);
+        }
+    }
+
+    // --- Announcements ---
+    async function postAnnouncement() {
+        const title = document.getElementById('announcementTitle').value.trim();
+        const message = document.getElementById('announcementMessage').value.trim();
+        const priority = document.getElementById('announcementPriority').value;
+        
+        if (!message) {
+            alert('Please enter a message');
+            return;
+        }
+        
+        try {
+            const r = await fetch(`${API}/api/class-codes/${managingClassCode}/announcements`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    title: title || 'Announcement',
+                    message,
+                    priority
+                })
+            });
+            
+            if (r.ok) {
+                showToast(t('announcementPosted'));
+                document.getElementById('announcementTitle').value = '';
+                document.getElementById('announcementMessage').value = '';
+                document.getElementById('announcementPriority').value = 'normal';
+                loadAnnouncements();
+            }
+        } catch (e) {
+            console.error('Failed to post announcement:', e);
+        }
+    }
+
+    async function loadAnnouncements() {
+        const container = document.getElementById('announcementsListContent');
+        
+        try {
+            const r = await fetch(`${API}/api/class-codes/${managingClassCode}/announcements`);
+            const announcements = await r.json();
+            
+            if (announcements.length === 0) {
+                container.innerHTML = `<div class="empty-list">${t('noAnnouncements')}</div>`;
+                return;
+            }
+            
+            container.innerHTML = announcements.map(a => `
+                <div class="manage-item priority-${a.priority}">
+                    <div class="info">
+                        <div class="title">${a.title}</div>
+                        <div class="meta">${a.message}</div>
+                        <div class="meta" style="margin-top:5px; font-size:12px;">
+                            ${new Date(a.createdAt).toLocaleDateString()}
+                        </div>
+                    </div>
+                    <button class="delete-btn" onclick="deleteAnnouncement('${a.id}')">×</button>
+                </div>
+            `).join('');
+        } catch (e) {
+            container.innerHTML = `<div class="empty-list">${t('noAnnouncements')}</div>`;
+        }
+    }
+
+    async function deleteAnnouncement(id) {
+        if (!confirm('Delete this announcement?')) return;
+        
+        try {
+            await fetch(`${API}/api/announcements/${id}`, { method: 'DELETE' });
+            loadAnnouncements();
+        } catch (e) {
+            console.error('Failed to delete announcement:', e);
+        }
+    }
+
+    // --- Game Locks ---
+    async function loadGameLocks() {
+        const container = document.getElementById('gameLocksGrid');
+        
+        try {
+            const r = await fetch(`${API}/api/class-codes/${managingClassCode}/locks`);
+            const data = await r.json();
+            currentLockedGames = data.lockedGames || [];
+        } catch (e) {
+            currentLockedGames = [];
+        }
+        
+        container.innerHTML = allGames.map(game => {
+            const isLocked = currentLockedGames.includes(game.id);
+            return `
+                <div class="game-lock-item">
+                    <div class="game-name">
+                        <span class="icon">${game.icon}</span>
+                        <span>${game.name[currentLang]}<br><small style="color:#888">${game.grade}</small></span>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" ${!isLocked ? 'checked' : ''} data-game-id="${game.id}">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            `;
+        }).join('');
+    }
+
+    async function saveGameLocks() {
+        const checkboxes = document.querySelectorAll('#gameLocksGrid input[type="checkbox"]');
+        const lockedGames = [];
+        
+        checkboxes.forEach(cb => {
+            if (!cb.checked) {
+                lockedGames.push(cb.dataset.gameId);
+            }
+        });
+        
+        try {
+            const r = await fetch(`${API}/api/class-codes/${managingClassCode}/locks`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ lockedGames })
+            });
+            
+            if (r.ok) {
+                showToast(t('locksSaved'));
+                currentLockedGames = lockedGames;
+            }
+        } catch (e) {
+            console.error('Failed to save locks:', e);
+        }
+    }
+
+    function showToast(message) {
+        const toast = document.getElementById('copyToast');
+        toast.querySelector('span').textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => {
+            toast.classList.remove('show');
+            toast.querySelector('span').textContent = t('copied');
+        }, 2000);
     }
 
     // Allow Enter key to login
