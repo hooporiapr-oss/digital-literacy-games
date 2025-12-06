@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #fff;
+        }
+        .box {
+            background: #2a2a3e;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px 0;
+            width: 100%;
+            font-size: 16px;
+        }
+        button {
+            background: #ffd700;
+            color: #000;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .result {
+            background: #333;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .error { color: #ff4444; }
+        .success { color: #44ff44; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Backend Connection Test</h1>
+    
+    <div class="box">
+        <h3>Step 1: Test Health Endpoint</h3>
+        <button onclick="testHealth()">Test /api/health</button>
+        <div id="healthResult" class="result">Click button to test...</div>
+    </div>
+
+    <div class="box">
+        <h3>Step 2: Test Admin Login</h3>
+        <input type="text" id="adminKey" placeholder="Enter admin key" value="akashic-admin-2024">
+        <button onclick="testAdmin()">Test Admin Access</button>
+        <div id="adminResult" class="result">Click button to test...</div>
+    </div>
+
+    <div class="box">
+        <h3>Step 3: Backend URL</h3>
+        <div class="result">https://digital-literacy-games.onrender.com</div>
+    </div>
+
+    <script>
+        const API_URL = 'https://digital-literacy-games.onrender.com';
+
+        async function testHealth() {
+            const result = document.getElementById('healthResult');
+            result.textContent = 'Testing...';
+            
+            try {
+                const response = await fetch(API_URL + '/api/health');
+                const data = await response.json();
+                
+                result.className = 'result success';
+                result.textContent = '✅ SUCCESS!\n\nStatus: ' + response.status + '\n\nResponse:\n' + JSON.stringify(data, null, 2);
+            } catch (error) {
+                result.className = 'result error';
+                result.textContent = '❌ FAILED!\n\nError: ' + error.message;
+            }
+        }
+
+        async function testAdmin() {
+            const result = document.getElementById('adminResult');
+            const adminKey = document.getElementById('adminKey').value;
+            result.textContent = 'Testing admin access...';
+            
+            try {
+                const response = await fetch(API_URL + '/api/admin/stats?adminKey=' + encodeURIComponent(adminKey));
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    result.className = 'result success';
+                    result.textContent = '✅ ADMIN ACCESS SUCCESS!\n\nStatus: ' + response.status + '\n\nStats:\n' + JSON.stringify(data, null, 2);
+                } else {
+                    const text = await response.text();
+                    result.className = 'result error';
+                    result.textContent = '❌ ACCESS DENIED!\n\nStatus: ' + response.status + '\n\nResponse: ' + text;
+                }
+            } catch (error) {
+                result.className = 'result error';
+                result.textContent = '❌ CONNECTION FAILED!\n\nError: ' + error.message;
+            }
+        }
+
+        // Auto-test on load
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('Testing backend connection...');
+            testHealth();
+        });
+    </script>
+</body>
+</html>
