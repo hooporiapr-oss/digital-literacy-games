@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>White-Label Branding - Akashic Academy</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
+            color: #fff; 
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        .header {
+            text-align: center;
+            padding: 30px 0;
+        }
+        .header h1 { color: #ffd700; font-size: 2rem; margin-bottom: 10px; }
+        .header p { color: #888; }
+        
+        .card {
+            background: rgba(42, 42, 62, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .card h2 {
+            color: #ffd700;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            color: #aaa;
+            font-size: 13px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px;
+            font-size: 14px;
+            border: 2px solid #444;
+            border-radius: 8px;
+            background: #1a1a2e;
+            color: #fff;
+            outline: none;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #ffd700;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+            font-family: inherit;
+        }
+        
+        .color-input-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .color-input-wrapper input[type="color"] {
+            width: 50px;
+            height: 40px;
+            padding: 2px;
+            cursor: pointer;
+        }
+        .color-input-wrapper input[type="text"] {
+            flex: 1;
+        }
+        
+        .toggle-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .toggle {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #444;
+            border-radius: 26px;
+            transition: 0.3s;
+        }
+        .toggle .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        .toggle input:checked + .slider { background: #10b981; }
+        .toggle input:checked + .slider:before { transform: translateX(24px); }
+        
+        button {
+            padding: 12px 25px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+            color: #000;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(255,215,0,0.3); }
+        .btn-secondary {
+            background: #444;
+            color: #fff;
+        }
+        .btn-secondary:hover { background: #555; }
+        .btn-danger {
+            background: #ef4444;
+            color: #fff;
+        }
+        .btn-danger:hover { background: #dc2626; }
+        
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .message.success { background: rgba(16,185,129,0.2); border: 1px solid #10b981; color: #6ee7b7; }
+        .message.error { background: rgba(239,68,68,0.2); border: 1px solid #ef4444; color: #fca5a5; }
+        
+        /* Preview */
+        .preview-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        @media (max-width: 900px) {
+            .preview-section { grid-template-columns: 1fr; }
+        }
+        
+        .preview-container {
+            background: var(--preview-bg, #1a1a2e);
+            border-radius: 15px;
+            padding: 30px;
+            border: 2px dashed #444;
+        }
+        .preview-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .preview-logo {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        .preview-logo img {
+            max-height: 60px;
+            max-width: 200px;
+        }
+        .preview-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--preview-primary, #ffd700);
+        }
+        .preview-tagline {
+            color: #888;
+            font-size: 14px;
+        }
+        .preview-card {
+            background: var(--preview-card, #2a2a3e);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .preview-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--preview-primary, #ffd700);
+            color: #000;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .preview-accent {
+            color: var(--preview-accent, #6366f1);
+        }
+        .preview-footer {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            margin-top: 20px;
+        }
+        
+        /* Login screen */
+        .login-card {
+            background: #2a2a3e;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .login-card h2 { color: #ffd700; margin-bottom: 20px; }
+        .login-card input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #444;
+            border-radius: 8px;
+            background: #1a1a2e;
+            color: #fff;
+        }
+        
+        .hidden { display: none; }
+        
+        .emoji-picker {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .emoji-option {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1a1a2e;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.2s;
+        }
+        .emoji-option:hover { border-color: #666; }
+        .emoji-option.selected { border-color: #ffd700; background: rgba(255,215,0,0.2); }
+        
+        .back-link {
+            display: inline-block;
+            color: #ffd700;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="container">
+        <div class="header">
+            <h1>🎨 White-Label Branding</h1>
+            <p>Customize your platform appearance</p>
+        </div>
+        
+        <div class="login-card">
+            <h2>Enter License Key</h2>
+            <div id="loginError" class="message error hidden"></div>
+            <input type="text" id="licenseKey" placeholder="XXXX-XXXX-XXXX">
+            <button class="btn-primary" onclick="login()" style="width:100%">Access Branding Settings</button>
+        </div>
+    </div>
+
+    <!-- Branding Editor -->
+    <div id="editorScreen" class="container hidden">
+        <a href="admin-dashboard.html" class="back-link">← Back to Admin Dashboard</a>
+        
+        <div class="header">
+            <h1>🎨 White-Label Branding</h1>
+            <p>License: <span id="displayLicenseKey">-</span></p>
+        </div>
+        
+        <div id="message" class="message hidden"></div>
+        
+        <div class="preview-section">
+            <!-- Settings Column -->
+            <div>
+                <!-- Identity -->
+                <div class="card">
+                    <h2>🏷️ Brand Identity</h2>
+                    <div class="form-group">
+                        <label>Platform Name</label>
+                        <input type="text" id="platformName" placeholder="Your Academy Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Tagline</label>
+                        <input type="text" id="tagline" placeholder="Your slogan or description">
+                    </div>
+                    <div class="form-group">
+                        <label>Logo Emoji (or leave empty for custom logo)</label>
+                        <div class="emoji-picker" id="emojiPicker"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Custom Logo URL (optional - replaces emoji)</label>
+                        <input type="url" id="logoUrl" placeholder="https://yoursite.com/logo.png">
+                    </div>
+                    <div class="form-group">
+                        <label>Favicon URL (optional)</label>
+                        <input type="url" id="faviconUrl" placeholder="https://yoursite.com/favicon.ico">
+                    </div>
+                </div>
+
+                <!-- Colors -->
+                <div class="card">
+                    <h2>🎨 Colors</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Primary Color</label>
+                            <div class="color-input-wrapper">
+                                <input type="color" id="primaryColorPicker" value="#ffd700">
+                                <input type="text" id="primaryColor" placeholder="#ffd700">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Secondary Color</label>
+                            <div class="color-input-wrapper">
+                                <input type="color" id="secondaryColorPicker" value="#1a1a2e">
+                                <input type="text" id="secondaryColor" placeholder="#1a1a2e">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Accent Color</label>
+                            <div class="color-input-wrapper">
+                                <input type="color" id="accentColorPicker" value="#6366f1">
+                                <input type="text" id="accentColor" placeholder="#6366f1">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Background Color</label>
+                            <div class="color-input-wrapper">
+                                <input type="color" id="backgroundColorPicker" value="#1a1a2e">
+                                <input type="text" id="backgroundColor" placeholder="#1a1a2e">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Card Color</label>
+                            <div class="color-input-wrapper">
+                                <input type="color" id="cardColorPicker" value="#2a2a3e">
+                                <input type="text" id="cardColor" placeholder="#2a2a3e">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Text Color</label>
+                            <div class="color-input-wrapper">
+                                <input type="color" id="textColorPicker" value="#ffffff">
+                                <input type="text" id="textColor" placeholder="#ffffff">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer & Support -->
+                <div class="card">
+                    <h2>📝 Footer & Support</h2>
+                    <div class="form-group">
+                        <label>Footer Text</label>
+                        <input type="text" id="footerText" placeholder="© 2024 Your Academy">
+                    </div>
+                    <div class="form-group">
+                        <label>Support Email (optional)</label>
+                        <input type="email" id="supportEmail" placeholder="support@youracademy.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Support URL (optional)</label>
+                        <input type="url" id="supportUrl" placeholder="https://youracademy.com/help">
+                    </div>
+                    <div class="form-group">
+                        <label>Show "Powered by Akashic Academy"</label>
+                        <div class="toggle-wrapper">
+                            <label class="toggle">
+                                <input type="checkbox" id="showPoweredBy" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span id="poweredByLabel">Visible</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom CSS -->
+                <div class="card">
+                    <h2>💻 Custom CSS (Advanced)</h2>
+                    <div class="form-group">
+                        <label>Additional CSS Styles</label>
+                        <textarea id="customCss" placeholder="/* Your custom CSS here */"></textarea>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="card">
+                    <button class="btn-primary" onclick="saveBranding()">💾 Save Changes</button>
+                    <button class="btn-secondary" onclick="loadBranding()">🔄 Reload</button>
+                    <button class="btn-danger" onclick="resetBranding()">🗑️ Reset to Defaults</button>
+                </div>
+            </div>
+
+            <!-- Preview Column -->
+            <div>
+                <div class="card">
+                    <h2>👁️ Live Preview</h2>
+                    <div class="preview-container" id="previewContainer">
+                        <div class="preview-header">
+                            <div class="preview-logo" id="previewLogo">🎓</div>
+                            <div class="preview-name" id="previewName">Akashic Academy</div>
+                            <div class="preview-tagline" id="previewTagline">Cognitive Training Games</div>
+                        </div>
+                        <div class="preview-card">
+                            <h3 style="margin-bottom:10px;">Welcome, Student!</h3>
+                            <p style="color:#888; font-size:14px; margin-bottom:15px;">Ready to train your brain?</p>
+                            <span class="preview-btn" id="previewBtn">Play Games</span>
+                        </div>
+                        <div class="preview-card">
+                            <p>This is how your <span class="preview-accent" id="previewAccent">links and accents</span> will appear.</p>
+                        </div>
+                        <div class="preview-footer" id="previewFooter">
+                            © 2024 Akashic Academy
+                        </div>
+                        <div class="preview-footer" id="previewPoweredBy">
+                            Powered by Akashic Academy
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h2>📋 Student Portal URL</h2>
+                    <p style="color:#888; font-size:14px; margin-bottom:15px;">Share this URL with your students:</p>
+                    <input type="text" id="portalUrl" readonly style="background:#1a1a2e; cursor:pointer;" onclick="copyPortalUrl()">
+                    <button class="btn-secondary" onclick="copyPortalUrl()" style="margin-top:10px;">📋 Copy URL</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    const API = 'https://akashic-academy-backend.onrender.com';
+    let licenseKey = '';
+    let branding = {};
+    
+    const logoEmojis = ['🎓', '🏫', '📚', '🧠', '🎮', '🌟', '🚀', '💡', '🔬', '🎯', '🏆', '⭐', '🌈', '🦋', '🌻', '🎪', '🎨', '🎭'];
+    
+    // Initialize emoji picker
+    function initEmojiPicker() {
+        const picker = document.getElementById('emojiPicker');
+        picker.innerHTML = logoEmojis.map(emoji => `
+            <div class="emoji-option" onclick="selectEmoji('${emoji}')">${emoji}</div>
+        `).join('');
+    }
+    
+    function selectEmoji(emoji) {
+        document.querySelectorAll('.emoji-option').forEach(opt => opt.classList.remove('selected'));
+        event.target.classList.add('selected');
+        document.getElementById('previewLogo').textContent = emoji;
+        branding.logoEmoji = emoji;
+    }
+    
+    // Color picker sync
+    function setupColorPickers() {
+        const colors = ['primary', 'secondary', 'accent', 'background', 'card', 'text'];
+        
+        colors.forEach(color => {
+            const picker = document.getElementById(`${color}ColorPicker`);
+            const text = document.getElementById(`${color}Color`);
+            
+            picker.addEventListener('input', () => {
+                text.value = picker.value;
+                updatePreview();
+            });
+            
+            text.addEventListener('input', () => {
+                if (/^#[0-9A-Fa-f]{6}$/.test(text.value)) {
+                    picker.value = text.value;
+                    updatePreview();
+                }
+            });
+        });
+    }
+    
+    // Update live preview
+    function updatePreview() {
+        const preview = document.getElementById('previewContainer');
+        const primary = document.getElementById('primaryColor').value || '#ffd700';
+        const secondary = document.getElementById('secondaryColor').value || '#1a1a2e';
+        const accent = document.getElementById('accentColor').value || '#6366f1';
+        const bg = document.getElementById('backgroundColor').value || '#1a1a2e';
+        const card = document.getElementById('cardColor').value || '#2a2a3e';
+        const text = document.getElementById('textColor').value || '#ffffff';
+        
+        preview.style.setProperty('--preview-primary', primary);
+        preview.style.setProperty('--preview-bg', bg);
+        preview.style.setProperty('--preview-card', card);
+        preview.style.setProperty('--preview-accent', accent);
+        preview.style.color = text;
+        
+        document.getElementById('previewName').style.color = primary;
+        document.getElementById('previewBtn').style.background = primary;
+        document.getElementById('previewAccent').style.color = accent;
+        
+        // Update text fields
+        document.getElementById('previewName').textContent = document.getElementById('platformName').value || 'Akashic Academy';
+        document.getElementById('previewTagline').textContent = document.getElementById('tagline').value || 'Cognitive Training Games';
+        document.getElementById('previewFooter').textContent = document.getElementById('footerText').value || '© 2024 Akashic Academy';
+        
+        // Logo
+        const logoUrl = document.getElementById('logoUrl').value;
+        const logoEmoji = branding.logoEmoji || '🎓';
+        if (logoUrl) {
+            document.getElementById('previewLogo').innerHTML = `<img src="${logoUrl}" alt="Logo">`;
+        } else {
+            document.getElementById('previewLogo').textContent = logoEmoji;
+        }
+        
+        // Powered by
+        const showPoweredBy = document.getElementById('showPoweredBy').checked;
+        document.getElementById('previewPoweredBy').style.display = showPoweredBy ? 'block' : 'none';
+        document.getElementById('poweredByLabel').textContent = showPoweredBy ? 'Visible' : 'Hidden';
+    }
+    
+    // Login
+    async function login() {
+        licenseKey = document.getElementById('licenseKey').value.trim();
+        const errorDiv = document.getElementById('loginError');
+        
+        if (!licenseKey) {
+            errorDiv.textContent = 'Please enter a license key';
+            errorDiv.classList.remove('hidden');
+            return;
+        }
+        
+        try {
+            const r = await fetch(`${API}/api/licenses/${licenseKey}/branding`);
+            if (!r.ok) {
+                errorDiv.textContent = 'Invalid license key';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+            
+            branding = await r.json();
+            
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('editorScreen').classList.remove('hidden');
+            document.getElementById('displayLicenseKey').textContent = licenseKey;
+            document.getElementById('portalUrl').value = `${window.location.origin}/student-setup.html?license=${licenseKey}`;
+            
+            initEmojiPicker();
+            setupColorPickers();
+            populateForm();
+            updatePreview();
+            
+        } catch (e) {
+            errorDiv.textContent = 'Connection error. Please try again.';
+            errorDiv.classList.remove('hidden');
+        }
+    }
+    
+    // Populate form with current branding
+    function populateForm() {
+        document.getElementById('platformName').value = branding.platformName || '';
+        document.getElementById('tagline').value = branding.tagline || '';
+        document.getElementById('logoUrl').value = branding.logoUrl || '';
+        document.getElementById('faviconUrl').value = branding.faviconUrl || '';
+        document.getElementById('footerText').value = branding.footerText || '';
+        document.getElementById('supportEmail').value = branding.supportEmail || '';
+        document.getElementById('supportUrl').value = branding.supportUrl || '';
+        document.getElementById('showPoweredBy').checked = branding.showPoweredBy !== false;
+        document.getElementById('customCss').value = branding.customCss || '';
+        
+        // Colors
+        const colors = {
+            primary: branding.primaryColor || '#ffd700',
+            secondary: branding.secondaryColor || '#1a1a2e',
+            accent: branding.accentColor || '#6366f1',
+            background: branding.backgroundColor || '#1a1a2e',
+            card: branding.cardColor || '#2a2a3e',
+            text: branding.textColor || '#ffffff'
+        };
+        
+        Object.entries(colors).forEach(([name, value]) => {
+            document.getElementById(`${name}Color`).value = value;
+            document.getElementById(`${name}ColorPicker`).value = value;
+        });
+        
+        // Select emoji
+        const emoji = branding.logoEmoji || '🎓';
+        document.querySelectorAll('.emoji-option').forEach(opt => {
+            opt.classList.toggle('selected', opt.textContent === emoji);
+        });
+    }
+    
+    // Save branding
+    async function saveBranding() {
+        const data = {
+            platformName: document.getElementById('platformName').value,
+            tagline: document.getElementById('tagline').value,
+            logoEmoji: branding.logoEmoji || '🎓',
+            logoUrl: document.getElementById('logoUrl').value || null,
+            faviconUrl: document.getElementById('faviconUrl').value || null,
+            primaryColor: document.getElementById('primaryColor').value,
+            secondaryColor: document.getElementById('secondaryColor').value,
+            accentColor: document.getElementById('accentColor').value,
+            backgroundColor: document.getElementById('backgroundColor').value,
+            cardColor: document.getElementById('cardColor').value,
+            textColor: document.getElementById('textColor').value,
+            footerText: document.getElementById('footerText').value,
+            showPoweredBy: document.getElementById('showPoweredBy').checked,
+            supportEmail: document.getElementById('supportEmail').value || '',
+            supportUrl: document.getElementById('supportUrl').value || '',
+            customCss: document.getElementById('customCss').value || ''
+        };
+        
+        try {
+            const r = await fetch(`${API}/api/licenses/${licenseKey}/branding`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            
+            if (r.ok) {
+                const result = await r.json();
+                branding = result.branding;
+                showMessage('Branding saved successfully!', 'success');
+            } else {
+                showMessage('Failed to save branding', 'error');
+            }
+        } catch (e) {
+            showMessage('Connection error', 'error');
+        }
+    }
+    
+    // Load branding
+    async function loadBranding() {
+        try {
+            const r = await fetch(`${API}/api/licenses/${licenseKey}/branding`);
+            if (r.ok) {
+                branding = await r.json();
+                populateForm();
+                updatePreview();
+                showMessage('Branding reloaded', 'success');
+            }
+        } catch (e) {
+            showMessage('Failed to reload branding', 'error');
+        }
+    }
+    
+    // Reset to defaults
+    async function resetBranding() {
+        if (!confirm('Are you sure you want to reset all branding to defaults? This cannot be undone.')) {
+            return;
+        }
+        
+        try {
+            const r = await fetch(`${API}/api/licenses/${licenseKey}/branding`, {
+                method: 'DELETE'
+            });
+            
+            if (r.ok) {
+                const result = await r.json();
+                branding = result.branding;
+                populateForm();
+                updatePreview();
+                showMessage('Branding reset to defaults', 'success');
+            }
+        } catch (e) {
+            showMessage('Failed to reset branding', 'error');
+        }
+    }
+    
+    // Show message
+    function showMessage(text, type) {
+        const msg = document.getElementById('message');
+        msg.textContent = text;
+        msg.className = `message ${type}`;
+        msg.classList.remove('hidden');
+        setTimeout(() => msg.classList.add('hidden'), 3000);
+    }
+    
+    // Copy portal URL
+    function copyPortalUrl() {
+        const url = document.getElementById('portalUrl');
+        url.select();
+        document.execCommand('copy');
+        showMessage('URL copied to clipboard!', 'success');
+    }
+    
+    // Add input listeners for live preview
+    document.addEventListener('DOMContentLoaded', () => {
+        const inputs = ['platformName', 'tagline', 'logoUrl', 'footerText', 'showPoweredBy'];
+        inputs.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('input', updatePreview);
+                el.addEventListener('change', updatePreview);
+            }
+        });
+    });
+    
+    // Enter key to login
+    document.getElementById('licenseKey').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') login();
+    });
+    </script>
+</body>
+</html>
