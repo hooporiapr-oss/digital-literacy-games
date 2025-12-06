@@ -384,6 +384,311 @@
             position: relative;
         }
         
+        /* Streak Display */
+        .streak-banner {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .streak-banner .flame {
+            font-size: 2.5rem;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .streak-info .streak-count {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .streak-info .streak-label {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        .streak-stats {
+            margin-left: auto;
+            text-align: right;
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        
+        /* Avatar & Settings */
+        .user-bar {
+            background: rgba(255,215,0,0.1);
+            border: 1px solid rgba(255,215,0,0.3);
+            border-radius: 10px;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .avatar-display {
+            width: 50px;
+            height: 50px;
+            background: #1a1a2e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            cursor: pointer;
+            border: 2px solid #ffd700;
+            transition: transform 0.2s;
+        }
+        .avatar-display:hover { transform: scale(1.1); }
+        .user-bar .welcome { color: #ffd700; font-weight: bold; }
+        .user-bar .grade { color: #aaa; font-size: 14px; }
+        .user-bar .user-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .settings-btn {
+            background: #333;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .settings-btn:hover { background: #444; }
+        
+        /* Avatar Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.show { display: flex; }
+        .modal-content {
+            background: #2a2a3e;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .modal-header h2 { color: #ffd700; margin: 0; }
+        .modal-close {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: auto;
+            padding: 0;
+        }
+        .avatar-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+        }
+        .avatar-option {
+            width: 100%;
+            aspect-ratio: 1;
+            background: #1a1a2e;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .avatar-option:hover { border-color: #666; transform: scale(1.05); }
+        .avatar-option.selected { border-color: #ffd700; background: rgba(255,215,0,0.2); }
+        
+        /* Settings Modal */
+        .settings-group {
+            margin-bottom: 20px;
+        }
+        .settings-group label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            color: #fff;
+        }
+        .settings-group .toggle {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+        .settings-group .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .settings-group .toggle .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #444;
+            border-radius: 26px;
+            transition: 0.3s;
+        }
+        .settings-group .toggle .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        .settings-group .toggle input:checked + .slider { background: #10b981; }
+        .settings-group .toggle input:checked + .slider:before { transform: translateX(24px); }
+        .volume-slider {
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        /* Achievements Section */
+        .achievements-section {
+            background: rgba(42, 42, 62, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .achievements-section h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .achievements-section .progress-text {
+            font-size: 14px;
+            color: #aaa;
+            font-weight: normal;
+        }
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+        }
+        .achievement-item {
+            background: #1a1a2e;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            opacity: 0.4;
+            transition: all 0.3s;
+        }
+        .achievement-item.earned {
+            opacity: 1;
+            border: 1px solid #ffd700;
+        }
+        .achievement-item .icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+        .achievement-item .name {
+            font-size: 12px;
+            font-weight: bold;
+            color: #fff;
+        }
+        .achievement-item .desc {
+            font-size: 10px;
+            color: #888;
+            margin-top: 4px;
+        }
+        
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .stat-item {
+            background: rgba(42, 42, 62, 0.9);
+            border-radius: 10px;
+            padding: 15px 20px;
+            text-align: center;
+            flex: 1;
+            min-width: 100px;
+        }
+        .stat-item .value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        .stat-item .label {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+        }
+        
+        /* Game Mode Toggle */
+        .mode-toggle {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        .mode-btn {
+            padding: 12px 25px;
+            background: #333;
+            border: 2px solid #444;
+            border-radius: 25px;
+            color: #888;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            width: auto;
+        }
+        .mode-btn:hover { border-color: #666; color: #fff; }
+        .mode-btn.active {
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            border-color: #ffd700;
+            color: #000;
+        }
+        .mode-btn.practice.active {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            border-color: #6366f1;
+            color: #fff;
+        }
+        .mode-indicator {
+            text-align: center;
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 15px;
+        }
+        .mode-indicator.practice { color: #6366f1; }
+        .mode-indicator.scored { color: #ffd700; }
+        
         .forgot-link {
             text-align: center;
             margin-top: 15px;
@@ -549,15 +854,63 @@
         </div>
         
         <div class="user-bar">
-            <div>
-                <div class="welcome" data-i18n="welcomeStudent">Welcome, <span id="studentName">Student</span>!</div>
-                <div class="grade"><span data-i18n="grade">Grade</span>: <span id="studentGrade">-</span></div>
+            <div class="user-info">
+                <div class="avatar-display" id="avatarDisplay" onclick="openAvatarModal()" title="Change Avatar">😊</div>
+                <div>
+                    <div class="welcome"><span data-i18n="welcomeStudent">Welcome,</span> <span id="studentName">Student</span>!</div>
+                    <div class="grade"><span data-i18n="grade">Grade</span>: <span id="studentGrade">-</span></div>
+                </div>
             </div>
-            <button class="btn-secondary" onclick="logout()" data-i18n="logout">Logout</button>
+            <div class="user-actions">
+                <button class="settings-btn" onclick="openSettingsModal()" title="Settings">⚙️</button>
+                <button class="btn-secondary" onclick="logout()" data-i18n="logout">Logout</button>
+            </div>
+        </div>
+        
+        <!-- Streak Banner -->
+        <div id="streakBanner" class="streak-banner hidden">
+            <div class="flame">🔥</div>
+            <div class="streak-info">
+                <div class="streak-count"><span id="streakCount">0</span> <span data-i18n="dayStreak">day streak!</span></div>
+                <div class="streak-label" data-i18n="keepItUp">Keep it up!</div>
+            </div>
+            <div class="streak-stats">
+                <div><span data-i18n="longest">Longest</span>: <span id="longestStreak">0</span> <span data-i18n="days">days</span></div>
+                <div><span data-i18n="totalDays">Total</span>: <span id="totalDays">0</span> <span data-i18n="days">days</span></div>
+            </div>
+        </div>
+        
+        <!-- Stats Bar -->
+        <div class="stats-bar" id="statsBar">
+            <div class="stat-item">
+                <div class="value" id="statGames">0</div>
+                <div class="label" data-i18n="gamesPlayed">Games Played</div>
+            </div>
+            <div class="stat-item">
+                <div class="value" id="statMinutes">0</div>
+                <div class="label" data-i18n="minutesPlayed">Minutes Played</div>
+            </div>
+            <div class="stat-item">
+                <div class="value" id="statScore">0%</div>
+                <div class="label" data-i18n="avgScore">Avg Score</div>
+            </div>
+            <div class="stat-item">
+                <div class="value" id="statBadges">0</div>
+                <div class="label" data-i18n="badges">Badges</div>
+            </div>
         </div>
         
         <!-- Announcements Banner -->
         <div id="announcementsBanner" class="announcements-banner hidden"></div>
+        
+        <!-- Achievements Section -->
+        <div id="achievementsSection" class="achievements-section">
+            <h3>
+                🏆 <span data-i18n="achievements">Achievements</span>
+                <span class="progress-text"><span id="achievementsEarned">0</span>/<span id="achievementsTotal">0</span></span>
+            </h3>
+            <div class="achievements-grid" id="achievementsGrid"></div>
+        </div>
         
         <!-- Goals Progress -->
         <div id="goalsSection" class="goals-section hidden">
@@ -571,6 +924,19 @@
             <div id="assignmentsList"></div>
         </div>
         
+        <!-- Game Mode Toggle -->
+        <div class="mode-toggle">
+            <button class="mode-btn active" id="scoredModeBtn" onclick="setGameMode('scored')">
+                🏆 <span data-i18n="scoredMode">Scored Mode</span>
+            </button>
+            <button class="mode-btn practice" id="practiceModeBtn" onclick="setGameMode('practice')">
+                🎯 <span data-i18n="practiceMode">Practice Mode</span>
+            </button>
+        </div>
+        <div class="mode-indicator scored" id="modeIndicator" data-i18n="scoredModeDesc">
+            Your scores will be tracked and count toward achievements
+        </div>
+        
         <div class="filter-bar">
             <button class="filter-btn active" onclick="filterGames('all')" data-i18n="allGames">All Games</button>
             <button class="filter-btn" onclick="filterGames('K-2')">K-2</button>
@@ -581,12 +947,58 @@
         
         <div class="games-grid" id="gamesGrid"></div>
     </div>
+    
+    <!-- Avatar Modal -->
+    <div id="avatarModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🎭 <span data-i18n="chooseAvatar">Choose Your Avatar</span></h2>
+                <button class="modal-close" onclick="closeAvatarModal()">×</button>
+            </div>
+            <div class="avatar-grid" id="avatarGrid"></div>
+        </div>
+    </div>
+    
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>⚙️ <span data-i18n="settings">Settings</span></h2>
+                <button class="modal-close" onclick="closeSettingsModal()">×</button>
+            </div>
+            <div class="settings-group">
+                <label>
+                    <span>🔊 <span data-i18n="soundEffects">Sound Effects</span></span>
+                    <div class="toggle">
+                        <input type="checkbox" id="soundToggle" checked onchange="updateSettings()">
+                        <span class="slider"></span>
+                    </div>
+                </label>
+                <input type="range" class="volume-slider" id="soundVolume" min="0" max="100" value="80" onchange="updateSettings()">
+            </div>
+            <div class="settings-group">
+                <label>
+                    <span>🎵 <span data-i18n="backgroundMusic">Background Music</span></span>
+                    <div class="toggle">
+                        <input type="checkbox" id="musicToggle" onchange="updateSettings()">
+                        <span class="slider"></span>
+                    </div>
+                </label>
+                <input type="range" class="volume-slider" id="musicVolume" min="0" max="100" value="50" onchange="updateSettings()">
+            </div>
+            <button onclick="closeSettingsModal()" data-i18n="done">Done</button>
+        </div>
+    </div>
 
     <script>
     const API = 'https://akashic-academy-backend.onrender.com';
     let currentLang = 'en';
     let classCodeData = null;
     let studentData = null;
+    let lockedGames = [];
+    let currentGameMode = 'scored'; // 'scored' or 'practice'
+    let studentSettings = { soundEnabled: true, musicEnabled: false, soundVolume: 80, musicVolume: 50 };
+    let avatars = [];
 
     // Games data
     const games = [
@@ -687,7 +1099,27 @@
             assignedGames: 'Assigned Games',
             dueIn: 'Due:',
             completed: 'Completed!',
-            gameLocked: 'Locked'
+            gameLocked: 'Locked',
+            // New features
+            dayStreak: 'day streak!',
+            keepItUp: 'Keep it up!',
+            longest: 'Longest',
+            totalDays: 'Total',
+            days: 'days',
+            gamesPlayed: 'Games Played',
+            minutesPlayed: 'Minutes Played',
+            avgScore: 'Avg Score',
+            badges: 'Badges',
+            achievements: 'Achievements',
+            chooseAvatar: 'Choose Your Avatar',
+            settings: 'Settings',
+            soundEffects: 'Sound Effects',
+            backgroundMusic: 'Background Music',
+            done: 'Done',
+            scoredMode: 'Scored Mode',
+            practiceMode: 'Practice Mode',
+            scoredModeDesc: 'Your scores will be tracked and count toward achievements',
+            practiceModeDesc: 'Practice without affecting your stats'
         },
         es: {
             studentPortal: 'Portal del Estudiante',
@@ -730,7 +1162,27 @@
             assignedGames: 'Juegos Asignados',
             dueIn: 'Fecha:',
             completed: '¡Completado!',
-            gameLocked: 'Bloqueado'
+            gameLocked: 'Bloqueado',
+            // New features
+            dayStreak: '¡días de racha!',
+            keepItUp: '¡Sigue así!',
+            longest: 'Más larga',
+            totalDays: 'Total',
+            days: 'días',
+            gamesPlayed: 'Juegos Jugados',
+            minutesPlayed: 'Minutos Jugados',
+            avgScore: 'Puntaje Prom.',
+            badges: 'Insignias',
+            achievements: 'Logros',
+            chooseAvatar: 'Elige tu Avatar',
+            settings: 'Configuración',
+            soundEffects: 'Efectos de Sonido',
+            backgroundMusic: 'Música de Fondo',
+            done: 'Listo',
+            scoredMode: 'Modo Puntuado',
+            practiceMode: 'Modo Práctica',
+            scoredModeDesc: 'Tus puntajes se registrarán y contarán para logros',
+            practiceModeDesc: 'Practica sin afectar tus estadísticas'
         }
     };
 
@@ -906,8 +1358,6 @@
         btn.disabled = false;
     }
 
-    let lockedGames = []; // Games locked by teacher
-
     function showGamesPortal() {
         document.getElementById('step1Screen').classList.add('hidden');
         document.getElementById('step2Screen').classList.add('hidden');
@@ -917,13 +1367,215 @@
         document.getElementById('studentName').textContent = studentData.firstName;
         document.getElementById('studentGrade').textContent = studentData.gradeLevel;
         
-        // Load student-specific data
+        // Load all student data
+        loadAvatars();
+        loadStudentStats();
+        loadStreak();
+        loadAchievements();
+        loadSettings();
         loadAnnouncements();
         loadGoals();
         loadAssignments();
         loadGameLocks();
         
         renderGames();
+    }
+
+    // --- AVATARS ---
+    async function loadAvatars() {
+        try {
+            const r = await fetch(`${API}/api/avatars`);
+            avatars = await r.json();
+        } catch (e) {
+            avatars = [{ id: 'default', icon: '😊' }];
+        }
+        
+        // Set current avatar
+        const currentAvatar = studentData.avatar || 'default';
+        const avatar = avatars.find(a => a.id === currentAvatar) || avatars[0];
+        document.getElementById('avatarDisplay').textContent = avatar.icon;
+    }
+
+    function openAvatarModal() {
+        const grid = document.getElementById('avatarGrid');
+        const currentAvatar = studentData.avatar || 'default';
+        
+        grid.innerHTML = avatars.map(a => `
+            <div class="avatar-option ${a.id === currentAvatar ? 'selected' : ''}" 
+                 onclick="selectAvatar('${a.id}')">
+                ${a.icon}
+            </div>
+        `).join('');
+        
+        document.getElementById('avatarModal').classList.add('show');
+    }
+
+    function closeAvatarModal() {
+        document.getElementById('avatarModal').classList.remove('show');
+    }
+
+    async function selectAvatar(avatarId) {
+        try {
+            const r = await fetch(`${API}/api/students/${studentData.id}/avatar`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ avatarId })
+            });
+            
+            if (r.ok) {
+                const data = await r.json();
+                studentData.avatar = avatarId;
+                document.getElementById('avatarDisplay').textContent = data.icon;
+                localStorage.setItem('studentData', JSON.stringify(studentData));
+                
+                // Update selection UI
+                document.querySelectorAll('.avatar-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                    if (opt.textContent.trim() === data.icon) {
+                        opt.classList.add('selected');
+                    }
+                });
+            }
+        } catch (e) {
+            console.error('Failed to update avatar:', e);
+        }
+        
+        closeAvatarModal();
+    }
+
+    // --- SETTINGS ---
+    async function loadSettings() {
+        try {
+            const r = await fetch(`${API}/api/students/${studentData.id}/settings`);
+            studentSettings = await r.json();
+            
+            document.getElementById('soundToggle').checked = studentSettings.soundEnabled;
+            document.getElementById('musicToggle').checked = studentSettings.musicEnabled;
+            document.getElementById('soundVolume').value = studentSettings.soundVolume;
+            document.getElementById('musicVolume').value = studentSettings.musicVolume;
+        } catch (e) {
+            // Use defaults
+        }
+    }
+
+    function openSettingsModal() {
+        document.getElementById('settingsModal').classList.add('show');
+    }
+
+    function closeSettingsModal() {
+        document.getElementById('settingsModal').classList.remove('show');
+    }
+
+    async function updateSettings() {
+        studentSettings = {
+            soundEnabled: document.getElementById('soundToggle').checked,
+            musicEnabled: document.getElementById('musicToggle').checked,
+            soundVolume: parseInt(document.getElementById('soundVolume').value),
+            musicVolume: parseInt(document.getElementById('musicVolume').value)
+        };
+        
+        try {
+            await fetch(`${API}/api/students/${studentData.id}/settings`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(studentSettings)
+            });
+        } catch (e) {
+            console.error('Failed to save settings:', e);
+        }
+        
+        // Store locally for games to use
+        localStorage.setItem('gameSettings', JSON.stringify(studentSettings));
+    }
+
+    // --- STATS ---
+    async function loadStudentStats() {
+        try {
+            const r = await fetch(`${API}/api/students/${studentData.id}/stats`);
+            const stats = await r.json();
+            
+            document.getElementById('statGames').textContent = stats.gamesCompleted;
+            document.getElementById('statMinutes').textContent = stats.totalMinutes;
+            document.getElementById('statScore').textContent = stats.averageScore + '%';
+            document.getElementById('statBadges').textContent = stats.achievementsEarned;
+            
+            // Update avatar if returned
+            if (stats.avatarIcon) {
+                document.getElementById('avatarDisplay').textContent = stats.avatarIcon;
+            }
+        } catch (e) {
+            // Defaults shown
+        }
+    }
+
+    // --- STREAK ---
+    async function loadStreak() {
+        const banner = document.getElementById('streakBanner');
+        
+        try {
+            // First update streak (records today's login)
+            await fetch(`${API}/api/students/${studentData.id}/streak`, { method: 'POST' });
+            
+            // Then get streak data
+            const r = await fetch(`${API}/api/students/${studentData.id}/streak`);
+            const streak = await r.json();
+            
+            if (streak.currentStreak > 0) {
+                document.getElementById('streakCount').textContent = streak.currentStreak;
+                document.getElementById('longestStreak').textContent = streak.longestStreak;
+                document.getElementById('totalDays').textContent = streak.totalDays;
+                banner.classList.remove('hidden');
+            } else {
+                banner.classList.add('hidden');
+            }
+        } catch (e) {
+            banner.classList.add('hidden');
+        }
+    }
+
+    // --- ACHIEVEMENTS ---
+    async function loadAchievements() {
+        const section = document.getElementById('achievementsSection');
+        const grid = document.getElementById('achievementsGrid');
+        
+        try {
+            // Check for new achievements first
+            await fetch(`${API}/api/students/${studentData.id}/check-achievements`, { method: 'POST' });
+            
+            // Get all achievements
+            const r = await fetch(`${API}/api/students/${studentData.id}/achievements`);
+            const data = await r.json();
+            
+            document.getElementById('achievementsEarned').textContent = data.earned;
+            document.getElementById('achievementsTotal').textContent = data.total;
+            
+            grid.innerHTML = data.achievements.map(a => `
+                <div class="achievement-item ${a.earned ? 'earned' : ''}" title="${a.desc[currentLang]}">
+                    <div class="icon">${a.icon}</div>
+                    <div class="name">${a.name[currentLang]}</div>
+                    <div class="desc">${a.desc[currentLang]}</div>
+                </div>
+            `).join('');
+            
+            section.classList.remove('hidden');
+        } catch (e) {
+            section.classList.add('hidden');
+        }
+    }
+
+    // --- GAME MODE ---
+    function setGameMode(mode) {
+        currentGameMode = mode;
+        
+        document.getElementById('scoredModeBtn').classList.toggle('active', mode === 'scored');
+        document.getElementById('practiceModeBtn').classList.toggle('active', mode === 'practice');
+        
+        const indicator = document.getElementById('modeIndicator');
+        indicator.className = `mode-indicator ${mode}`;
+        indicator.textContent = t(mode === 'scored' ? 'scoredModeDesc' : 'practiceModeDesc');
+        
+        // Store mode for games
+        localStorage.setItem('gameMode', mode);
     }
 
     async function loadAnnouncements() {
@@ -1084,11 +1736,37 @@
         renderGames(grade);
     }
 
-    function playGame(gameId) {
+    async function playGame(gameId) {
         // Check if game is locked
         if (lockedGames.includes(gameId)) {
             alert(t('gameLocked'));
             return;
+        }
+        
+        // Start a game session
+        try {
+            const r = await fetch(`${API}/api/game-sessions/start`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    studentId: studentData.id,
+                    gameId,
+                    mode: currentGameMode
+                })
+            });
+            
+            if (r.ok) {
+                const session = await r.json();
+                // Store session info for game to use
+                localStorage.setItem('currentSession', JSON.stringify({
+                    sessionId: session.sessionId,
+                    mode: session.mode,
+                    gameId,
+                    studentId: studentData.id
+                }));
+            }
+        } catch (e) {
+            console.error('Failed to start session:', e);
         }
         
         const lang = currentLang === 'es' ? 'es' : 'en';
