@@ -179,6 +179,117 @@
         .badge.used { background: #6366f1; color: #fff; }
         .badge.expired { background: #ef4444; color: #fff; }
         
+        /* Activity Section Styles */
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .activity-stat {
+            background: #1a1a2e;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .activity-stat .icon { font-size: 1.5rem; margin-bottom: 5px; }
+        .activity-stat .value { font-size: 1.8rem; font-weight: bold; color: #ffd700; }
+        .activity-stat .label { color: #888; font-size: 11px; margin-top: 5px; text-transform: uppercase; }
+        
+        .online-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .online-student {
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .online-student .pulse {
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .activity-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .activity-table th, .activity-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+        .activity-table th { color: #ffd700; font-size: 11px; text-transform: uppercase; }
+        .activity-table tr:hover { background: rgba(255,215,0,0.05); }
+        
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px;
+            background: #1a1a2e;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .leaderboard-item .rank {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .leaderboard-item .rank.gold { background: #ffd700; color: #000; }
+        .leaderboard-item .rank.silver { background: #c0c0c0; color: #000; }
+        .leaderboard-item .rank.bronze { background: #cd7f32; color: #000; }
+        .leaderboard-item .info { flex: 1; }
+        .leaderboard-item .info .name { font-weight: bold; }
+        .leaderboard-item .info .stats { font-size: 12px; color: #888; }
+        .leaderboard-item .score { font-size: 1.2rem; color: #ffd700; font-weight: bold; }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab {
+            padding: 10px 20px;
+            background: #333;
+            border: none;
+            border-radius: 8px;
+            color: #aaa;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .tab:hover { background: #444; color: #fff; }
+        .tab.active { background: #ffd700; color: #000; }
+        
+        .auto-refresh {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #888;
+        }
+        .auto-refresh input[type="checkbox"] { width: auto; }
+        
         /* Generate Code Form */
         .generate-form {
             display: flex;
@@ -398,6 +509,101 @@
             </div>
         </div>
 
+        <!-- Live Activity Card -->
+        <div class="card">
+            <div class="flex-between">
+                <h2>📊 <span data-i18n="liveActivity">Live Student Activity</span></h2>
+                <div class="auto-refresh">
+                    <label>
+                        <input type="checkbox" id="autoRefresh" checked onchange="toggleAutoRefresh()">
+                        <span data-i18n="autoRefresh">Auto-refresh</span>
+                    </label>
+                    <button class="btn-secondary" onclick="loadActivity()" style="padding:8px 15px; font-size:13px;">🔄</button>
+                </div>
+            </div>
+            
+            <!-- Activity Stats -->
+            <div class="activity-grid">
+                <div class="activity-stat">
+                    <div class="icon">🟢</div>
+                    <div class="value" id="onlineCount">0</div>
+                    <div class="label" data-i18n="online">Online Now</div>
+                </div>
+                <div class="activity-stat">
+                    <div class="icon">👥</div>
+                    <div class="value" id="activeToday">0</div>
+                    <div class="label" data-i18n="activeToday">Active Today</div>
+                </div>
+                <div class="activity-stat">
+                    <div class="icon">🎮</div>
+                    <div class="value" id="gamesPlayed">0</div>
+                    <div class="label" data-i18n="gamesPlayed">Games Today</div>
+                </div>
+                <div class="activity-stat">
+                    <div class="icon">✅</div>
+                    <div class="value" id="gamesCompleted">0</div>
+                    <div class="label" data-i18n="completed">Completed</div>
+                </div>
+                <div class="activity-stat">
+                    <div class="icon">⏱️</div>
+                    <div class="value" id="totalTime">0</div>
+                    <div class="label" data-i18n="minutesToday">Minutes Today</div>
+                </div>
+                <div class="activity-stat">
+                    <div class="icon">⭐</div>
+                    <div class="value" id="avgScore">0</div>
+                    <div class="label" data-i18n="avgScore">Avg Score</div>
+                </div>
+            </div>
+            
+            <!-- Online Students -->
+            <div id="onlineSection">
+                <h3 style="color:#10b981; margin-bottom:10px;">🟢 <span data-i18n="studentsOnline">Students Online</span></h3>
+                <div class="online-list" id="onlineList">
+                    <span style="color:#666;" data-i18n="noOnline">No students online</span>
+                </div>
+            </div>
+            
+            <!-- Tabs for different views -->
+            <div class="tabs" style="margin-top:25px;">
+                <button class="tab active" onclick="showActivityTab('recent')" data-i18n="recentActivity">Recent Activity</button>
+                <button class="tab" onclick="showActivityTab('leaderboard')" data-i18n="leaderboard">Leaderboard</button>
+                <button class="tab" onclick="showActivityTab('games')" data-i18n="popularGames">Popular Games</button>
+            </div>
+            
+            <!-- Recent Activity Tab -->
+            <div id="tabRecent">
+                <table class="activity-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="student">Student</th>
+                            <th data-i18n="game">Game</th>
+                            <th data-i18n="score">Score</th>
+                            <th data-i18n="duration">Duration</th>
+                            <th data-i18n="time">Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="activityList">
+                        <tr><td colspan="5" style="text-align:center; color:#666;" data-i18n="noActivity">No activity yet</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Leaderboard Tab -->
+            <div id="tabLeaderboard" class="hidden">
+                <div id="leaderboardList">
+                    <p style="color:#666; text-align:center;" data-i18n="noLeaderboard">No data yet</p>
+                </div>
+            </div>
+            
+            <!-- Popular Games Tab -->
+            <div id="tabGames" class="hidden">
+                <div id="popularGamesList">
+                    <p style="color:#666; text-align:center;" data-i18n="noGamesData">No data yet</p>
+                </div>
+            </div>
+        </div>
+
         <!-- Student Registration Info -->
         <div class="card">
             <h2>ℹ️ <span data-i18n="howItWorks">How It Works</span></h2>
@@ -482,7 +688,32 @@
             codeGenerated: 'Access code generated successfully!',
             generateError: 'Failed to generate code. Please try again.',
             notEnoughSlots: 'Not enough student slots available.',
-            default: 'General'
+            default: 'General',
+            // Activity translations
+            liveActivity: 'Live Student Activity',
+            autoRefresh: 'Auto-refresh',
+            online: 'Online Now',
+            activeToday: 'Active Today',
+            gamesPlayed: 'Games Today',
+            completed: 'Completed',
+            minutesToday: 'Minutes Today',
+            avgScore: 'Avg Score',
+            studentsOnline: 'Students Online',
+            noOnline: 'No students online',
+            recentActivity: 'Recent Activity',
+            leaderboard: 'Leaderboard',
+            popularGames: 'Popular Games',
+            student: 'Student',
+            game: 'Game',
+            score: 'Score',
+            duration: 'Duration',
+            time: 'Time',
+            noActivity: 'No activity yet',
+            noLeaderboard: 'No leaderboard data yet',
+            noGamesData: 'No games data yet',
+            gamesCompleted: 'games completed',
+            totalTime: 'total time',
+            playing: 'Playing'
         },
         es: {
             welcome: 'Bienvenido',
@@ -533,7 +764,32 @@
             codeGenerated: '¡Código de acceso generado exitosamente!',
             generateError: 'Error al generar código. Por favor intenta de nuevo.',
             notEnoughSlots: 'No hay suficientes cupos disponibles.',
-            default: 'General'
+            default: 'General',
+            // Activity translations
+            liveActivity: 'Actividad de Estudiantes en Vivo',
+            autoRefresh: 'Auto-actualizar',
+            online: 'En Línea',
+            activeToday: 'Activos Hoy',
+            gamesPlayed: 'Juegos Hoy',
+            completed: 'Completados',
+            minutesToday: 'Minutos Hoy',
+            avgScore: 'Puntaje Prom.',
+            studentsOnline: 'Estudiantes en Línea',
+            noOnline: 'No hay estudiantes en línea',
+            recentActivity: 'Actividad Reciente',
+            leaderboard: 'Clasificación',
+            popularGames: 'Juegos Populares',
+            student: 'Estudiante',
+            game: 'Juego',
+            score: 'Puntaje',
+            duration: 'Duración',
+            time: 'Hora',
+            noActivity: 'Sin actividad aún',
+            noLeaderboard: 'Sin datos de clasificación aún',
+            noGamesData: 'Sin datos de juegos aún',
+            gamesCompleted: 'juegos completados',
+            totalTime: 'tiempo total',
+            playing: 'Jugando'
         }
     };
 
@@ -574,31 +830,92 @@
         errorDiv.style.display = 'none';
         
         try {
-            const r = await fetch(`${API}/api/licenses/${key}/validate`);
+            // Try to fetch the license directly
+            const r = await fetch(`${API}/api/licenses/${key}`);
+            
             if (r.ok) {
                 const data = await r.json();
-                if (data.valid) {
+                // Check if we got valid license data (has licenseKey or customerName)
+                if (data && (data.licenseKey || data.customerName)) {
                     LICENSE_KEY = key;
+                    licenseData = data;
                     localStorage.setItem('licenseKey', key);
                     document.getElementById('loginScreen').classList.add('hidden');
                     document.getElementById('dashboard').classList.remove('hidden');
-                    await loadLicense();
-                } else {
+                    updateLicenseDisplay();
+                    loadCodes();
+                    startActivityTracking();
+                } else if (data.valid === false) {
                     errorDiv.textContent = data.message || t('invalidKey');
+                    errorDiv.style.display = 'block';
+                } else {
+                    errorDiv.textContent = t('invalidKey');
                     errorDiv.style.display = 'block';
                 }
             } else {
-                errorDiv.textContent = t('invalidKey');
-                errorDiv.style.display = 'block';
+                // Try alternate endpoint with validation
+                const r2 = await fetch(`${API}/api/licenses/validate`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ licenseKey: key })
+                });
+                
+                if (r2.ok) {
+                    const data2 = await r2.json();
+                    if (data2.valid || data2.license) {
+                        LICENSE_KEY = key;
+                        licenseData = data2.license || data2;
+                        localStorage.setItem('licenseKey', key);
+                        document.getElementById('loginScreen').classList.add('hidden');
+                        document.getElementById('dashboard').classList.remove('hidden');
+                        if (!licenseData.licenseKey) await loadLicense();
+                        else {
+                            updateLicenseDisplay();
+                            loadCodes();
+                        }
+                        startActivityTracking();
+                    } else {
+                        errorDiv.textContent = data2.message || t('invalidKey');
+                        errorDiv.style.display = 'block';
+                    }
+                } else {
+                    errorDiv.textContent = t('invalidKey');
+                    errorDiv.style.display = 'block';
+                }
             }
         } catch (e) {
-            errorDiv.textContent = t('connectionError');
+            console.error('Login error:', e);
+            errorDiv.textContent = t('connectionError') + ' - Check console for details';
             errorDiv.style.display = 'block';
         }
         
         btn.disabled = false;
         btn.textContent = t('login');
     }
+
+    // Debug function - call from browser console: testAPI()
+    window.testAPI = async function() {
+        const key = document.getElementById('licenseKeyInput').value.trim().toUpperCase() || 'TEST';
+        console.log('Testing API with key:', key);
+        
+        const endpoints = [
+            `${API}/api/licenses/${key}`,
+            `${API}/api/licenses/${key}/validate`,
+            `${API}/api/license/${key}`,
+            `${API}/api/license/validate/${key}`
+        ];
+        
+        for (const url of endpoints) {
+            try {
+                console.log('Trying:', url);
+                const r = await fetch(url);
+                const text = await r.text();
+                console.log(`${url} -> Status: ${r.status}, Response:`, text.substring(0, 200));
+            } catch (e) {
+                console.log(`${url} -> Error:`, e.message);
+            }
+        }
+    };
 
     function doLogout() {
         localStorage.removeItem('licenseKey');
@@ -744,6 +1061,200 @@
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 2000);
         });
+    }
+
+    // ========================================
+    // ACTIVITY TRACKING FUNCTIONS
+    // ========================================
+    
+    let activityRefreshInterval = null;
+    let activityData = null;
+    
+    async function loadActivity() {
+        if (!LICENSE_KEY) return;
+        
+        try {
+            const r = await fetch(`${API}/api/activity/stats/${LICENSE_KEY}`);
+            if (r.ok) {
+                activityData = await r.json();
+                updateActivityDisplay();
+            }
+        } catch (e) {
+            console.error('Failed to load activity:', e);
+        }
+    }
+    
+    function updateActivityDisplay() {
+        if (!activityData) return;
+        
+        // Update stats
+        document.getElementById('onlineCount').textContent = activityData.online || 0;
+        document.getElementById('activeToday').textContent = activityData.studentsActiveToday || 0;
+        document.getElementById('gamesPlayed').textContent = activityData.gamesPlayedToday || 0;
+        document.getElementById('gamesCompleted').textContent = activityData.gamesCompletedToday || 0;
+        document.getElementById('totalTime').textContent = activityData.totalTimeToday || 0;
+        document.getElementById('avgScore').textContent = activityData.avgScoreToday || 0;
+        
+        // Update online students
+        const onlineList = document.getElementById('onlineList');
+        if (activityData.onlineStudents && activityData.onlineStudents.length > 0) {
+            onlineList.innerHTML = activityData.onlineStudents.map(s => `
+                <div class="online-student">
+                    <span class="pulse"></span>
+                    <span>${s.firstName} ${s.lastName}</span>
+                    ${s.gameName ? `<span style="opacity:0.7;">• ${s.gameName}</span>` : ''}
+                </div>
+            `).join('');
+        } else {
+            onlineList.innerHTML = `<span style="color:#666;">${t('noOnline')}</span>`;
+        }
+        
+        // Update leaderboard
+        updateLeaderboard();
+        
+        // Update popular games
+        updatePopularGames();
+        
+        // Load recent activity
+        loadRecentActivity();
+    }
+    
+    function updateLeaderboard() {
+        const list = document.getElementById('leaderboardList');
+        if (!activityData.leaderboard || activityData.leaderboard.length === 0) {
+            list.innerHTML = `<p style="color:#666; text-align:center;">${t('noLeaderboard')}</p>`;
+            return;
+        }
+        
+        list.innerHTML = activityData.leaderboard.map((s, i) => {
+            let rankClass = '';
+            if (i === 0) rankClass = 'gold';
+            else if (i === 1) rankClass = 'silver';
+            else if (i === 2) rankClass = 'bronze';
+            
+            const timeStr = Math.round(s.totalTime / 60);
+            
+            return `
+                <div class="leaderboard-item">
+                    <div class="rank ${rankClass}">${i + 1}</div>
+                    <div class="info">
+                        <div class="name">${s.name}</div>
+                        <div class="stats">${s.gamesCompleted} ${t('gamesCompleted')} • ${timeStr} min ${t('totalTime')}</div>
+                    </div>
+                    <div class="score">${s.avgScore}%</div>
+                </div>
+            `;
+        }).join('');
+    }
+    
+    function updatePopularGames() {
+        const list = document.getElementById('popularGamesList');
+        if (!activityData.popularGames || activityData.popularGames.length === 0) {
+            list.innerHTML = `<p style="color:#666; text-align:center;">${t('noGamesData')}</p>`;
+            return;
+        }
+        
+        const maxCount = activityData.popularGames[0].count;
+        
+        list.innerHTML = activityData.popularGames.map(g => {
+            const pct = Math.round((g.count / maxCount) * 100);
+            return `
+                <div style="margin-bottom:15px;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                        <span>${g.name}</span>
+                        <span style="color:#ffd700;">${g.count} plays</span>
+                    </div>
+                    <div style="height:8px; background:#333; border-radius:4px; overflow:hidden;">
+                        <div style="height:100%; width:${pct}%; background:linear-gradient(90deg,#ffd700,#ffaa00); border-radius:4px;"></div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+    
+    async function loadRecentActivity() {
+        if (!LICENSE_KEY) return;
+        
+        try {
+            const r = await fetch(`${API}/api/activity/license/${LICENSE_KEY}?limit=20`);
+            if (r.ok) {
+                const activity = await r.json();
+                updateRecentActivityTable(activity);
+            }
+        } catch (e) {
+            console.error('Failed to load recent activity:', e);
+        }
+    }
+    
+    function updateRecentActivityTable(activity) {
+        const tbody = document.getElementById('activityList');
+        
+        if (!activity || activity.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#666;">${t('noActivity')}</td></tr>`;
+            return;
+        }
+        
+        tbody.innerHTML = activity.map(a => {
+            const time = new Date(a.startedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const date = new Date(a.startedAt).toLocaleDateString();
+            const duration = a.duration ? `${Math.round(a.duration / 60)}m ${a.duration % 60}s` : '-';
+            const score = a.score !== null ? `${a.score}%` : '-';
+            const status = a.completed ? '✅' : (a.endedAt ? '❌' : '🎮');
+            
+            return `
+                <tr>
+                    <td>${a.studentName}</td>
+                    <td>${a.gameName}</td>
+                    <td>${status} ${score}</td>
+                    <td>${duration}</td>
+                    <td>${date} ${time}</td>
+                </tr>
+            `;
+        }).join('');
+    }
+    
+    function showActivityTab(tab) {
+        // Update tab buttons
+        document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
+        event.target.classList.add('active');
+        
+        // Show/hide tabs
+        document.getElementById('tabRecent').classList.add('hidden');
+        document.getElementById('tabLeaderboard').classList.add('hidden');
+        document.getElementById('tabGames').classList.add('hidden');
+        
+        if (tab === 'recent') {
+            document.getElementById('tabRecent').classList.remove('hidden');
+        } else if (tab === 'leaderboard') {
+            document.getElementById('tabLeaderboard').classList.remove('hidden');
+        } else if (tab === 'games') {
+            document.getElementById('tabGames').classList.remove('hidden');
+        }
+    }
+    
+    function toggleAutoRefresh() {
+        const checked = document.getElementById('autoRefresh').checked;
+        
+        if (checked) {
+            // Start auto-refresh every 30 seconds
+            activityRefreshInterval = setInterval(loadActivity, 30000);
+        } else {
+            // Stop auto-refresh
+            if (activityRefreshInterval) {
+                clearInterval(activityRefreshInterval);
+                activityRefreshInterval = null;
+            }
+        }
+    }
+    
+    function startActivityTracking() {
+        // Load initial data
+        loadActivity();
+        
+        // Start auto-refresh if checked
+        if (document.getElementById('autoRefresh').checked) {
+            activityRefreshInterval = setInterval(loadActivity, 30000);
+        }
     }
 
     // Allow Enter key to login
