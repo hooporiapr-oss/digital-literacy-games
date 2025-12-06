@@ -5,11 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Portal - Akashic Academy</title>
     <style>
+        :root {
+            --primary-color: #ffd700;
+            --secondary-color: #1a1a2e;
+            --accent-color: #6366f1;
+            --background-color: #1a1a2e;
+            --card-color: #2a2a3e;
+            --text-color: #ffffff;
+        }
+        
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
             font-family: 'Segoe UI', Arial, sans-serif; 
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
-            color: #fff; 
+            background: linear-gradient(135deg, var(--background-color) 0%, #16213e 100%); 
+            color: var(--text-color); 
             min-height: 100vh;
             padding: 20px;
         }
@@ -19,6 +28,7 @@
         
         .card {
             background: rgba(42, 42, 62, 0.95);
+            background: var(--card-color);
             border-radius: 20px;
             padding: 40px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.4);
@@ -26,7 +36,8 @@
         }
         
         .logo { font-size: 4rem; text-align: center; margin-bottom: 15px; }
-        h1 { color: #ffd700; text-align: center; font-size: 1.8rem; margin-bottom: 10px; }
+        .logo img { max-height: 80px; max-width: 200px; }
+        h1 { color: var(--primary-color); text-align: center; font-size: 1.8rem; margin-bottom: 10px; }
         .subtitle { color: #aaa; text-align: center; margin-bottom: 30px; }
         
         .form-group { margin-bottom: 20px; }
@@ -67,7 +78,7 @@
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s;
-            background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ffaa00 100%);
             color: #000;
             margin-top: 10px;
         }
@@ -694,7 +705,7 @@
             margin-top: 15px;
         }
         .forgot-link a {
-            color: #6366f1;
+            color: var(--accent-color);
             text-decoration: none;
             font-size: 14px;
         }
@@ -707,12 +718,32 @@
             border-top: 1px solid #333;
         }
         .login-toggle a {
-            color: #ffd700;
+            color: var(--primary-color);
             text-decoration: none;
             font-weight: bold;
         }
         .login-toggle a:hover { text-decoration: underline; }
+        
+        /* Footer Branding */
+        .platform-footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+        .platform-footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        .powered-by {
+            margin-top: 10px;
+            opacity: 0.6;
+        }
+        
+        /* Custom CSS injection */
+        #customStyles { }
     </style>
+    <style id="customStyles"></style>
 </head>
 <body>
     <div class="lang-toggle">
@@ -999,6 +1030,112 @@
     let currentGameMode = 'scored'; // 'scored' or 'practice'
     let studentSettings = { soundEnabled: true, musicEnabled: false, soundVolume: 80, musicVolume: 50 };
     let avatars = [];
+    let branding = null; // White-label branding
+
+    // Load branding from URL param or default
+    async function loadBranding() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const licenseKey = urlParams.get('license');
+        
+        try {
+            let url = `${API}/api/branding/default`;
+            if (licenseKey) {
+                url = `${API}/api/licenses/${licenseKey}/branding`;
+            }
+            
+            const r = await fetch(url);
+            if (r.ok) {
+                branding = await r.json();
+                applyBranding();
+            }
+        } catch (e) {
+            console.log('Using default branding');
+        }
+    }
+    
+    // Apply branding to page
+    function applyBranding() {
+        if (!branding) return;
+        
+        // Update CSS variables
+        const root = document.documentElement;
+        root.style.setProperty('--primary-color', branding.primaryColor || '#ffd700');
+        root.style.setProperty('--secondary-color', branding.secondaryColor || '#1a1a2e');
+        root.style.setProperty('--accent-color', branding.accentColor || '#6366f1');
+        root.style.setProperty('--background-color', branding.backgroundColor || '#1a1a2e');
+        root.style.setProperty('--card-color', branding.cardColor || '#2a2a3e');
+        root.style.setProperty('--text-color', branding.textColor || '#ffffff');
+        
+        // Update logo
+        const logos = document.querySelectorAll('.logo');
+        logos.forEach(logo => {
+            if (branding.logoUrl) {
+                logo.innerHTML = `<img src="${branding.logoUrl}" alt="${branding.platformName || 'Logo'}">`;
+            } else {
+                logo.textContent = branding.logoEmoji || '🎓';
+            }
+        });
+        
+        // Update platform name
+        document.querySelectorAll('[data-brand="name"]').forEach(el => {
+            el.textContent = branding.platformName || 'Akashic Academy';
+        });
+        
+        // Update page title
+        document.title = `${branding.platformName || 'Akashic Academy'} - Student Portal`;
+        
+        // Update favicon if provided
+        if (branding.faviconUrl) {
+            let favicon = document.querySelector('link[rel="icon"]');
+            if (!favicon) {
+                favicon = document.createElement('link');
+                favicon.rel = 'icon';
+                document.head.appendChild(favicon);
+            }
+            favicon.href = branding.faviconUrl;
+        }
+        
+        // Update footer
+        const footer = document.getElementById('platformFooter');
+        if (footer) {
+            let footerHtml = branding.footerText || '';
+            if (branding.supportEmail) {
+                footerHtml += ` | <a href="mailto:${branding.supportEmail}">Support</a>`;
+            }
+            if (branding.supportUrl) {
+                footerHtml += ` | <a href="${branding.supportUrl}" target="_blank">Help</a>`;
+            }
+            footer.innerHTML = footerHtml;
+            
+            // Powered by
+            const poweredBy = document.getElementById('poweredBy');
+            if (poweredBy) {
+                poweredBy.style.display = branding.showPoweredBy !== false ? 'block' : 'none';
+            }
+        }
+        
+        // Apply custom CSS
+        if (branding.customCss) {
+            document.getElementById('customStyles').textContent = branding.customCss;
+        }
+        
+        console.log('🎨 Branding applied:', branding.platformName);
+    }
+    
+    // Load branding for logged-in student
+    async function loadStudentBranding() {
+        if (!studentData?.id) return;
+        
+        try {
+            const r = await fetch(`${API}/api/students/${studentData.id}/branding`);
+            if (r.ok) {
+                branding = await r.json();
+                applyBranding();
+            }
+        } catch (e) {
+            console.log('Could not load student branding');
+        }
+    }
 
     // Games data
     const games = [
@@ -1366,6 +1503,9 @@
         
         document.getElementById('studentName').textContent = studentData.firstName;
         document.getElementById('studentGrade').textContent = studentData.gradeLevel;
+        
+        // Load student-specific branding
+        loadStudentBranding();
         
         // Load all student data
         loadAvatars();
@@ -1789,7 +1929,10 @@
     });
 
     // Initialize
-    window.onload = function() {
+    window.onload = async function() {
+        // Load branding first
+        await loadBranding();
+        
         const savedLang = localStorage.getItem('lang');
         if (savedLang) currentLang = savedLang;
         updateUI();
@@ -1799,6 +1942,7 @@
         if (saved) {
             try {
                 studentData = JSON.parse(saved);
+                await loadStudentBranding();
                 showGamesPortal();
             } catch (e) {
                 localStorage.removeItem('studentData');
@@ -1806,5 +1950,11 @@
         }
     };
     </script>
+    
+    <!-- Platform Footer -->
+    <div class="platform-footer">
+        <div id="platformFooter">© 2024 Akashic Academy</div>
+        <div id="poweredBy" class="powered-by">Powered by Akashic Academy</div>
+    </div>
 </body>
 </html>
