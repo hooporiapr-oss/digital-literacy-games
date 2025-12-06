@@ -351,4 +351,112 @@
                     </div>
                     <div class="game-card">
                         <div class="game-header">
-                            <span class="game-icon">⌨
+                            <span class="game-icon">⌨️</span>
+                            <div>
+                                <div class="game-title">Speed Typing</div>
+                                <div class="game-title-es">Escritura Rápida</div>
+                            </div>
+                        </div>
+                        <p class="game-desc">Professional typing test. Track WPM and accuracy.</p>
+                        <div class="game-links">
+                            <button class="game-link en" onclick="playGame('games-912-typing-en.html')">🇺🇸 English</button>
+                            <button class="game-link es" onclick="playGame('games-912-typing-es.html')">🇵🇷 Español</button>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-header">
+                            <span class="game-icon">🎨</span>
+                            <div>
+                                <div class="game-title">Stroop Challenge</div>
+                                <div class="game-title-es">Desafío Stroop</div>
+                            </div>
+                        </div>
+                        <p class="game-desc">Advanced focus test. Ignore the word, name the color.</p>
+                        <div class="game-links">
+                            <button class="game-link en" onclick="playGame('games-912-stroop-challenge-en.html')">🇺🇸 English</button>
+                            <button class="game-link es" onclick="playGame('games-912-stroop-challenge-es.html')">🇵🇷 Español</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+    const API_URL = 'https://akashic-academy-backend.onrender.com';
+    
+    // Initialize page
+    window.addEventListener('DOMContentLoaded', async () => {
+        console.log('🎮 Games portal loading...');
+        
+        // Get student credentials from localStorage
+        const studentId = localStorage.getItem('akashic_student_id');
+        const studentName = localStorage.getItem('akashic_student_name');
+        const classCode = localStorage.getItem('akashic_class_code');
+        
+        console.log('Student ID:', studentId);
+        console.log('Student Name:', studentName);
+        console.log('Class Code:', classCode);
+        
+        // Check if logged in
+        if (!studentId || !studentName || !classCode) {
+            console.error('❌ Missing credentials, redirecting to login');
+            alert('Please log in first to access games.');
+            window.location.href = 'student-setup.html';
+            return;
+        }
+        
+        // Validate session with backend
+        try {
+            console.log('🔄 Validating session...');
+            const res = await fetch(
+                `${API_URL}/api/session/validate?studentId=${studentId}&classCode=${classCode}`
+            );
+            
+            if (!res.ok) {
+                throw new Error('Session invalid');
+            }
+            
+            const data = await res.json();
+            console.log('✅ Session valid:', data);
+            
+            // Show content
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+            document.getElementById('studentName').textContent = `Welcome, ${studentName}!`;
+            
+        } catch (err) {
+            console.error('❌ Session validation failed:', err);
+            alert('Your session has expired. Please log in again.');
+            localStorage.clear();
+            window.location.href = 'student-setup.html';
+        }
+    });
+    
+    // Play game through protected backend
+    function playGame(filename) {
+        const studentId = localStorage.getItem('akashic_student_id');
+        const classCode = localStorage.getItem('akashic_class_code');
+        
+        console.log(`🎮 Loading game: ${filename}`);
+        
+        // Redirect to protected backend endpoint
+        const gameUrl = `${API_URL}/games/${filename}?studentId=${studentId}&classCode=${classCode}`;
+        console.log('Game URL:', gameUrl);
+        
+        window.location.href = gameUrl;
+    }
+    
+    // Logout function
+    function logout() {
+        if (confirm('Are you sure you want to logout?')) {
+            console.log('👋 Logging out...');
+            localStorage.removeItem('akashic_student_id');
+            localStorage.removeItem('akashic_student_name');
+            localStorage.removeItem('akashic_class_code');
+            window.location.href = 'student-setup.html';
+        }
+    }
+    </script>
+</body>
+</html>
