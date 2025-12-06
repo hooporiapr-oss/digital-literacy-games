@@ -26,7 +26,7 @@
 <body>
     <div id="login" class="box">
         <h2>🔐 Admin Login</h2>
-        <input type="password" id="key" placeholder="Admin Key" value="akashic-admin-2024">
+        <input type="password" id="key" placeholder="Admin Key">
         <button onclick="doLogin()">Login</button>
         <p id="error" style="color:#ff4444; margin-top:10px;"></p>
     </div>
@@ -171,6 +171,9 @@
     }
 
     document.getElementById('count').oninput = updatePrice;
+    document.getElementById('days').onchange = function() {
+        document.getElementById('total').textContent = 'FREE (' + this.value + ' days)';
+    };
 
     async function createLic(e) {
         e.preventDefault();
@@ -193,6 +196,7 @@
                 msg.style.color = '#10b981';
                 msg.textContent = '✅ Created: ' + d.license.licenseKey;
                 e.target.reset();
+                toggleTrial(); // Reset trial state
                 loadAll();
             } else {
                 msg.style.color = '#ff4444';
@@ -205,5 +209,14 @@
         return false;
     }
 
-    // Auto-login if saved
-    window.on
+    // Auto-login if saved key exists
+    window.onload = function() {
+        const savedKey = localStorage.getItem('adminKey');
+        if (savedKey) {
+            document.getElementById('key').value = savedKey;
+            doLogin();
+        }
+    };
+    </script>
+</body>
+</html>
